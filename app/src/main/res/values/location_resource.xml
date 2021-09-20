@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="Province">
+
+        <item>Sindh</item>
+        <item>Balochistan</item>
+        <item>Kpk</item>
+        <item>Punjab</item>
+    </string-array>
+
+
+
+
+    <string-array name="Sindh">
+        <item>Dadu</item>
+        <item>Sukkur</item>
+        <item>Morro</item>
+        <item>Umerkot</item>
+    </string-array>
+
+
+        <string-array name="Punjab">
+            <item>Lahore</item>
+            <item>Rawalpindi</item>
+            <item>Faisalabad</item>
+            <item>Gujranwala</item>
+        </string-array>
+
+        <string-array name="KPK">
+            <item>Peshawar</item>
+            <item>Kohat</item>
+            <item>Mardan</item>
+            <item>AbbottAbad</item>
+        </string-array>
+
+
+    <string-array name="Balochistan">
+        <item>Quetta</item>
+        <item>Panjgur</item>
+        <item>Khuzdar</item>
+        <item>Chamman</item>
+    </string-array>
+
+
+
+
+</resources>
+
+    

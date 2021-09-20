@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">FarmersEcom</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register_here">Register here</string>
+    <string name="register">Register</string>
+    <string name="login_here">login here</string>
+    <string name="first_name">First Name</string>
+    <string name="radio_button_male">Male</string>
+    <string name="radio_button_female">Female</string>
+    <string name="dob">Date of Birth</string>
+    <string name="select_province">Select Province</string>
+    <string name="select_city">Select City</string>
+    <string name="last_name">Last Name</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="date_hint">dd/mm/yyyy</string>
+    <string name="address">Address</string>
+    <string name="postal_code">Postal Code</string>
+
+
 </resources>

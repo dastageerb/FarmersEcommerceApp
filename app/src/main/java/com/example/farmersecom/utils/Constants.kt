@@ -1,7 +1,11 @@
 package com.example.farmersecom.utils
 
-class Constants
+object Constants
 {
+
+    // Log
+val TAG = "1234"
+
 
     // General Constants
 
