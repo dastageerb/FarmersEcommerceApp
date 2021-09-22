@@ -143,11 +143,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
                && email.validEmail{ binding.editTextRegisterFragEmail.error = it }
                && pass.validator()
                    .nonEmpty()
-                   .minLength(6)
+                   .minLength(8)
                    .maxLength(16)
                    .addErrorCallback { binding.editTextRegisterFragPassword.error = it }
                    .check()
-               && rePass.contains(pass){ binding.editTextRegisterFragReEnterPassword.error = " Password Does not match "}
+               && rePass.textEqualTo(pass){ binding.editTextRegisterFragReEnterPassword.error = " Password Does not match "}
     } // isPersonalInfoValid
 
 
@@ -215,6 +215,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
      */
     private fun isCityValid(city: String, province: String): Boolean
     {
+        // province will not be empty because it is validated first so no need to check below
         return if(city.isEmpty())
         {
             binding.autoCompleteCity.error = "Please select a city"
