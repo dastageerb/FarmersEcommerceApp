@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.RadioButton
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
+import com.example.farmersecom.authentication.data.entity.requests.RegisterEntity
 import com.example.farmersecom.authentication.presentation.register.utils.Utils.getList
 import com.example.farmersecom.authentication.presentation.register.utils.Utils.setAdapter
 import com.example.farmersecom.base.BaseFragment
@@ -15,6 +18,8 @@ import com.example.farmersecom.databinding.FragmentRegisterBinding
 import com.example.farmersecom.utils.ContextExtension.showToast
 import com.wajahatkarim3.easyvalidation.core.view_ktx.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +28,8 @@ import java.util.*
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickListener
 {
+
+    private val viewModel:RegisterViewModel by viewModels()
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentRegisterBinding
     {
@@ -37,33 +44,33 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
         binding.buttonRegFragRegister.setOnClickListener(this)
         // Go back to Login Fragment on Click
         binding.buttonRegFragLogin.setOnClickListener(this)
-        initView()
+
+            initView()
 
     } // onViewCreated closed
 
-    private fun initView() =binding.apply()
+    private  fun initView() = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
     {
 
-        //disable  autoCompleteCity until province selected
-        autoCompleteCity.isEnabled = false
-        // set Adapter for province autoCompleteView
-        autoCompleteProvince.setAdapter(requireContext(),R.array.Province)
+        binding.apply() {
+            //disable  autoCompleteCity until province selected
+            autoCompleteCity.isEnabled = false
+            // set Adapter for province autoCompleteView
+            autoCompleteProvince.setAdapter(requireContext(), R.array.Province)
 
-        // set cities when Province is selected (clicked)
-        autoCompleteProvince.onItemClickListener = AdapterView.OnItemClickListener()
-        {
-            parent, _, position, _ ->
-            // enable autoCompleteCity when province is selected
-            autoCompleteCity.isEnabled = true
-            when(parent.getItemAtPosition(position))
-            {
-                "Sindh" ->  autoCompleteCity.setAdapter(requireContext(),R.array.Sindh)
-                "Balochistan" ->  autoCompleteCity.setAdapter(requireContext(),R.array.Balochistan)
-                "Punjab" ->  autoCompleteCity.setAdapter(requireContext(),R.array.Punjab)
-                "Kpk" ->  autoCompleteCity.setAdapter(requireContext(),R.array.KPK)
-            } // when closed
-        } // autoCompleteProvince OnClickListener
-
+            // set cities when Province is selected (clicked)
+            autoCompleteProvince.onItemClickListener = AdapterView.OnItemClickListener() { parent, _, position, _ ->
+                // enable autoCompleteCity when province is selected
+                autoCompleteCity.isEnabled = true
+                when (parent.getItemAtPosition(position))
+                {
+                    "Sindh" -> autoCompleteCity.setAdapter(requireContext(), R.array.Sindh)
+                    "Balochistan" -> autoCompleteCity.setAdapter(requireContext(), R.array.Balochistan)
+                    "Punjab" -> autoCompleteCity.setAdapter(requireContext(), R.array.Punjab)
+                    "Kpk" -> autoCompleteCity.setAdapter(requireContext(), R.array.KPK)
+                } // when closed
+            } // autoCompleteProvince OnClickListener
+        }
     } /// initView closed
 
 
@@ -80,7 +87,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
 
    /**  validate the whole Registration form then Register */
-    private fun validateAndRegister()
+    private fun validateAndRegister() = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
     {
         val fName  = binding.editTextRegisterFragFirstName.text.toString().trim() // firstName
         val lName = binding.editTextRegisterFragLastName.text.toString().trim() // lastName
@@ -103,8 +110,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
         val postalCode = binding.editTextRegisterFragPostalCode.text.toString().trim()
 
 
-
-
         val validPersonalInfo = isPersonalInfoValid(fName,lName,contact,email,pass,rePass)
         val validDob = isValidDate(dateOfBirth)
         val validProvince = isProvinceValid(province)
@@ -113,10 +118,97 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
         if(validPersonalInfo && validDob && validProvince && validCity && validPostalInfo)
         {
-            registerPRo()
+            val registerEntity = RegisterEntity(fName,lName,contact,email,rePass,
+                gender,dateOfBirth,province,city,address,postalCode.toInt())
+            viewModel.register(registerEntity)
         }
 
     } // register closed
+
+
+    /** valid the personal info
+     * this method uses a library Easy validation by Sir @Wajah_Karim
+     * */
+
+    private fun isPersonalInfoValid(fName: String, lName: String, contact: String, email: String, pass: String, rePass: String):Boolean
+    {
+        return fName.nonEmpty { binding.editTextRegisterFragFirstName.error = it }
+               && lName.nonEmpty { binding.editTextRegisterFragLastName.error = it }
+               && contact.validator()
+                   .nonEmpty()
+                   .minLength(11)
+                   .maxLength(11)
+                   .addErrorCallback { binding.editTextRegisterFragContact.error = it }
+                   .check()
+               && email.validEmail{ binding.editTextRegisterFragEmail.error = it }
+               && pass.validator()
+                   .nonEmpty()
+                   .minLength(6)
+                   .maxLength(16)
+                   .addErrorCallback { binding.editTextRegisterFragPassword.error = it }
+                   .check()
+               && rePass.contains(pass){ binding.editTextRegisterFragReEnterPassword.error = " Password Does not match "}
+    } // isPersonalInfoValid
+
+
+    /** check the Dob is not empty
+     *  check if it a valid date or not
+     *  check if has a valid format
+     * */
+
+    private fun isValidDate(date: String): Boolean
+    {
+        if(!date.nonEmpty())
+        {
+            binding.editTextRegisterFragDate.error = "date is empty "
+            return false
+        }
+        val sdf = SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE)
+        var testDate: Date
+        try
+        {
+            testDate = sdf.parse(date)
+        } catch (e: ParseException)
+        {
+            binding.editTextRegisterFragDate.error = "invalid date format."
+            return false
+        }
+        if (!sdf.format(testDate).equals(date))
+        {
+            binding.editTextRegisterFragDate.error = "invalid date"
+            return false
+        }
+        return true
+    }  // isValidDate
+
+
+    /** check province  is not empty
+     * get list from resource and perform check
+     * check the entered values is in the list or no
+     * */
+
+    private fun isProvinceValid(province: String): Boolean
+    {
+        return if(province.isEmpty())
+        {
+            binding.autoCompleteProvince.error = "Please select a province"
+            return false
+        }
+        // R.array.id.getList(resource) is an extension function that returns a list based on id
+        else if(!R.array.Province.getList(resources).contains(province))
+        {
+            binding.autoCompleteProvince.error = "invalid province"
+            false
+        }
+        else
+        {
+            binding.autoCompleteProvince.error = null
+            true
+        }
+    } // isProvinceValid
+
+
+
 
     /** check if city is not empty
      *  selected from a valid province
@@ -161,84 +253,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
     } // checkCityInProvince
 
-    /** check province  is not empty
-     * get list from resource and perform check
-     * check the entered values is in the list or no
-     * */
 
-    private fun isProvinceValid(province: String): Boolean
-    {
-        return if(province.isEmpty())
-        {
-            binding.autoCompleteProvince.error = "Please select a province"
-            return false
-        }
-        // R.array.id.getList(resource) is an extension function that returns a list based on id
-        else if(!R.array.Province.getList(resources).contains(province))
-        {
-            binding.autoCompleteProvince.error = "invalid province"
-            false
-        }
-        else
-        {
-            binding.autoCompleteProvince.error = null
-            true
-        }
-    } // isProvinceValid
 
-    /** check the Dob is not empty
-     *  check if it a valid date or not
-     *  check if has a valid format
-     * */
-
-    private fun isValidDate(date: String): Boolean
-    {
-        if(!date.nonEmpty())
-        {
-            binding.editTextRegisterFragDate.error = "date is empty "
-            return false
-        }
-        val sdf = SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE)
-        var testDate: Date
-        try
-        {
-            testDate = sdf.parse(date)
-        } catch (e: ParseException)
-        {
-            binding.editTextRegisterFragDate.error = "invalid date format."
-            return false
-        }
-        if (!sdf.format(testDate).equals(date))
-        {
-            binding.editTextRegisterFragDate.error = "invalid date"
-            return false
-        }
-        return true
-    }  // isValidDate
-
-    /** valid the personal info
-     * this method uses a library Easy validation by Sir @Wajah_Karim
-     * */
-
-    private fun isPersonalInfoValid(fName: String, lName: String, contact: String, email: String, pass: String, rePass: String):Boolean
-    {
-        return fName.nonEmpty { binding.editTextRegisterFragFirstName.error = it }
-               && lName.nonEmpty { binding.editTextRegisterFragLastName.error = it }
-               && contact.validator()
-                   .nonEmpty()
-                   .minLength(11)
-                   .maxLength(11)
-                   .addErrorCallback { binding.editTextRegisterFragContact.error = it }
-                   .check()
-               && email.validEmail{ binding.editTextRegisterFragEmail.error = it }
-               && pass.validator()
-                   .nonEmpty()
-                   .minLength(6)
-                   .maxLength(16)
-                   .addErrorCallback { binding.editTextRegisterFragPassword.error = it }
-                   .check()
-               && rePass.contains(pass){ binding.editTextRegisterFragReEnterPassword.error = " Password Does not match "}
-    } // validateData
 
 
     /** validate the postal info (address , postal code)
@@ -256,10 +272,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
                    .check()
     } // isPostalInfoValid
 
-    private fun registerPRo()
-    {
-        requireContext().showToast("Working")
-    }
+
 
 
 

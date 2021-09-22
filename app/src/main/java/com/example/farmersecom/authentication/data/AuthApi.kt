@@ -12,12 +12,12 @@ interface AuthApi
 {
 
 
-    @POST("api/signup")
+    @POST("api/register")
     suspend fun registerViaEmail(@Body registerEntity: RegisterEntity) : Response<RegisterResponse>
 
 
-    @POST("api/signin")
-    suspend fun logInViaEmail(@Body logInEntity: LogInEntity) : Response<LogInResponse>
+    @POST("api/login")
+    suspend fun logInViaEmail(@Body logInEntity: LogInEntity) : Response<Any>
 
 
 

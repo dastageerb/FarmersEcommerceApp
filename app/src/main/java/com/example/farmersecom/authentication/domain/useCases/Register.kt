@@ -7,7 +7,7 @@ import javax.inject.Inject
 class Register @Inject constructor(private val repository: AuthRepository)
 {
 
-    suspend fun register(entity:RegisterEntity) = repository.registerViaEmail(entity)
+    suspend fun register(entity: RegisterEntity) = repository.registerViaEmail(entity)
 
 
 }

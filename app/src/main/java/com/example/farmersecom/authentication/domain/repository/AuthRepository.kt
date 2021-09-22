@@ -1,6 +1,5 @@
 package com.example.farmersecom.authentication.domain.repository
 
-import com.example.akhbar.utils.NetworkResource
 import com.example.farmersecom.authentication.data.entity.requests.LogInEntity
 import com.example.farmersecom.authentication.data.entity.requests.RegisterEntity
 import com.example.farmersecom.authentication.data.entity.responses.LogInResponse
@@ -16,7 +15,7 @@ interface AuthRepository
 
     suspend fun registerViaEmail(registerEntity: RegisterEntity):Response<RegisterResponse>
 
-    suspend fun logInViaEmail(logInEntity: LogInEntity): Response<LogInResponse>
+    suspend fun logInViaEmail(logInEntity: LogInEntity): Response<Any>
 
     suspend fun logInViaGmail()
 

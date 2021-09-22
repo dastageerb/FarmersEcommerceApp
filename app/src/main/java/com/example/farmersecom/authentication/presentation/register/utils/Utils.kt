@@ -10,7 +10,7 @@ object Utils
 {
 
 
-    fun Int.getList(resources: Resources) = resources.getStringArray(this)
+    fun Int.getList(resources: Resources): Array<String> = resources.getStringArray(this)
 
 
     fun AutoCompleteTextView.setAdapter(context:Context,id:Int)
