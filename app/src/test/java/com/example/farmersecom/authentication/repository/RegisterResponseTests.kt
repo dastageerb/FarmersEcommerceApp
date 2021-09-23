@@ -32,6 +32,33 @@ class RegisterResponseTests : ApiAbstract<AuthApi>()
         authApi = createService(AuthApi::class.java)
     }
 
+    @Test
+    fun registerUserSuccess()  = runBlocking()
+    {
+        enqueueResponse(directory,"/register_response.json")
+        val registerEntity = RegisterEntity("shoaib","bughio","03063255130"
+            ,"dastageerg44@gmail.com","123456","Male",
+            "22/4/2021","Sindh","K.N.Shah","Shahbaz Colony","76260".toInt())
+
+        val response = authApi.registerViaEmail(registerEntity)
+        assertThat(response.body()?.status ,`is`("success"))
+        assertThat(response.body()?.message ,`is`("User Registered Successfully"))
+
+    }
+
+
+    @Test
+    fun registerUserFailed()  = runBlocking()
+    {
+        enqueueResponse(directory,"/register_failed_response.json")
+        val registerEntity = RegisterEntity("shoaib","bughio","03063255130"
+            ,"dastageerg44@gmail.com","123456","Male",
+            "22/4/2021","Sindh","K.N.Shah","Shahbaz Colony","76260".toInt())
+
+        val response = authApi.registerViaEmail(registerEntity)
+        assertThat(response.body()?.status ,`is`("failed"))
+        assertThat(response.body()?.message, `is`("Email Already Exists"))
+    }
 
 
 

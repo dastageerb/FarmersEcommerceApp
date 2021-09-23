@@ -44,9 +44,9 @@ class RegisterViewModel @Inject constructor(private  val register: Register) : V
     {
         return when(response.code())
         {
-            200 -> NetworkResource.Success(response.body())
+            200,201 -> NetworkResource.Success(response.body())
             400 -> NetworkResource.Error(response.message())
-            else -> NetworkResource.Error("Something went Wrong")
+            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
         } // when closed
     } // handle Response closed
 

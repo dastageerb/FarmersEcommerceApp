@@ -17,7 +17,7 @@ interface AuthApi
 
 
     @POST("api/login")
-    suspend fun logInViaEmail(@Body logInEntity: LogInEntity) : Response<Any>
+    suspend fun logInViaEmail(@Body logInEntity: LogInEntity) : Response<LogInResponse>
 
 
 

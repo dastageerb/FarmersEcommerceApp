@@ -1,0 +1,10 @@
+{
+    "status": "success",
+    "message": "User Successfully Logged In",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ5OTExNDE0MDU3MjI1ZmM2ZGQ1MGMiLCJlbWFpbCI6ImdodWxhbWRhc3RhZ2VlcjkwNUBnbWFpbC5jb20iLCJpYXQiOjE2MzIzMDQ1MTksImV4cCI6MTYzMjMwODExOX0.XO2bivy_mN9ltItv-WAmAmYzfpd2fsNFnjGBMotLoaA",
+    "user": {
+        "_id": "6149911414057225fc6dd50c",
+        "fullName": "Shoaib Bughio",
+        "email": "ghulamdastageer905@gmail.com"
+    }
+}

@@ -4,26 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.akhbar.utils.NetworkResource
 import com.example.farmersecom.authentication.data.entity.requests.LogInEntity
-import com.example.farmersecom.authentication.data.entity.requests.RegisterEntity
 import com.example.farmersecom.authentication.data.entity.responses.LogInResponse
-import com.example.farmersecom.authentication.data.entity.responses.RegisterResponse
 import com.example.farmersecom.authentication.domain.useCases.LogInViaEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
-import javax.security.auth.login.LoginException
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(private val login:LogInViaEmail) : ViewModel()
 {
 
 
-    private val _loginResponse: MutableStateFlow<NetworkResource<Any>>
+    private val _loginResponse: MutableStateFlow<NetworkResource<LogInResponse>>
             = MutableStateFlow(NetworkResource.None())
 
     val loginResponse get() = _loginResponse
@@ -45,12 +41,12 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail) : View
         }
     }
 
-    private fun handleResponse(response: Response<Any>): NetworkResource<Any>
+    private fun handleResponse(response: Response<LogInResponse>): NetworkResource<LogInResponse>
     {
         return when(response.code())
         {
             200 -> NetworkResource.Success(response.body())
-            400  -> NetworkResource.Error(response.raw().body.toString())
+            400  -> NetworkResource.Error(response.message())
             else -> NetworkResource.Error("Something went wrong ${response.code()}")
         } // when closed
     } // handle Response closed

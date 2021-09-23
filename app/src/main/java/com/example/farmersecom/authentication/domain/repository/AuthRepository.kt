@@ -15,7 +15,7 @@ interface AuthRepository
 
     suspend fun registerViaEmail(registerEntity: RegisterEntity):Response<RegisterResponse>
 
-    suspend fun logInViaEmail(logInEntity: LogInEntity): Response<Any>
+    suspend fun logInViaEmail(logInEntity: LogInEntity): Response<LogInResponse>
 
     suspend fun logInViaGmail()
 

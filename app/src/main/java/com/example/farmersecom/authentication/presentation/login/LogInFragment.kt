@@ -60,7 +60,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                     is NetworkResource.Error ->
                     {
                         binding.progressBarLogIn.hide()
-                        Timber.tag(TAG).d(it.msg)
+                        Timber.tag(TAG).d("error  "+it.msg)
                     }
                     is NetworkResource.Success ->
                     {
@@ -87,10 +87,12 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
     {
 
         val email = binding.editTextEmail.text.toString().trim()
-        val password = binding.editTextPassword.toString().trim();
+        val password = binding.editTextPassword.text.toString().trim();
 
         if(validation(email,password))
         {
+            Timber.tag(TAG).d("validate email and password $email , $password")
+            requireContext().showToast("$email:$password")
             loginViewModel.loginUser(LogInEntity(email,password))
         } // if closed
     } // validDateAndLogin closed

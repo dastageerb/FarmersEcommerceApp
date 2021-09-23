@@ -9,17 +9,23 @@ import android.widget.RadioButton
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.akhbar.utils.NetworkResource
+import com.example.akhbar.utils.ViewExtension.hide
+import com.example.akhbar.utils.ViewExtension.show
 import com.example.farmersecom.R
 import com.example.farmersecom.authentication.data.entity.requests.RegisterEntity
 import com.example.farmersecom.authentication.presentation.register.utils.Utils.getList
 import com.example.farmersecom.authentication.presentation.register.utils.Utils.setAdapter
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentRegisterBinding
+import com.example.farmersecom.utils.Constants
 import com.example.farmersecom.utils.ContextExtension.showToast
 import com.wajahatkarim3.easyvalidation.core.view_ktx.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,6 +52,41 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
         binding.buttonRegFragLogin.setOnClickListener(this)
 
             initView()
+
+
+
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewModel.registerResponse.collect()
+            {
+
+                when(it)
+                {
+                    is NetworkResource.Loading ->
+                    {
+                        binding.progressBarRegisterFrag.show()
+                        Timber.tag(Constants.TAG).d("Loading")
+                    }
+                    is NetworkResource.Error ->
+                    {
+                        binding.progressBarRegisterFrag.hide()
+                        Timber.tag(Constants.TAG).d(it.msg)
+                    }
+                    is NetworkResource.Success ->
+                    {
+
+                        binding.progressBarRegisterFrag.hide()
+                        requireContext().showToast(it.data.toString())
+                        Timber.tag(Constants.TAG).d(it.data.toString())
+                    }
+                    else -> {}
+                }
+            }
+        }
+
+
+
 
     } // onViewCreated closed
 

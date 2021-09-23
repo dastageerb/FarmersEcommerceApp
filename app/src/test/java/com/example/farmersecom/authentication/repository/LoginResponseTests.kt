@@ -3,6 +3,7 @@ package com.example.farmersecom.authentication.repository
 
 import com.example.farmersecom.ApiAbstract
 import com.example.farmersecom.authentication.data.AuthApi
+import com.example.farmersecom.authentication.data.entity.requests.LogInEntity
 import com.example.farmersecom.authentication.data.entity.requests.RegisterEntity
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -32,32 +33,50 @@ class LoginResponseTests : ApiAbstract<AuthApi>()
         authApi = createService(AuthApi::class.java)
     }
 
+     // success test case
     @Test
-    fun registerUserSuccess()  = runBlocking()
+    fun loginUserSuccess()  = runBlocking()
     {
-        enqueueResponse(directory,"/register_response.json")
-        val registerEntity = RegisterEntity("shoaib","bughio","03063255130"
-            ,"dastageerg44@gmail.com","123456","Male",
-            "22/4/2021","Sindh","K.N.Shah","Shahbaz Colony","76260".toInt())
-
-        val response = authApi.registerViaEmail(registerEntity)
+        enqueueResponse(directory,"/login_success.json")
+        val loginEntity = LogInEntity("dastageerg44@gmail.com","12345678")
+        val response = authApi.logInViaEmail(loginEntity)
         assertThat(response.body()?.status ,`is`("success"))
-        assertThat(response.body()?.message ,`is`("User Registered Successfully"))
+        assertThat(response.body()?.message ,`is`("User Successfully Logged In"))
 
+    }
+
+    /// error test cases
+
+    @Test
+    fun invalidEmail()  = runBlocking()
+    {
+        enqueueResponse(directory,"/login_email_invalid.json")
+        val loginEntity = LogInEntity("dastageerg44@.com","12345678")
+        val response = authApi.logInViaEmail(loginEntity)
+        assertThat(response.body()?.status ,`is`("failed"))
+        assertThat(response.body()?.message ,`is`("email is invalid"))
     }
 
 
     @Test
-    fun registerUserFailed()  = runBlocking()
+    fun incorrectPassword()  = runBlocking()
     {
-        enqueueResponse(directory,"/register_failed_response.json")
-        val registerEntity = RegisterEntity("shoaib","bughio","03063255130"
-            ,"dastageerg44@gmail.com","123456","Male",
-            "22/4/2021","Sindh","K.N.Shah","Shahbaz Colony","76260".toInt())
-
-        val response = authApi.registerViaEmail(registerEntity)
+        enqueueResponse(directory,"/login_password_incorrect.json")
+        val loginEntity = LogInEntity("dastageerg44@gmail.com","12345")
+        val response = authApi.logInViaEmail(loginEntity)
         assertThat(response.body()?.status ,`is`("failed"))
-        assertThat(response.body()?.message, `is`("Email Already Exists"))
+        assertThat(response.body()?.message ,`is`("password incorrect"))
+    }
+
+
+    @Test
+    fun userNotFound()  = runBlocking()
+    {
+        enqueueResponse(directory,"/login_user_not_found.json")
+        val loginEntity = LogInEntity("dastageerg@gmail.com","12345")
+        val response = authApi.logInViaEmail(loginEntity)
+        assertThat(response.body()?.status ,`is`("failed"))
+        assertThat(response.body()?.message ,`is`("user not found"))
     }
 
 
