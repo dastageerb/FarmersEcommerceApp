@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.profile.presentation.ProfileFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/imageCardView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:cardCornerRadius="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="change Photo"
+        android:background="@color/colorTransparent"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAllCaps="false"
+        android:layout_toEndOf="@id/imageCardView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="72dp"
+        />
+
+    <TextView
+        android:id="@+id/textViewProfileFragName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageCardView"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/buttonUpdateInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Personal info"
+        android:layout_below="@id/textViewProfileFragName"
+        android:background="@color/colorTransparent"
+        android:textColor="@color/colorGrey"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:textAllCaps="false"
+        />
+
+    <TextView
+        android:id="@+id/textBuyersSection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonUpdateInfo"
+        android:text="buyers Section"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        />
+
+    <Button
+        android:id="@+id/buttonBuyersSection"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/textBuyersSection"
+        android:layout_marginStart="24sp"
+        android:layout_marginTop="8dp"
+        android:text="Buyers Section" />
+
+
+    <TextView
+        android:id="@+id/textSellersSection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonBuyersSection"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="sellers Section" />
+
+
+    <Button
+        android:id="@+id/buttonSetupStore"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/textSellersSection"
+        android:layout_marginStart="24sp"
+        android:layout_marginTop="8dp"
+        android:text="Setup Store" />
+
+    <Button
+        android:id="@+id/buttonGoToStore"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:text="Go to Store"
+        android:layout_below="@id/buttonSetupStore"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24sp"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/buttonProfileFragLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_bg"
+        android:text="Log out" />
+
+</RelativeLayout>
