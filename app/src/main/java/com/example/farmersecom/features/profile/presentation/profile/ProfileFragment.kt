@@ -1,6 +1,7 @@
 package com.example.farmersecom.features.profile.presentation.profile
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -22,13 +24,19 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProfileBinding
 import com.example.farmersecom.features.profile.domain.model.Profile
+import com.example.farmersecom.utils.Constants.APP_PACKAGE_NAME
 import com.example.farmersecom.utils.Constants.TAG
 import com.example.farmersecom.utils.ContextExtension.showToast
+import com.example.farmersecom.utils.Permissions.hasCameraPermission
+import com.example.farmersecom.utils.Permissions.hasStoragePermission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
+
+
+
 
 
 @AndroidEntryPoint
@@ -125,29 +133,130 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     } // onClick closed
 
 
-
-    private val mPermissionResult = registerForActivityResult(RequestPermission())
-    { isGranted ->
-
-            if (isGranted)
-            {
-
-            } else
-            {
-                requireContext().showToast("App needs Permissions to Continue")
-                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", APP_PACKAGE_NAME, null)
-                })
-            } // else closed
-        } /// forEach closed
-    } // Request Permission closed
-
-
+    /**Changing Image by camera or gallery **/
 
     private fun changePhoto()
     {
-//        mPermissionResult.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-    }
+        val builder = AlertDialog.Builder(requireContext())
+        // builder.setMessage("")
+        builder.setTitle("Choose Image")
+        builder.setCancelable(true)
+        builder.setNegativeButton("Camera")
+        { dialog, _ -> dialog.cancel()
+
+            if(requireContext().hasCameraPermission())
+            {
+
+            }else
+            {
+                multiPermissionCallback.launch(arrayOf(Manifest.permission.CAMERA))
+            }
+
+
+            dialog.dismiss()
+        }
+        builder.setPositiveButton("Gallery")
+        { dialog, _ ->
+
+            if(requireContext().hasStoragePermission())
+            {
+
+            }else
+            {
+                multiPermissionCallback.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+            }
+
+
+            dialog.dismiss()
+        } // dialog closed
+        val alert = builder.create()
+        alert.show()
+
+    } // changPhoto
+
+
+//
+//    private val takeImageResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+//        if (isSuccess) {
+//            latestTmpUri?.let { uri ->
+//                previewImage.setImageURI(uri)
+//            }
+//        }
+//    }
+//
+//    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+//        uri?.let { previewImage.setImageURI(uri) }
+//    }
+
+
+
+    private val multiPermissionCallback =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
+            {
+                    map ->
+                //handle individual results if desired
+                map.entries.forEach()
+                { entry ->
+                    when (entry.key)
+                    {
+                        Manifest.permission.READ_EXTERNAL_STORAGE->
+                            requireContext().showToast("Read "+entry.value)
+                        Manifest.permission.CAMERA -> requireContext().showToast("Camera "+entry.value)
+                    } // when closed
+
+                } // forEach closed
+            } // ActivityResult Contract closed
+
+
+
+
+
+//    private val capturePhotoPermission
+//        = registerForActivityResult(ActivityResultContracts.RequestPermission())
+//    {
+//            isGranted ->
+//            if (isGranted)
+//            {
+//                    captureImage();
+//            } else
+//            {
+//                requireContext().showToast("App needs Permissions to Capture Photo")
+//                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+//                    data = Uri.fromParts("package", APP_PACKAGE_NAME, null)
+//                })
+//            } // else closed
+//        } /// forEach closed
+//
+//    private val accessGalleryPermission
+//            = registerForActivityResult(ActivityResultContracts.RequestPermission())
+//    {
+//            isGranted ->
+//        if (isGranted)
+//        {
+//            getImageFromGallery()
+//        } else
+//        {
+//            requireContext().showToast("App needs Permissions to Access Gallery ")
+//            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+//                data = Uri.fromParts("package", APP_PACKAGE_NAME, null)
+//            })
+//        } // else closed
+//    } /// forEach closed
+
+
+    private fun getImageFromGallery()
+    {
+
+    } // getImageFromGallery closed
+
+
+    private fun captureImage()
+    {
+
+    } // getImageFrom Gallery closed
+
+
 
 
 } // Profile Fragment closed
+

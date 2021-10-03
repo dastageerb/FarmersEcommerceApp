@@ -3,6 +3,9 @@ package com.example.farmersecom.utils
 object Constants
 {
 
+    // App Package name
+    const val APP_PACKAGE_NAME = "com.example.farmersecom"
+
     // SharedPrefsStore
     const val TOKEN = "TOKEN"
     const val TOKEN_PREFS = "TOKEN_PREFS"
