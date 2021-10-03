@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity()
         navController = navHostFragment.navController
 
 
-
-
     } // onCreate
 
 

@@ -2,8 +2,8 @@ package com.example.farmersecom.features.authentication.repository
 
 
 import com.example.farmersecom.ApiAbstract
-import com.example.farmersecom.features.authentication.data.AuthApi
-import com.example.farmersecom.features.authentication.data.entity.requests.LogInEntity
+import com.example.farmersecom.features.authentication.data.frameWork.AuthApi
+import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.LogInData
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -30,7 +30,7 @@ class LoginResponseTests : ApiAbstract<AuthApi>()
     fun loginUserSuccess()  = runBlocking()
     {
         enqueueResponse(directory,"/login_success.json")
-        val loginEntity = LogInEntity("dastageerg44@gmail.com","12345678")
+        val loginEntity = LogInData("dastageerg44@gmail.com","12345678")
         val response = authApi.logInViaEmail(loginEntity)
         assertThat(response.body()?.status ,`is`("success"))
         assertThat(response.body()?.message ,`is`("User Successfully Logged In"))
@@ -43,7 +43,7 @@ class LoginResponseTests : ApiAbstract<AuthApi>()
     fun invalidEmail()  = runBlocking()
     {
         enqueueResponse(directory,"/login_email_invalid.json")
-        val loginEntity = LogInEntity("dastageerg44@.com","12345678")
+        val loginEntity = LogInData("dastageerg44@.com","12345678")
         val response = authApi.logInViaEmail(loginEntity)
         assertThat(response.body()?.status ,`is`("failed"))
         assertThat(response.body()?.message ,`is`("email is invalid"))
@@ -54,7 +54,7 @@ class LoginResponseTests : ApiAbstract<AuthApi>()
     fun incorrectPassword()  = runBlocking()
     {
         enqueueResponse(directory,"/login_password_incorrect.json")
-        val loginEntity = LogInEntity("dastageerg44@gmail.com","12345")
+        val loginEntity = LogInData("dastageerg44@gmail.com","12345")
         val response = authApi.logInViaEmail(loginEntity)
         assertThat(response.body()?.status ,`is`("failed"))
         assertThat(response.body()?.message ,`is`("password incorrect"))
@@ -65,7 +65,7 @@ class LoginResponseTests : ApiAbstract<AuthApi>()
     fun userNotFound()  = runBlocking()
     {
         enqueueResponse(directory,"/login_user_not_found.json")
-        val loginEntity = LogInEntity("dastageerg@gmail.com","12345")
+        val loginEntity = LogInData("dastageerg@gmail.com","12345")
         val response = authApi.logInViaEmail(loginEntity)
         assertThat(response.body()?.status ,`is`("failed"))
         assertThat(response.body()?.message ,`is`("user not found"))

@@ -21,6 +21,9 @@
     <string name="address">Address</string>
     <string name="postal_code">Postal Code</string>
     <string name="name">Name</string>
+    <string name="description">description</string>
+    <string name="store_name">Store Name</string>
+    <string name="setup">Setup</string>
 
 
 </resources>

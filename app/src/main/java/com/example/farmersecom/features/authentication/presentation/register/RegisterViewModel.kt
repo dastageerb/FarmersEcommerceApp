@@ -3,12 +3,14 @@ package com.example.farmersecom.features.authentication.presentation.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.akhbar.utils.NetworkResource
-import com.example.farmersecom.features.authentication.data.entity.requests.RegisterEntity
-import com.example.farmersecom.features.authentication.data.entity.responses.RegisterResponse
+import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
+import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.RegisterResponse
 import com.example.farmersecom.features.authentication.domain.useCases.Register
+import com.example.farmersecom.utils.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -20,15 +22,16 @@ class RegisterViewModel @Inject constructor(private  val register: Register) : V
 
     private val _registerResponse:MutableStateFlow<NetworkResource<RegisterResponse>>
         = MutableStateFlow(NetworkResource.None())
+    val registerResponse: StateFlow<NetworkResource<RegisterResponse>>
+            = _registerResponse
 
-    val registerResponse get() = _registerResponse
 
-    fun register(registerEntity: RegisterEntity) = viewModelScope.launch(Dispatchers.IO)
+    fun register(registerData: RegisterData) = viewModelScope.launch(Dispatchers.IO)
     {
         _registerResponse.value = NetworkResource.Loading()
           try
             {
-                val response = register.register(registerEntity)
+                val response = register.register(registerData)
                 _registerResponse.value = handleResponse(response)
             }catch (e:Exception)
             {
@@ -45,7 +48,7 @@ class RegisterViewModel @Inject constructor(private  val register: Register) : V
         return when(response.code())
         {
             200,201 -> NetworkResource.Success(response.body())
-            400 -> NetworkResource.Error(response.message())
+            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
             else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
         } // when closed
     } // handle Response closed

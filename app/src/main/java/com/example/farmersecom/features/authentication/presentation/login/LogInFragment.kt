@@ -13,7 +13,7 @@ import com.example.akhbar.utils.NetworkResource
 import com.example.akhbar.utils.ViewExtension.hide
 import com.example.akhbar.utils.ViewExtension.show
 import com.example.farmersecom.R
-import com.example.farmersecom.features.authentication.data.entity.requests.LogInEntity
+import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.LogInData
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentLogInBinding
 import com.example.farmersecom.utils.Constants.TAG
@@ -23,7 +23,6 @@ import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -59,7 +58,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
     override fun onStart()
     {
         super.onStart()
-        if(loginViewModel.sharedPrefGetToken()!=null)
+        if(loginViewModel.getAuthToken()!=null)
         {
             findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
         }
@@ -86,6 +85,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                         {
                             binding.progressBarLogIn.hide()
                             Timber.tag(TAG).d("error  "+it.msg)
+                            requireContext().showToast("error: ${it.msg}")
                         }
                         is NetworkResource.Success ->
                         {
@@ -94,7 +94,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                             Timber.tag(TAG).d(it.data.toString())
                             it.data?.let()
                             {
-                                loginViewModel.sharedPrefSaveToken(it.token.toString())
+                                loginViewModel.saveAuthToken(it.token.toString())
                                 findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
                             }
                         }
@@ -127,7 +127,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
         {
             Timber.tag(TAG).d("validate email and password $email , $password")
             requireContext().showToast("$email:$password")
-            loginViewModel.loginUser(LogInEntity(email,password))
+            loginViewModel.loginUser(LogInData(email,password))
         } // if closed
     } // validDateAndLogin closed
 

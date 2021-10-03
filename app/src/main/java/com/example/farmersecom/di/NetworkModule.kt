@@ -24,21 +24,13 @@ object NetworkModule
 
 
 
-//
-//    @Provides
-//    @Singleton
-//    suspend fun providesToken(dataStoreRepo: DataStoreRepo):String = dataStoreRepo.dataStore
-
-//    val task = async(bgContext){dataProvider.loadData("task")}
-//    val result = task.await() //This is the data result
 
     @Provides
     @Singleton
     fun providesIntercept(sharedPreferences:SharedPrefsHelper) :Interceptor
     {
 
-        val token = sharedPreferences.getPrefs()
-
+        val token = sharedPreferences.getToken()
         return Interceptor{ chain ->
             val request = chain.request()
             val newRequest = request.newBuilder().addHeader("Authorization", "Bearer $token")

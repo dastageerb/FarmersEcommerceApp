@@ -1,4 +1,4 @@
-package com.example.farmersecom.features.authentication.data.entity.responses
+package com.example.farmersecom.features.authentication.data.frameWork.entity.responses
 
 
 import com.squareup.moshi.Json

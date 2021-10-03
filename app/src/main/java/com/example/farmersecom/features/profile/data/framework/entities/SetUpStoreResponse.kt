@@ -1,13 +1,13 @@
-package com.example.farmersecom.features.authentication.data.entity.responses
+package com.example.farmersecom.features.profile.data.framework.entities
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class RegisterResponse(
-    @Json(name = "status")
-    val status: String,
+data class SetUpStoreResponse(
     @Json(name = "message")
     val message: String,
+    @Json(name = "status")
+    val status: String
 )

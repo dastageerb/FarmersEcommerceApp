@@ -1,30 +1,23 @@
-package com.example.farmersecom.features.authentication.domain.repository
+package com.example.farmersecom.features.authentication.data.frameWork
 
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.LogInData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.LogInResponse
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.RegisterResponse
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
 
-interface AuthRepository
+interface AuthApi
 {
 
 
-
-   suspend fun authViaNumber()
-
-    suspend fun registerViaEmail(registerData: RegisterData):Response<RegisterResponse>
-
-    suspend fun logInViaEmail(logInData: LogInData): Response<LogInResponse>
-
-    suspend fun logInViaGmail()
-
-    suspend fun logInViaFaceBook()
-
-    suspend fun logOut()
+    @POST("api/register")
+    suspend fun registerViaEmail(@Body registerData: RegisterData) : Response<RegisterResponse>
 
 
-
+    @POST("api/login")
+    suspend fun logInViaEmail(@Body logInData: LogInData) : Response<LogInResponse>
 
 
 

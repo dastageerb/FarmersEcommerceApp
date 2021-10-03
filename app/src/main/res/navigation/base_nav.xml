@@ -22,17 +22,44 @@
         android:id="@+id/registerFragment"
         android:name="com.example.farmersecom.features.authentication.presentation.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.farmersecom.features.profile.presentation.ProfileFragment"
+        android:name="com.example.farmersecom.features.profile.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_logInFragment"
             app:destination="@id/logInFragment"
          />
+        <action
+            android:id="@+id/action_profileFragment_to_setupStoreFragment"
+            app:destination="@id/setupStoreFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_storeFragment"
+            app:destination="@id/storeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/setupStoreFragment"
+        android:name="com.example.farmersecom.features.profile.presentation.setupStore.SetupStoreFragment"
+        android:label="fragment_setup_store"
+        tools:layout="@layout/fragment_setup_store" >
+        <action
+            android:id="@+id/action_setupStoreFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_setupStoreFragment_to_storeFragment"
+            app:destination="@id/storeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/storeFragment"
+        android:name="com.example.farmersecom.features.store.StoreFragment"
+        android:label="fragment_store"
+        tools:layout="@layout/fragment_store" />
 
 
 </navigation>

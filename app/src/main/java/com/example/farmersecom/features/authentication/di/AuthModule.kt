@@ -1,8 +1,8 @@
 package com.example.farmersecom.features.authentication.di
 
 import com.example.farmersecom.BuildConfig
-import com.example.farmersecom.features.authentication.data.AuthApi
-import com.example.farmersecom.features.authentication.data.AuthRepositoryImpl
+import com.example.farmersecom.features.authentication.data.frameWork.AuthApi
+import com.example.farmersecom.features.authentication.data.business.AuthRepositoryImpl
 import com.example.farmersecom.features.authentication.domain.repository.AuthRepository
 import dagger.Module
 import dagger.Provides
@@ -31,6 +31,7 @@ object AuthModule
             .addInterceptor(interceptor)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
+            .cache(null)
             .build()
     } // provideOkHttpClient
 

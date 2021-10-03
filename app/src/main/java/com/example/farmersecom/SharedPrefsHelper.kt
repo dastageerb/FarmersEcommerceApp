@@ -9,14 +9,20 @@ class SharedPrefsHelper @Inject constructor(private val prefs: SharedPreferences
 {
 
 
-    fun savePrefs(data: String?)
+    fun saveToken(data: String?)
     {
         editor.putString(TOKEN, data)
         editor.commit()
-    } //
+    }
+
+    fun clearToken()
+    {
+        editor.remove(TOKEN)
+        editor.commit()
+    }
 
 
-    fun getPrefs(): String?
+    fun getToken(): String?
     {
         return prefs.getString(TOKEN, null)
     }

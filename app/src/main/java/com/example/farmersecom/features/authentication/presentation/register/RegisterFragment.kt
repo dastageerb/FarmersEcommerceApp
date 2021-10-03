@@ -15,7 +15,7 @@ import com.example.akhbar.utils.NetworkResource
 import com.example.akhbar.utils.ViewExtension.hide
 import com.example.akhbar.utils.ViewExtension.show
 import com.example.farmersecom.R
-import com.example.farmersecom.features.authentication.data.entity.requests.RegisterEntity
+import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
 import com.example.farmersecom.features.authentication.presentation.register.utils.Utils.getList
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentRegisterBinding
@@ -67,7 +67,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
             {
                 viewModel.registerResponse.collect()
                 {
-
                     when(it)
                     {
                         is NetworkResource.Loading ->
@@ -78,13 +77,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
                         is NetworkResource.Error ->
                         {
                             binding.progressBarRegisterFrag.hide()
+                            requireContext().showToast(it.msg.toString())
                             Timber.tag(Constants.TAG).d(it.msg)
                         }
                         is NetworkResource.Success ->
                         {
-
                             binding.progressBarRegisterFrag.hide()
-                            requireContext().showToast(it.data.toString())
+                            requireContext().showToast(it.data?.message.toString())
                             Timber.tag(Constants.TAG).d(it.data.toString())
                         }
                         else -> {}
@@ -164,7 +163,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
         if(validPersonalInfo && validDob && validProvince && validCity && validPostalInfo)
         {
-            val registerEntity = RegisterEntity(fName,lName,contact,email,rePass,
+            val registerEntity = RegisterData(fName,lName,contact,email,rePass,
                 gender,dateOfBirth,province,city,address,postalCode.toInt())
             viewModel.register(registerEntity)
         }

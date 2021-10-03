@@ -1,8 +1,9 @@
-package com.example.farmersecom.features.authentication.data.entity.responses
+package com.example.farmersecom.features.authentication.data.frameWork.entity.responses
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import retrofit2.Response
 
 @JsonClass(generateAdapter = true)
 data class LogInResponse(

@@ -3,11 +3,15 @@ package com.example.farmersecom.utils
 object Constants
 {
 
-    // DataStore
+    // SharedPrefsStore
     const val TOKEN = "TOKEN"
     const val TOKEN_PREFS = "TOKEN_PREFS"
 
+    // DataBase
 
+    const val DATABASE_VERSION = 3
+    const val DATABASE_NAME = "FARMERS_ECOMMERCE"
+    const val PROFILE_TABLE = "PROFILE_TABLE"
 
 
 
