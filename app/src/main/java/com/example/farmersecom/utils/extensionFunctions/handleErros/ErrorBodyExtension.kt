@@ -1,8 +1,7 @@
-package com.example.farmersecom.utils
+package com.example.farmersecom.utils.extensionFunctions.handleErros
 
 import okhttp3.ResponseBody
 import org.json.JSONObject
-import retrofit2.Response
 
 object ErrorBodyExtension
 {

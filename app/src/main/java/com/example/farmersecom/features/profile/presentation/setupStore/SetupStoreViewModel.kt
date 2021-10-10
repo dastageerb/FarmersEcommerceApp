@@ -2,15 +2,14 @@ package com.example.farmersecom.features.profile.presentation.setupStore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.akhbar.utils.NetworkResource
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.profile.data.framework.entities.SetUpStoreResponse
 import com.example.farmersecom.features.profile.data.framework.entities.SetupStoreData
 import com.example.farmersecom.features.profile.domain.usecase.SetupStoreUseCase
-import com.example.farmersecom.utils.ErrorBodyExtension.getMessage
-import com.example.farmersecom.utils.HandleErrorExtension.handleException
+import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
+import com.example.farmersecom.utils.extensionFunctions.handleErros.HandleErrorExtension.handleException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.example.farmersecom.utils
+package com.example.farmersecom.utils.extensionFunctions.context
 
 import android.content.Context
 import android.net.ConnectivityManager

@@ -2,11 +2,11 @@ package com.example.farmersecom.features.authentication.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.akhbar.utils.NetworkResource
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.RegisterResponse
 import com.example.farmersecom.features.authentication.domain.useCases.Register
-import com.example.farmersecom.utils.ErrorBodyExtension.getMessage
+import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +37,7 @@ class RegisterViewModel @Inject constructor(private  val register: Register) : V
             {
                 when (e)
                 {
-                    is HttpException -> _registerResponse.value =NetworkResource.Error("Something went wrong")
+                    is HttpException -> _registerResponse.value = NetworkResource.Error("Something went wrong")
                     else -> _registerResponse.value = NetworkResource.Error("No Internet Connection")
                 } // when closed
             }

@@ -1,4 +1,4 @@
-package com.example.akhbar.utils
+package com.example.farmersecom.utils.extensionFunctions.view
 
 import android.view.View
 import android.widget.ImageView

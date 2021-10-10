@@ -1,4 +1,4 @@
-package com.example.akhbar.utils
+package com.example.farmersecom.utils.network
 
 import android.content.Context
 import android.net.ConnectivityManager

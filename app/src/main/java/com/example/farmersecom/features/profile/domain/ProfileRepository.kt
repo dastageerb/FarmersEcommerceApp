@@ -1,6 +1,6 @@
 package com.example.farmersecom.features.profile.domain
 
-import com.example.akhbar.utils.NetworkResource
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.profile.data.framework.entities.SetUpStoreResponse
 import com.example.farmersecom.features.profile.data.framework.entities.SetupStoreData
 import com.example.farmersecom.features.profile.domain.model.Profile

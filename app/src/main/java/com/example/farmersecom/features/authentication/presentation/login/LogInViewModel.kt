@@ -2,13 +2,12 @@ package com.example.farmersecom.features.authentication.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.akhbar.utils.NetworkResource
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.LogInData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.LogInResponse
 import com.example.farmersecom.features.authentication.domain.useCases.LogInViaEmail
-import com.example.farmersecom.utils.ErrorBodyExtension.getMessage
-import com.google.gson.Gson
+import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,11 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
-import java.lang.Error
 import javax.inject.Inject
-import org.json.JSONObject
-
-
 
 
 @HiltViewModel

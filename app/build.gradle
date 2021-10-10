@@ -169,6 +169,9 @@ dependencies {
     // Parsing
     implementation 'com.google.code.gson:gson:2.8.8'
 
+    // Image Cropper Library
+
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
 
 } //

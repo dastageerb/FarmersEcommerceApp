@@ -1,4 +1,4 @@
-package com.example.farmersecom.utils
+package com.example.farmersecom.utils.extensionFunctions.permission
 
 import android.Manifest
 import android.content.Context

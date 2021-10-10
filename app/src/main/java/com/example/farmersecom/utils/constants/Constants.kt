@@ -1,4 +1,4 @@
-package com.example.farmersecom.utils
+package com.example.farmersecom.utils.constants
 
 object Constants
 {

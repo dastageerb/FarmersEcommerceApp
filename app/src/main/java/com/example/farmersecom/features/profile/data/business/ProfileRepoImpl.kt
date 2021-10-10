@@ -1,8 +1,7 @@
 package com.example.farmersecom.features.profile.data.business
 
 
-import androidx.annotation.WorkerThread
-import com.example.akhbar.utils.NetworkResource
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.profile.data.framework.NetworkMapper
 import com.example.farmersecom.features.profile.data.framework.ProfileApi
 import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
@@ -10,11 +9,8 @@ import com.example.farmersecom.features.profile.data.framework.entities.SetUpSto
 import com.example.farmersecom.features.profile.data.framework.entities.SetupStoreData
 import com.example.farmersecom.features.profile.domain.ProfileRepository
 import com.example.farmersecom.features.profile.domain.model.Profile
-import com.example.farmersecom.utils.ErrorBodyExtension.getMessage
-import com.example.farmersecom.utils.HandleErrorExtension.handleException
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
+import com.example.farmersecom.utils.extensionFunctions.handleErros.HandleErrorExtension.handleException
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 

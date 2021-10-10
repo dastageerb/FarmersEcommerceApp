@@ -1,6 +1,5 @@
-package com.example.farmersecom.utils
+package com.example.farmersecom.utils.extensionFunctions.handleErros
 
-import com.example.akhbar.utils.NetworkResource
 import retrofit2.HttpException
 import java.lang.Exception
 

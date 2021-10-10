@@ -1,7 +1,6 @@
 package com.example.farmersecom.features.profile.presentation.profile
 
 import android.Manifest
-import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -16,19 +15,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.akhbar.utils.NetworkResource
-import com.example.akhbar.utils.ViewExtension.hide
-import com.example.akhbar.utils.ViewExtension.load
-import com.example.akhbar.utils.ViewExtension.show
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProfileBinding
 import com.example.farmersecom.features.profile.domain.model.Profile
-import com.example.farmersecom.utils.Constants.APP_PACKAGE_NAME
-import com.example.farmersecom.utils.Constants.TAG
-import com.example.farmersecom.utils.ContextExtension.showToast
-import com.example.farmersecom.utils.Permissions.hasCameraPermission
-import com.example.farmersecom.utils.Permissions.hasStoragePermission
+import com.example.farmersecom.utils.constants.Constants.APP_PACKAGE_NAME
+import com.example.farmersecom.utils.constants.Constants.TAG
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasCameraPermission
+import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasStoragePermission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -199,49 +198,36 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                 { entry ->
                     when (entry.key)
                     {
-                        Manifest.permission.READ_EXTERNAL_STORAGE->
-                            requireContext().showToast("Read "+entry.value)
-                        Manifest.permission.CAMERA -> requireContext().showToast("Camera "+entry.value)
+                        Manifest.permission.READ_EXTERNAL_STORAGE-> if(entry.value)
+                            {
+                                getImageFromGallery()
+                            }else
+                            {
+                                permissionDenied("App Needs Permission to Pick Image")
+                            }
+                        Manifest.permission.CAMERA -> if(entry.value)
+                        {
+                            captureImage()
+                        }else
+                        {
+                            permissionDenied("App Needs Permission to Capture Image")
+                        }
                     } // when closed
 
                 } // forEach closed
             } // ActivityResult Contract closed
 
 
+    private fun permissionDenied(msg:String)
+    {
+        requireContext().showToast(msg)
+            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply ()
+            {
+                data = Uri.fromParts("package", APP_PACKAGE_NAME, null)
+            })
+    }// permissionDenied
 
 
-
-//    private val capturePhotoPermission
-//        = registerForActivityResult(ActivityResultContracts.RequestPermission())
-//    {
-//            isGranted ->
-//            if (isGranted)
-//            {
-//                    captureImage();
-//            } else
-//            {
-//                requireContext().showToast("App needs Permissions to Capture Photo")
-//                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-//                    data = Uri.fromParts("package", APP_PACKAGE_NAME, null)
-//                })
-//            } // else closed
-//        } /// forEach closed
-//
-//    private val accessGalleryPermission
-//            = registerForActivityResult(ActivityResultContracts.RequestPermission())
-//    {
-//            isGranted ->
-//        if (isGranted)
-//        {
-//            getImageFromGallery()
-//        } else
-//        {
-//            requireContext().showToast("App needs Permissions to Access Gallery ")
-//            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-//                data = Uri.fromParts("package", APP_PACKAGE_NAME, null)
-//            })
-//        } // else closed
-//    } /// forEach closed
 
 
     private fun getImageFromGallery()

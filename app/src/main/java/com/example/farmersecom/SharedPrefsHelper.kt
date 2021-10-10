@@ -1,7 +1,7 @@
 package com.example.farmersecom
 
 import android.content.SharedPreferences
-import com.example.farmersecom.utils.Constants.TOKEN
+import com.example.farmersecom.utils.constants.Constants.TOKEN
 import javax.inject.Inject
 
 class SharedPrefsHelper @Inject constructor(private val prefs: SharedPreferences,

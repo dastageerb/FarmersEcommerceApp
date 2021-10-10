@@ -1,6 +1,4 @@
-package com.example.akhbar.utils
-
-import retrofit2.Response
+package com.example.farmersecom.utils.sealedResponseUtils
 
 sealed class NetworkResource<T>(private val data:T?=null,private val msg:String?=null)
 {

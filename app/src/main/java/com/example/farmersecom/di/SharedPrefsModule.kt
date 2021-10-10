@@ -2,7 +2,7 @@ package com.example.farmersecom.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.farmersecom.utils.Constants.TOKEN_PREFS
+import com.example.farmersecom.utils.constants.Constants.TOKEN_PREFS
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
