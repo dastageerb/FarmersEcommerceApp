@@ -10,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.farmersecom.BuildConfig
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
@@ -29,6 +31,7 @@ import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasCameraPermission
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasStoragePermission
 import com.example.farmersecom.utils.imageUtils.ImageCropHelper
+import com.example.farmersecom.utils.imageUtils.ImageUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -238,8 +241,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         { uri ->
            binding.imageViewProfile.setImageURI(uri)
         }
-
-
     } // pickGalleryImage result closed
 
 
@@ -252,11 +253,37 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
     /** Capture Image from Camera **/
 
+    private var imageUri: Uri? = null
+
     private fun captureImage()
     {
-
+        ImageUtils.createImageFile(requireContext())?.also()
+        {
+            imageUri = FileProvider
+                .getUriForFile(requireContext(),
+                    BuildConfig.APPLICATION_ID + ".fileprovider", it)
+            takePictureRegistration.launch(imageUri)
+        }
     } // getImageFrom Gallery closed
 
+        private val takePictureRegistration =
+            registerForActivityResult(ActivityResultContracts.TakePicture())
+            { isSuccess ->
+                if (isSuccess)
+                {
+                    binding.imageViewProfile.setImageURI(imageUri)
+                    // launch image cropper activity
+                    cropCapturedImage.launch(imageUri)
+                }
+            } // camera activity result closed
+
+        private val  cropCapturedImage = registerForActivityResult(ImageCropHelper.cropCapturedImage)
+        {
+            it?.let()
+            { uri ->
+                binding.imageViewProfile.setImageURI(uri)
+            }
+        } // cropCapturedImage closed
 
 
 
