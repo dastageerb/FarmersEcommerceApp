@@ -28,6 +28,7 @@ import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasCameraPermission
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasStoragePermission
+import com.example.farmersecom.utils.imageUtils.ImageCropHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -100,7 +101,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
     private fun updateViews(data: Profile?) = binding.apply()
     {
-        imageViewProfile.load(data?.userImgUrl)
+      //  imageViewProfile.load(data?.userImgUrl)
         textViewProfileFragName.text = data?.fullName
         if(data?.isSeller==true)
         {
@@ -145,7 +146,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
             if(requireContext().hasCameraPermission())
             {
-
+                    captureImage()
             }else
             {
                 multiPermissionCallback.launch(arrayOf(Manifest.permission.CAMERA))
@@ -159,7 +160,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
             if(requireContext().hasStoragePermission())
             {
-
+                    getImageFromGallery()
             }else
             {
                 multiPermissionCallback.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
@@ -174,7 +175,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     } // changPhoto
 
 
-//
+
 //    private val takeImageResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
 //        if (isSuccess) {
 //            latestTmpUri?.let { uri ->
@@ -182,10 +183,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 //            }
 //        }
 //    }
-//
-//    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-//        uri?.let { previewImage.setImageURI(uri) }
-//    }
+
+
+    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let { binding.imageViewProfile.setImageURI(uri) }
+    }
 
 
 
@@ -228,13 +230,27 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     }// permissionDenied
 
 
+    /** Pick Gallery Image **/
+
+    private val pickGalleryImage = registerForActivityResult(ImageCropHelper.pickImageFromGalley)
+    {
+        it?.let()
+        { uri ->
+           binding.imageViewProfile.setImageURI(uri)
+        }
+
+
+    } // pickGalleryImage result closed
 
 
     private fun getImageFromGallery()
     {
-
+        pickGalleryImage.launch(null)
     } // getImageFromGallery closed
 
+
+
+    /** Capture Image from Camera **/
 
     private fun captureImage()
     {
