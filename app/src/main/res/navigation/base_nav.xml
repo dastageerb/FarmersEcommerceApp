@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/storeFragment"
-        android:name="com.example.farmersecom.features.store.StoreFragment"
+        android:name="com.example.farmersecom.features.store.presentation.storeFragment.StoreFragment"
         android:label="fragment_store"
         tools:layout="@layout/fragment_store" />
 
