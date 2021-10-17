@@ -59,7 +59,16 @@
         android:id="@+id/storeFragment"
         android:name="com.example.farmersecom.features.store.presentation.storeFragment.StoreFragment"
         android:label="fragment_store"
-        tools:layout="@layout/fragment_store" />
+        tools:layout="@layout/fragment_store" >
+        <action
+            android:id="@+id/action_storeFragment_to_addNewProductFragment"
+            app:destination="@id/addNewProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewProductFragment"
+        android:name="com.example.farmersecom.features.store.presentation.addNewProduct.AddNewProductFragment"
+        android:label="fragment_add_new_product"
+        tools:layout="@layout/fragment_add_new_product" />
 
 
 </navigation>
