@@ -12,6 +12,7 @@ import com.example.farmersecom.databinding.FragmentAddNewProductBinding
 
 class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>()
 {
+
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentAddNewProductBinding
     {
         return FragmentAddNewProductBinding.inflate(inflater,container,false)

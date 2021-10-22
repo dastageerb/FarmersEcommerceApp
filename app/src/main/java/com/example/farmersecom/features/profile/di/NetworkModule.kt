@@ -2,7 +2,8 @@ package com.example.farmersecom.features.profile.di
 
 import com.example.farmersecom.di.AuthRetrofit
 import com.example.farmersecom.features.profile.data.business.ProfileRepoImpl
-import com.example.farmersecom.features.profile.data.framework.NetworkMapper
+import com.example.farmersecom.features.profile.data.framework.ChangePhotoNetworkEntityMapper
+import com.example.farmersecom.features.profile.data.framework.ProfileNetworkEntityMapper
 import com.example.farmersecom.features.profile.data.framework.ProfileApi
 import com.example.farmersecom.features.profile.domain.ProfileRepository
 import dagger.Module
@@ -25,8 +26,10 @@ object NetworkModule
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileApi: ProfileApi,networkMapper: NetworkMapper)
-    : ProfileRepository = ProfileRepoImpl(profileApi,networkMapper)
+    fun provideProfileRepository(profileApi: ProfileApi,
+                                 profileNetworkEntityMapper: ProfileNetworkEntityMapper,
+                                 changePhotoMapper: ChangePhotoNetworkEntityMapper)
+    : ProfileRepository = ProfileRepoImpl(profileApi,profileNetworkEntityMapper,changePhotoMapper)
 
 
 

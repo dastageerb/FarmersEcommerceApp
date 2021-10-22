@@ -24,6 +24,10 @@
     <string name="description">description</string>
     <string name="store_name">Store Name</string>
     <string name="setup">Setup</string>
+    <string name="select_quantity">Select Quantity</string>
+
+
+
 
 
 </resources>

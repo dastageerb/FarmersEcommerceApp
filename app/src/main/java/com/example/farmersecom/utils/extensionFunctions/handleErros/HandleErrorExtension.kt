@@ -11,7 +11,7 @@ object HandleErrorExtension
       return when(this)
         {
             is HttpException -> "Http Exception:${this.message}"
-            else ->  "No Internet Connection: "
+            else ->  "No Internet Connection: ${this.message}"
         } // when closed
     } //
 

@@ -2,8 +2,10 @@ package com.example.farmersecom.features.profile.presentation.profile
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -36,10 +39,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import timber.log.Timber
 
-
-
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
+import okhttp3.RequestBody.Companion.asRequestBody
 
 
 @AndroidEntryPoint
@@ -60,7 +67,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
         initViews()
         subscribeProfileResponseFlow()
-
+        subscribeChangeImageResponseFlow()
     } // onViewCreate closed
 
     private fun subscribeProfileResponseFlow()
@@ -179,21 +186,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
 
 
-//    private val takeImageResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
-//        if (isSuccess) {
-//            latestTmpUri?.let { uri ->
-//                previewImage.setImageURI(uri)
-//            }
-//        }
-//    }
-
-
-    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let { binding.imageViewProfile.setImageURI(uri) }
-    }
-
-
-
     private val multiPermissionCallback =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
             {
@@ -233,22 +225,36 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     }// permissionDenied
 
 
-    /** Pick Gallery Image **/
+    /** Pick Gallery Image  and pass it to image cropper **/
 
-    private val pickGalleryImage = registerForActivityResult(ImageCropHelper.pickImageFromGalley)
-    {
-        it?.let()
-        { uri ->
-           binding.imageViewProfile.setImageURI(uri)
-        }
-    } // pickGalleryImage result closed
+
 
 
     private fun getImageFromGallery()
     {
-        pickGalleryImage.launch(null)
+        selectImageFromGalleryResult.launch("image/*")
     } // getImageFromGallery closed
 
+
+
+    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent())
+    { uri: Uri? ->
+        uri?.let()
+        {
+            binding.imageViewProfile.setImageURI(uri)
+            // pass the uri to  image cropper
+            cropGalleryImage.launch(uri)
+        }
+    } //
+
+    private val cropGalleryImage = registerForActivityResult(ImageCropHelper.cropImage)
+    {
+        it?.let()
+        { uri ->
+            binding.imageViewProfile.setImageURI(uri)
+            uploadImage(uri)
+        }
+    } // pickGalleryImage result closed
 
 
     /** Capture Image from Camera **/
@@ -266,24 +272,87 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         }
     } // getImageFrom Gallery closed
 
+    /**
+        Take picture from camera
+        then
+        pass it to image cropping library
+    */
         private val takePictureRegistration =
             registerForActivityResult(ActivityResultContracts.TakePicture())
             { isSuccess ->
                 if (isSuccess)
                 {
                     binding.imageViewProfile.setImageURI(imageUri)
+                    // picture taken -> now passing to image cropper
                     // launch image cropper activity
                     cropCapturedImage.launch(imageUri)
                 }
             } // camera activity result closed
 
-        private val  cropCapturedImage = registerForActivityResult(ImageCropHelper.cropCapturedImage)
+
+
+        private val  cropCapturedImage = registerForActivityResult(ImageCropHelper.cropImage)
         {
             it?.let()
             { uri ->
                 binding.imageViewProfile.setImageURI(uri)
+
+                uploadImage(uri)
             }
         } // cropCapturedImage closed
+
+
+
+
+
+    private fun uploadImage(uri: Uri)
+    {
+
+//        val file =  File(uri.path!!)
+//       val body =  MultipartBody.Builder().setType(MultipartBody.FORM)
+//            .addFormDataPart("userImage", file.name,uri.toFile().asRequestBody())
+//            .build()
+//        viewModel.uploadUserImg(body)
+//
+
+
+        val file = uri.toFile();
+        val requestFile = file.asRequestBody(requireContext().contentResolver.getType(uri)?.toMediaTypeOrNull())
+        val body = MultipartBody.Part.createFormData("userImage", file.path, requestFile)
+        viewModel.uploadUserImg(body)
+
+    } // uploadImage closed
+
+
+    private fun subscribeChangeImageResponseFlow()
+    {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                viewModel.uploadUserImgResponse.collect()
+                {
+                    when(it)
+                    {
+                        is NetworkResource.Loading ->
+                        {
+                            Timber.tag(TAG).d("Loading")
+                        }
+                        is NetworkResource.Success ->
+                        {
+                            Timber.tag(TAG).d("${it.data}")
+
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            Timber.tag(TAG).d("${it.msg}")
+                        }
+                    }// when closed
+                } // getProfile closed
+            } // repeatOnLife cycle closed
+        } /// lifecycleScope closed
+
+    } // subscribeProfileResponseFlow closed
 
 
 

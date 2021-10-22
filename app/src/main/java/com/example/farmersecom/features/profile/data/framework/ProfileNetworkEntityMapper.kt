@@ -5,7 +5,7 @@ import com.example.farmersecom.features.profile.domain.EntityMapper
 import com.example.farmersecom.features.profile.domain.model.Profile
 import javax.inject.Inject
 
-class NetworkMapper @Inject constructor():EntityMapper<ProfileNetworkEntity,Profile>
+class ProfileNetworkEntityMapper @Inject constructor():EntityMapper<ProfileNetworkEntity,Profile>
 {
 
     override fun entityToModel(entity: ProfileNetworkEntity): Profile
