@@ -70,6 +70,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         subscribeChangeImageResponseFlow()
     } // onViewCreate closed
 
+    override fun onStart()
+    {
+        super.onStart()
+        if(viewModel.getAuthToken()==null)
+        {
+            findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
+        }
+    }
+
+
     private fun subscribeProfileResponseFlow()
     {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
@@ -131,7 +141,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             R.id.buttonProfileFragLogout ->
             {
                 viewModel.clearToken()
-                findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
+                findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
             }
             R.id.buttonSetupStore ->
             {

@@ -1,6 +1,7 @@
 package com.example.farmersecom.features.authentication.presentation.register
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -100,6 +101,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
         binding.apply {
             //disable  autoCompleteCity until province selected
             autoCompleteCity.isEnabled = false
+
+            // make autocompletes UnClickable preventing the keyboard from poping up
+            autoCompleteProvince.inputType = InputType.TYPE_NULL //
+            autoCompleteCity.inputType = InputType.TYPE_NULL
+
             // set Adapter for province autoCompleteView
             autoCompleteProvince.setUpAdapter(requireContext(), R.array.Province)
 

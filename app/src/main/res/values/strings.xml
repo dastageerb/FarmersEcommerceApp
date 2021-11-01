@@ -25,9 +25,11 @@
     <string name="store_name">Store Name</string>
     <string name="setup">Setup</string>
     <string name="select_quantity">Select Quantity</string>
-
-
-
+    <string name="dozen">Dozen</string>
+    <string name="liter">Liter</string>
+    <string name="kilo">Kilo</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="buy_now">Buy Now</string>
 
 
 </resources>

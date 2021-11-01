@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,11 +27,31 @@ class MainActivity : AppCompatActivity()
         navController = navHostFragment.navController
 
 
+        val appBarConfiguration = AppBarConfiguration(
+            setOf
+                (
+                R.id.homeFragment
+                ,R.id.searchFragment
+                ,R.id.cartFragment
+                ,R.id.profileFragment
+            ))
+
+        binding.bottomNavigationViewMainActivity.setupWithNavController(navController)
+        binding.bottomNavigationViewMainActivity.setOnItemReselectedListener ()
+        {
+
+        }
+        setupActionBarWithNavController(navController,appBarConfiguration)
+
+
+
+
+
     } // onCreate
 
 
     override fun onSupportNavigateUp(): Boolean
     {
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
+    } // onSupportNavigateUp closed
 }

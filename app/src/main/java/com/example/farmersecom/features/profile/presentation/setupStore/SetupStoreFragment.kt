@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.example.farmersecom.R
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
@@ -75,6 +77,7 @@ class SetupStoreFragment : BaseFragment<FragmentSetupStoreBinding>()
                             requireContext().showToast(it.data?.message.toString())
                             binding.progressBarSetupStoreFrag.hide()
                             Timber.tag(Constants.TAG).d(it.data.toString())
+                            findNavController().navigate(R.id.action_setupStoreFragment_to_storeFragment)
                         }
                         else -> {}
                     } // when closed

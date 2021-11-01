@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.productDetails.presentation.ProductDetailsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFragmentProductDetails"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <TextView
+                android:id="@+id/textViewFragmentProductDetailsProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RS.375"
+                android:layout_below="@id/recyclerViewFragmentProductDetails"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                />
+
+            <TextView
+                android:id="@+id/textViewFragmentProductDetailsProductDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="product description"
+                android:textSize="18sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/textViewFragmentProductDetailsProductPrice"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                />
+
+            <RatingBar
+                android:id="@+id/ratingBarFragmentProductDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:isIndicator="true"
+                android:layout_below="@id/textViewFragmentProductDetailsProductDescription"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_alignParentStart="true"
+                />
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonProductDetailsFragmentAddToCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_cart"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="32dp"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonProductDetailsFragmentBuyNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buy_now"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
+        />
+
+
+</RelativeLayout>
