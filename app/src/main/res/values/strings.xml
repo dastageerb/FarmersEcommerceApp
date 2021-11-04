@@ -30,6 +30,7 @@
     <string name="kilo">Kilo</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="buy_now">Buy Now</string>
+    <string name="quantity">quantity</string>
 
 
 </resources>

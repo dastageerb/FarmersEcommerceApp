@@ -15,10 +15,14 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductDetailsBinding
     {
-
         return FragmentProductDetailsBinding.inflate(inflater,container,false);
     } // onCreateView closed
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
 
 } // ProductDetailsFragment
