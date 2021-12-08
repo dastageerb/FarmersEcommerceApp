@@ -1,7 +1,6 @@
-package com.example.farmersecom.features.productDetails.presentation
+package com.example.farmersecom.features.buyerSection.presentation.orderHistory
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,56 +8,52 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
-import com.example.farmersecom.databinding.FragmentProductDetailsBinding
+import com.example.farmersecom.databinding.FragmentBuyerOrderHistoryBinding
+import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboardViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
-import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+
+@InternalCoroutinesApi
 @AndroidEntryPoint
-class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
+class BuyerOrderHistoryFragment : BaseFragment<FragmentBuyerOrderHistoryBinding>()
 {
-    val id = "61add66551c87d29dc08d41c"
 
-    private val viewModel:ProductDetailsViewModel by viewModels()
-
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductDetailsBinding
+    private val viewModel:BuyerDashboardViewModel by viewModels()
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentBuyerOrderHistoryBinding
     {
-        return FragmentProductDetailsBinding.inflate(inflater,container,false);
-    } // onCreateView closed
-
-
-
+        return FragmentBuyerOrderHistoryBinding.inflate(inflater,container,false);
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getProductDetails(id)
-        subscribeProductDetailsResponseFlow()
-    } // onViewCreated
 
+        viewModel.getBuyerOrderByStatus("Completed")
+        subscribeToBuyerCurrentOrdersResponseFlow()
+    } // onViewCreated closed
 
-
-    private fun subscribeProductDetailsResponseFlow()
+    private fun subscribeToBuyerCurrentOrdersResponseFlow()
     {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
-                viewModel.productDetailsResponse.collect()
+                viewModel.buyerOrderResponse.collect()
                 {
                     when(it)
                     {
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
-                            updateViews(it.data)
+                            // updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
@@ -68,12 +63,7 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
                 } // getProfile closed
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
-    } // subscribeProfileResponseFlow closed
+    } // subscribeToBuyerCurrentOrderFlow
 
 
-    private fun updateViews(data: JsonObject?)
-    {
-
-    } //
-
-} // ProductDetailsFragment
+}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <GridView
@@ -11,19 +11,20 @@
         android:layout_height="match_parent"
         android:numColumns="3" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonAddNewProduct"
-        android:layout_width="160dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/add_product_button_bg"
-        android:text="add new product"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fragmentStoreDashboardAddNewProductButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Product"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="14sp" />
-
+        android:drawableLeft="@drawable/ic_baseline_add_24"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        app:backgroundTint="@color/colorPrimary"
+        />
 
 </RelativeLayout>

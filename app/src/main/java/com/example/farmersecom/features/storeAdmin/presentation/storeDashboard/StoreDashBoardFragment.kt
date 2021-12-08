@@ -44,7 +44,7 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
         adapter.itemList = list
         binding.storeDashboardListView.adapter = adapter
 
-        binding.buttonAddNewProduct.setOnClickListener(this)
+        binding.fragmentStoreDashboardAddNewProductButton.setOnClickListener(this)
 
     } // initViews closed
 
@@ -52,7 +52,7 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
     {
         when(v?.id)
         {
-            R.id.buttonAddNewProduct -> findNavController().navigate(R.id.action_storeFragment_to_addNewProductFragment)
+            R.id.fragmentStoreDashboardAddNewProductButton -> findNavController().navigate(R.id.action_storeFragment_to_addNewProductFragment)
         } // when closed
     } // onClick closed
 

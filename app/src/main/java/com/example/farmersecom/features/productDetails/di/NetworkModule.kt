@@ -1,6 +1,10 @@
 package com.example.farmersecom.features.productDetails.di
 
 import com.example.farmersecom.di.AuthRetrofit
+import com.example.farmersecom.features.authentication.di.NonAuthRetrofit
+import com.example.farmersecom.features.productDetails.data.business.ProductDetailsImpl
+import com.example.farmersecom.features.productDetails.data.frameWork.ProductDetailsApi
+import com.example.farmersecom.features.productDetails.domain.ProductDetailsRepository
 import com.example.farmersecom.features.profile.data.business.ProfileRepoImpl
 import com.example.farmersecom.features.profile.data.framework.ChangePhotoNetworkEntityMapper
 import com.example.farmersecom.features.profile.data.framework.ProfileNetworkEntityMapper
@@ -22,17 +26,18 @@ object NetworkModule
 {
 
 
-//    @Provides
-//    @Singleton
-//    fun providesProductDetails(@AuthRetrofit retrofit: Retrofit): StoreAdminApi = retrofit.create(StoreAdminApi::class.java)
+    @Provides
+    @Singleton
+    fun providesProductDetails(@NonAuthRetrofit retrofit: Retrofit): ProductDetailsApi =
+        retrofit.create(ProductDetailsApi::class.java)
 
 
 //
-//    @Provides
-//    @Singleton
-//    fun provideStoreAdminRepository(storeAdminApi: StoreAdminApi):StoreAdminRepository =
-//        StoreAdminImpl(storeAdminApi)
-//
-//
+    @Provides
+    @Singleton
+    fun provideProductDetailsRepository(productDetailsApi: ProductDetailsApi):ProductDetailsRepository =
+        ProductDetailsImpl(productDetailsApi)
+
+
 
 }
