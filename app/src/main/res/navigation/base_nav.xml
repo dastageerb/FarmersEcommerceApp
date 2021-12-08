@@ -32,10 +32,7 @@
         android:name="com.example.farmersecom.features.profile.presentation.profile.ProfileFragment"
         android:label="profile"
         tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_logInFragment"
-            app:destination="@id/logInFragment"
-         />
+
         <action
             android:id="@+id/action_profileFragment_to_setupStoreFragment"
             app:destination="@id/setupStoreFragment" />
@@ -45,6 +42,9 @@
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/setupStoreFragment"
@@ -60,16 +60,16 @@
     </fragment>
     <fragment
         android:id="@+id/storeFragment"
-        android:name="com.example.farmersecom.features.store.presentation.storeFragment.StoreFragment"
+        android:name="com.example.farmersecom.features.storeAdmin.presentation.storeDashboard.StoreDashBoardFragment"
         android:label="fragment_store"
-        tools:layout="@layout/fragment_store" >
+        tools:layout="@layout/fragment_store_dashboard" >
         <action
             android:id="@+id/action_storeFragment_to_addNewProductFragment"
             app:destination="@id/addNewProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewProductFragment"
-        android:name="com.example.farmersecom.features.store.presentation.addNewProduct.AddNewProductFragment"
+        android:name="com.example.farmersecom.features.storeAdmin.presentation.addNewProduct.AddNewProductFragment"
         android:label="fragment_add_new_product"
         tools:layout="@layout/fragment_add_new_product" />
     <fragment
@@ -88,7 +88,16 @@
         android:label="Search"
         tools:layout="@layout/fragment_search"
 
-        />
+        >
+        <action
+            android:id="@+id/action_searchFragment_to_filtersFragment"
+            app:destination="@id/filtersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filtersFragment"
+        android:name="com.example.farmersecom.features.search.presentation.FiltersFragment"
+        android:label="fragment_filters"
+        tools:layout="@layout/fragment_filters" />
 
 
 </navigation>

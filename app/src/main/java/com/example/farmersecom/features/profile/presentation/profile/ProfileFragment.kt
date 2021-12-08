@@ -65,18 +65,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
-        subscribeProfileResponseFlow()
-        subscribeChangeImageResponseFlow()
+
+        if(viewModel.getAuthToken()==null)
+        {
+            findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
+        }
+
+            initViews()
+            subscribeProfileResponseFlow()
+            subscribeChangeImageResponseFlow()
+
+
     } // onViewCreate closed
 
     override fun onStart()
     {
         super.onStart()
-        if(viewModel.getAuthToken()==null)
-        {
-            findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
-        }
+//        if(viewModel.getAuthToken()==null)
+//        {
+//            findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
+//        }
     }
 
 
@@ -306,9 +314,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             it?.let()
             { uri ->
                 binding.imageViewProfile.setImageURI(uri)
-
                 uploadImage(uri)
-            }
+            } // uri closed
         } // cropCapturedImage closed
 
 
@@ -325,10 +332,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 //        viewModel.uploadUserImg(body)
 //
 
-
         val file = uri.toFile();
         val requestFile = file.asRequestBody(requireContext().contentResolver.getType(uri)?.toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("userImage", file.path, requestFile)
+
+        if(file.exists())
+        {
+            requireContext().showToast("Exists"+file.path)
+            Timber.tag(TAG).d(""+file.path)
+        }else
+        {
+            requireContext().showToast("Do not exists")
+        }
+
         viewModel.uploadUserImg(body)
 
     } // uploadImage closed

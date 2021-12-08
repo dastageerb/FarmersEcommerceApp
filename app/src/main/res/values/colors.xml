@@ -9,8 +9,13 @@
     <color name="white">#FFFFFFFF</color>
 
 
+
+
     <color name="colorGrey">#706D6D</color>
 
+
+    <color name="colorRed">#F63325</color>
+    <color name="colorGreen">#54F85B</color>
 
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="hintColor">#757575</color>

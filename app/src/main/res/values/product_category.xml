@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="Product_Category">
+
+        <item>fruit</item>
+        <item>vegetable</item>
+        <item>dairy</item>
+    </string-array>
+
+
+
+
+
+</resources>
+
+    

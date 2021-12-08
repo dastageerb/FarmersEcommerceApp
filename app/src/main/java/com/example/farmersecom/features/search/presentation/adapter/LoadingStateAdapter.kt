@@ -1,5 +1,4 @@
-package com.example.unsplashimageapp.ui.fragments.homeFragment.adapter
-
+package com.example.farmersecom.features.search.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

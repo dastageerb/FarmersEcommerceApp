@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.cart.presentation.CartFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:id="@+id/cartFragmentRecyclerView"
+        android:clipToPadding="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/textViewCartFragmentTotalPrice"
+        />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total"
+        android:layout_above="@id/buttonCartFragmentCheckOut"
+        android:layout_marginBottom="32dp"
+        android:textSize="20sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        />
+
+    <TextView
+        android:id="@+id/textViewCartFragmentTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonCartFragmentCheckOut"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_toEndOf="@id/textTotal"
+        android:text="Rs.109"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonCartFragmentCheckOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check Out"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+
+        />
+</RelativeLayout>

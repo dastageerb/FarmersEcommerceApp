@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/imageViewLayoutCartItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/colorPrimary"
+            />
+            <TextView
+                android:id="@+id/textViewLayoutCartItemProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Name"
+                android:layout_toEndOf="@id/imageViewLayoutCartItem"
+                android:layout_marginTop="8dp"
+                />
+
+        <TextView
+            android:id="@+id/textViewLayoutCartItemProductQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity"
+            android:layout_toEndOf="@id/imageViewLayoutCartItem"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/textViewLayoutCartItemProductName"
+            />
+        <TextView
+            android:id="@+id/textViewLayoutCartItemProductQuantityUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kilos"
+            android:layout_toEndOf="@id/textViewLayoutCartItemProductQuantity"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/textViewLayoutCartItemProductName"
+            android:layout_marginStart="8dp"
+            />
+
+
+        <TextView
+            android:id="@+id/textViewLayoutCartItemProductQuantityPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:layout_toEndOf="@id/imageViewLayoutCartItem"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/textViewLayoutCartItemProductQuantity"
+            android:layout_marginStart="8dp"
+            android:textColor="@android:color/holo_red_dark"
+            />
+
+
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -17,4 +17,9 @@ class CartFragment : BaseFragment<FragmentCartBinding>()
         return  FragmentCartBinding.inflate(inflater,container,false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+    } // onViewCreated closed
+
 } // cardFragment closed
