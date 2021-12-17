@@ -50,6 +50,10 @@ class BuyerOrderHistoryFragment : BaseFragment<FragmentBuyerOrderHistoryBinding>
                 {
                     when(it)
                     {
+                        is NetworkResource.Loading ->
+                        {
+
+                        }
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")

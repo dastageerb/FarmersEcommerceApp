@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.farmersecom.features.productStore.domain.model.Product
 import com.example.farmersecom.features.productStore.domain.usecase.GetStoreByIdUseCase
 import com.example.farmersecom.features.productStore.domain.usecase.GetStoreProductsByStoreIdUseCase
 import com.example.farmersecom.features.search.domain.model.SearchItem
@@ -30,9 +31,9 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
 
 
     /** Get Store Response **/
-    private val _productStoreResponse: MutableStateFlow<NetworkResource<JsonObject>> = MutableStateFlow(
+    private val _productStoreResponse: MutableStateFlow<NetworkResource<Product>> = MutableStateFlow(
         NetworkResource.None())
-    val productStoreResponse: StateFlow<NetworkResource<JsonObject>> = _productStoreResponse
+    val productStoreResponse: StateFlow<NetworkResource<Product>> = _productStoreResponse
 
 
     fun getStoreDetails(id:String) = viewModelScope.launch(Dispatchers.IO)
@@ -41,7 +42,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
         try
         {
             val response = getStoreByIdUseCase.getProductStoreById(id)
-            _productStoreResponse.value = handleProfileResponse(response)
+          //  _productStoreResponse.value = handleProfileResponse(response)
         }catch (e:Exception)
         {
             when (e)
@@ -53,7 +54,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
         } //
     } // getProfile closed
 
-    private fun handleProfileResponse(response: Response<JsonObject>): NetworkResource<JsonObject>
+    private fun handleProfileResponse(response: Response<Product>): NetworkResource<Product>
     {
         return when(response.code())
         {
@@ -66,7 +67,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
 
     /** Get Store Products Response  Response **/
 
-    private var _storeProductsResponse:MutableStateFlow<NetworkResource<PagingData<JsonObject>>> =
+    private var _storeProductsResponse:MutableStateFlow<NetworkResource<PagingData<Product>>> =
         MutableStateFlow(NetworkResource.None());
 
     val storeProductsResponse = _storeProductsResponse;

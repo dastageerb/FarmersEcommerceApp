@@ -2,6 +2,7 @@ package com.example.farmersecom.features.productStore.data.frameWork
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.farmersecom.features.productStore.domain.model.Product
 import com.example.farmersecom.features.search.data.frameWork.SearchApi
 import com.example.farmersecom.features.search.domain.model.SearchItem
 import com.google.gson.JsonObject
@@ -11,10 +12,10 @@ import java.io.IOException
 class StoreProductsPagingSource(
     private val api: ProductStoreApi,
     private val storeId:String,
-) : PagingSource<Int,JsonObject>()
+) : PagingSource<Int,Product>()
 {
 
-    override fun getRefreshKey(state: PagingState<Int,JsonObject>): Int?
+    override fun getRefreshKey(state: PagingState<Int,Product>): Int?
     {
         return state.anchorPosition?.let()
         {
@@ -23,7 +24,7 @@ class StoreProductsPagingSource(
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int,JsonObject>
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int,Product>
     {
         val page = params.key ?: 1
 

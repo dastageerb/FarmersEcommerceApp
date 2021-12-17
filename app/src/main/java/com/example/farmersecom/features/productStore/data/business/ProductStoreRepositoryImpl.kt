@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.example.farmersecom.features.productStore.data.frameWork.ProductStoreApi
 import com.example.farmersecom.features.productStore.data.frameWork.StoreProductsPagingSource
 import com.example.farmersecom.features.productStore.domain.ProductStoreRepository
+import com.example.farmersecom.features.productStore.domain.model.Product
 import com.example.farmersecom.features.search.data.business.SearchPagingSource
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +21,7 @@ class ProductStoreRepositoryImpl(private val productStoreApi: ProductStoreApi):P
     }
 
 
-    override suspend fun getStoreProductsByStoreId(id: String): Flow<PagingData<JsonObject>>
+    override suspend fun getStoreProductsByStoreId(id: String): Flow<PagingData<Product>>
     = Pager(PagingConfig(20)) { StoreProductsPagingSource(productStoreApi,id) }.flow
 
 

@@ -26,7 +26,7 @@ import timber.log.Timber
 class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
 {
 
-    private val id = "";
+    private val id = "616fe967f92cd90016fc069";
     private val viewModel:ProductStoreViewModel by viewModels()
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductStoreBinding
     {

@@ -35,8 +35,6 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
         list.add(DashBoardItem("Active Order", R.drawable.ic_baseline_live_orders_24))
         list.add(DashBoardItem("Completed Order", R.drawable.ic_baseline_live_orders_24))
         list.add(DashBoardItem("Seller Feedback", R.drawable.ic_baseline_live_orders_24))
-
-
         val adapter  = StoreDashBoardAdapter()
         {
             Timber.tag(TAG).d(it.itemName)

@@ -74,9 +74,16 @@
         tools:layout="@layout/fragment_add_new_product" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.farmersecom.features.home.presentation.HomeFragment"
+        android:name="com.example.farmersecom.features.home.presentation.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_moreSliderItemsFragment"
+            app:destination="@id/moreSliderItemsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllLatestItemsFragment"
+            app:destination="@id/seeAllLatestItemsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.farmersecom.features.cart.presentation.CartFragment"
@@ -98,6 +105,30 @@
         android:name="com.example.farmersecom.features.search.presentation.FiltersFragment"
         android:label="fragment_filters"
         tools:layout="@layout/fragment_filters" />
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details" >
+        <action
+            android:id="@+id/action_productDetailsFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.farmersecom.features.orderDetails.presentation.orderDetails.OrderDetailsFragment"
+        android:label="fragment_order_details"
+        tools:layout="@layout/fragment_order_details" />
+    <fragment
+        android:id="@+id/moreSliderItemsFragment"
+        android:name="com.example.farmersecom.features.home.presentation.moreSliderItems.MoreSliderItemsFragment"
+        android:label="fragment_more_slider_items"
+        tools:layout="@layout/fragment_more_slider_items" />
+    <fragment
+        android:id="@+id/seeAllLatestItemsFragment"
+        android:name="com.example.farmersecom.features.home.presentation.seeAllLatestItems.SeeAllLatestItemsFragment"
+        android:label="fragment_see_all_latest_items"
+        tools:layout="@layout/fragment_see_all_latest_items" />
 
 
 </navigation>

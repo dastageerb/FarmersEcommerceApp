@@ -1,17 +1,25 @@
-package com.example.farmersecom.features.productDetails.presentation
+package com.example.farmersecom.features.productDetails.presentation.productDetails
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProductDetailsBinding
+import com.example.farmersecom.features.orderDetails.presentation.orderDetails.PlaceOrderViewModel
+import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
+import com.example.farmersecom.features.productDetails.domain.model.ProductPicture
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.google.gson.JsonObject
@@ -24,9 +32,13 @@ import timber.log.Timber
 @AndroidEntryPoint
 class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
 {
-    val id = "61add66551c87d29dc08d41c"
+    val id = "61b3062c658dc50016921ad0"
 
-    private val viewModel:ProductDetailsViewModel by viewModels()
+
+
+    private val orderViewModel: PlaceOrderViewModel by activityViewModels()
+    private val viewModel: ProductDetailsViewModel by viewModels()
+    val list = mutableListOf<ProductDetailsResponse>()
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductDetailsBinding
     {
@@ -41,6 +53,16 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         super.onViewCreated(view, savedInstanceState)
         viewModel.getProductDetails(id)
         subscribeProductDetailsResponseFlow()
+
+
+        binding.buttonProductDetailsFragmentBuyNow.setOnClickListener()
+        {
+
+            orderViewModel.setList(list)
+            findNavController().navigate(R.id.action_productDetailsFragment_to_orderDetailsFragment)
+
+        }
+
     } // onViewCreated
 
 
@@ -71,9 +93,32 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
     } // subscribeProfileResponseFlow closed
 
 
-    private fun updateViews(data: JsonObject?)
+    @SuppressLint("SetTextI18n")
+    private fun updateViews(data: ProductDetailsResponse?)
     {
+        data?.let { list.add(it) }
+        data?.let { setupRecyclerView(binding.recyclerViewFragmentProductDetails, it.productPictures) }
+        binding.textViewFragmentProductDetailsProductName.text = data?.productName
+        binding.textViewFragmentProductDetailsProductPrice.text = "RS."+data?.productPrice.toString()
+        binding.textViewProductQuantityFragmentProductDetails.text = data?.productQuantity.toString()
+        binding.textViewProductQuantityUnitFragmentProductDetails.text = data?.productUnit
+        binding.textViewProductDescription.text = data?.productDescription
 
-    } //
+
+    } // updateView closed
+
+
+    private fun setupRecyclerView(recycler: RecyclerView,list: List<ProductPicture>)
+    {
+        val adapter = ProductImageAdapter();
+        recycler.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL ,false)
+        recycler.adapter = adapter
+        var snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(recycler);
+        adapter.submitList(list)
+
+
+    } // setupRecyclerView
 
 } // ProductDetailsFragment

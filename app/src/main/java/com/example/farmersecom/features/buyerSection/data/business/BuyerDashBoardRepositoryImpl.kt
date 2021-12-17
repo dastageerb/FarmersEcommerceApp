@@ -24,4 +24,4 @@ class BuyerDashBoardRepositoryImpl(private val buyerDashboardApi: BuyerDashboard
             = Pager(PagingConfig(20)) { BuyerFavouritesPagingSource(buyerDashboardApi) }.flow
 
 
-}
+} // BuyerDashBoardRepositoryImpl

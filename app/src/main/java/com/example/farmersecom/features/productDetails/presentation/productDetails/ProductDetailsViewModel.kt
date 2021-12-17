@@ -1,7 +1,8 @@
-package com.example.farmersecom.features.productDetails.presentation
+package com.example.farmersecom.features.productDetails.presentation.productDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.useCase.GetProductByIdUseCase
 import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
 import com.example.farmersecom.features.profile.domain.model.Profile
@@ -25,9 +26,9 @@ class ProductDetailsViewModel @Inject constructor(private val getProductByIdUseC
 {
 
 
-    private val _productDetailsResponse: MutableStateFlow<NetworkResource<JsonObject>> = MutableStateFlow(
+    private val _productDetailsResponse: MutableStateFlow<NetworkResource<ProductDetailsResponse>> = MutableStateFlow(
         NetworkResource.None())
-    val productDetailsResponse: StateFlow<NetworkResource<JsonObject>> = _productDetailsResponse
+    val productDetailsResponse: StateFlow<NetworkResource<ProductDetailsResponse>> = _productDetailsResponse
 
 
     fun getProductDetails(id:String) = viewModelScope.launch(Dispatchers.IO)
@@ -45,10 +46,12 @@ class ProductDetailsViewModel @Inject constructor(private val getProductByIdUseC
                 else -> _productDetailsResponse.value =
                     NetworkResource.Error("No Internet Connection: ${e.message}")
             }
-        } //
+        }
+
+
     } // getProfile closed
 
-    private fun handleProfileResponse(response: Response<JsonObject>): NetworkResource<JsonObject>
+    private fun handleProfileResponse(response: Response<ProductDetailsResponse>): NetworkResource<ProductDetailsResponse>
     {
         return when(response.code())
         {
