@@ -23,5 +23,7 @@ data class ProductDetailsResponse(
     @Json(name = "productQuantity")
     val productQuantity: Int,
     @Json(name = "productUnit")
-    val productUnit: String
+    val productUnit: String,
+    @Json(name = "store")
+    var store: Store?
 )

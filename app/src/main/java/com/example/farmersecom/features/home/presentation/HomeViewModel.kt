@@ -1,31 +1,30 @@
 package com.example.farmersecom.features.home.presentation
 
-import android.app.slice.SliceItem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
-import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.RegisterResponse
-import com.example.farmersecom.features.home.domain.model.HomeLatestItem
-import com.example.farmersecom.features.home.domain.model.HomeSlider
+import com.example.farmersecom.features.home.data.framework.HomeApi
+import com.example.farmersecom.features.home.domain.model.homeModels.HomeLatestItem
+import com.example.farmersecom.features.home.domain.model.sliderModels.HomeSlider
 import com.example.farmersecom.features.home.domain.usecases.GetHomeLatestItemsUseCase
 import com.example.farmersecom.features.home.domain.usecases.GetSliderItemsUseCase
-import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getSliderItemsUseCase: GetSliderItemsUseCase,
-    private val getHomeLatestItemsUseCase: GetHomeLatestItemsUseCase):ViewModel()
+    private val getHomeLatestItemsUseCase: GetHomeLatestItemsUseCase,
+    ):ViewModel()
 {
 
     /** Get Slider Items */
@@ -96,5 +95,17 @@ class HomeViewModel @Inject constructor(
         } // when closed
     }
 
+//     fun getHomeInfo() = viewModelScope.launch(Dispatchers.IO)
+//    {
+//        try
+//        {
+//
+//            val response = homeApi.getMoreSliderItems("mango",1,20)
+//            Timber.tag(TAG).d("${response.body().toString()}")
+//        }catch (e:Exception)
+//        {
+//            Timber.tag(TAG).d("${e.message}")
+//        }
+//    }
 
 } //

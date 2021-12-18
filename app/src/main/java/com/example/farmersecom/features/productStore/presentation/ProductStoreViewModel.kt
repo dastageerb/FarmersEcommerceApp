@@ -30,7 +30,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
 {
 
 
-    /** Get Store Response **/
+    /** Get com.example.farmersecom.features.productDetails.domain.model.Store Response **/
     private val _productStoreResponse: MutableStateFlow<NetworkResource<Product>> = MutableStateFlow(
         NetworkResource.None())
     val productStoreResponse: StateFlow<NetworkResource<Product>> = _productStoreResponse
@@ -65,7 +65,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
     }
 
 
-    /** Get Store Products Response  Response **/
+    /** Get com.example.farmersecom.features.productDetails.domain.model.Store Products Response  Response **/
 
     private var _storeProductsResponse:MutableStateFlow<NetworkResource<PagingData<Product>>> =
         MutableStateFlow(NetworkResource.None());

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutHomeLatestProductsItemBinding
-import com.example.farmersecom.features.home.domain.model.HomeLatestItem
+import com.example.farmersecom.features.home.domain.model.homeModels.HomeLatestItem
 import com.example.farmersecom.features.home.domain.model.sharedModel.CategoryItem
 
 class HomeLatestProductsAdapter(val context:Context,val onSeeAllClicked:(CategoryItem)->Unit):ListAdapter<HomeLatestItem,HomeLatestProductsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<HomeLatestItem>()

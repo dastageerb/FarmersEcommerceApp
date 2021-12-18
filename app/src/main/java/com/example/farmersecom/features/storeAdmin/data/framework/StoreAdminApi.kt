@@ -11,7 +11,7 @@ interface  StoreAdminApi
 {
 
 
-    // Store Dashboard
+    // com.example.farmersecom.features.productDetails.domain.model.Store Dashboard
 
 
     // Add new Product

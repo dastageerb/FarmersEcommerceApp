@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+
+        <ImageView
+            android:id="@+id/layoutMoreItemsImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerVertical="true"
+            android:background="@color/colorPrimary"
+            android:layout_marginStart="16dp"
+            />
+        <TextView
+            android:id="@+id/layoutMoreItemsProductNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:layout_toEndOf="@id/layoutMoreItemsImageView"
+            android:layout_marginTop="48dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/layoutMoreItemsProductCategoryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="category"
+            android:layout_toEndOf="@id/layoutMoreItemsImageView"
+            android:layout_below="@id/layoutMoreItemsProductNameTextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/layoutMoreItemsProductQuantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_toEndOf="@id/layoutMoreItemsImageView"
+            android:layout_below="@id/layoutMoreItemsProductCategoryTextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            />
+        <TextView
+            android:id="@+id/layoutMoreItemsProductQuantityUnitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kil0"
+            android:layout_toEndOf="@id/layoutMoreItemsProductQuantityTextView"
+            android:layout_below="@id/layoutMoreItemsProductCategoryTextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/layoutMoreItemsProductPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutMoreItemsProductQuantityUnitTextView"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/layoutMoreItemsImageView"
+            android:text="120"
+            android:textColor="@color/colorRed"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/layoutMoreItemsProductLocationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutMoreItemsProductQuantityUnitTextView"
+            android:layout_alignParentEnd="true"
+            android:text="Location"
+            android:layout_marginEnd="16dp"
+            android:textSize="20sp" />
+
+
+
+    </RelativeLayout>
+
+
+
+</com.google.android.material.card.MaterialCardView>

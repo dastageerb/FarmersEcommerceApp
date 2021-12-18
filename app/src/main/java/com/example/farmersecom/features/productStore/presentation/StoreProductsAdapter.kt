@@ -6,11 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutProductStoreItemBinding
-import com.example.farmersecom.databinding.LayoutSearchItemViewBinding
-import com.example.farmersecom.features.home.domain.model.HomeSlider
 import com.example.farmersecom.features.productStore.domain.model.Product
-import com.example.farmersecom.features.search.domain.model.SearchItem
-import com.example.farmersecom.features.search.presentation.adapter.SearchItemAdapter
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 
 class StoreProductsAdapter ()
@@ -51,5 +47,5 @@ class StoreProductsAdapter ()
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         holder.bind(getItem(position))
-    }
+    } // onBindViewHolder closed
 }

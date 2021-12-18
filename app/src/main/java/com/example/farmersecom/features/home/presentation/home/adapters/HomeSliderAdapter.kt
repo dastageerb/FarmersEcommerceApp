@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutHomeSliderItemBinding
-import com.example.farmersecom.features.home.domain.model.HomeSlider
+import com.example.farmersecom.features.home.domain.model.sliderModels.HomeSlider
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 
 class HomeSliderAdapter(val onSliderItemSelected: (sliderQuery:String) -> Unit):ListAdapter<HomeSlider, HomeSliderAdapter.ViewHolder>
@@ -29,7 +29,7 @@ class HomeSliderAdapter(val onSliderItemSelected: (sliderQuery:String) -> Unit):
     {
         fun bind(item: HomeSlider)
         {
-            view.layoutHomeSliderImageView.load(item.categoryImage)
+            view.layoutHomeSliderImageView.load(item.slideImage)
         }
 
     } // viewHolder closed
@@ -46,7 +46,7 @@ class HomeSliderAdapter(val onSliderItemSelected: (sliderQuery:String) -> Unit):
         holder.bind(getItem(position))
         holder.itemView.setOnClickListener()
         {
-            onSliderItemSelected(getItem(position).categoryName)
+            onSliderItemSelected(getItem(position).productName)
         }
 
     } // onBindViewHolder

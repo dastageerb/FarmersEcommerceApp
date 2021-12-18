@@ -6,12 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentSeeAllLatestItemsBinding
+import com.example.farmersecom.features.home.presentation.MoreItemsAdapter
 import com.example.farmersecom.features.home.presentation.SharedViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -23,6 +31,7 @@ import timber.log.Timber
 class SeeAllLatestItemsFragment : BaseFragment<FragmentSeeAllLatestItemsBinding>()
 {
 
+    private lateinit var moreItemsAdapter: MoreItemsAdapter
     private val sharedViewModel: SharedViewModel by activityViewModels()
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentSeeAllLatestItemsBinding
     {
@@ -37,10 +46,60 @@ class SeeAllLatestItemsFragment : BaseFragment<FragmentSeeAllLatestItemsBinding>
         {
             sharedViewModel.getCategoryItem.collect()
             {
-                Timber.tag(Constants.TAG).d("${it.categoryName}")
+                Timber.tag(Constants.TAG).d("category name = ${it.categoryName}")
+                Timber.tag(Constants.TAG).d("category name = ${it.categoryId}")
+                sharedViewModel.getMoreCategoryItems(it.categoryId)
             } //
         } // viewLifeCycleOwner
 
+        setupMoreItemsRecycler(binding.seeAllLatestItemsFragmentRecyclerView)
+        subscribeToMoreSliderResponseFlow()
+
     } // onViewCreated closed
+
+
+
+    private fun subscribeToMoreSliderResponseFlow()
+    {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                sharedViewModel.moreItemsResponseProduct.collect()
+                {
+                    when(it)
+                    {
+                        is NetworkResource.Success ->
+                        {
+                         //   binding.moreSliderItemsFragmentProgressBar.hide()
+                            Timber.tag(Constants.TAG).d("${it.data?.products}")
+                            moreItemsAdapter.submitList(it.data?.products)
+
+                            Timber.tag(Constants.TAG).d("after success -> ${moreItemsAdapter.itemCount}")
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                        is NetworkResource.Loading ->
+                        {
+                           // binding.moreSliderItemsFragmentProgressBar.show()
+                        }
+                    }// when closed
+                } // getProfile closed
+            } // repeatOnLife cycle closed
+        } /// lifecycleScope closed
+    } // subscribeToSearchResponseFlow
+
+
+
+    private fun setupMoreItemsRecycler(recycler: RecyclerView)
+    {
+        moreItemsAdapter = MoreItemsAdapter()
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+        recycler.adapter = moreItemsAdapter
+        // fakeList()
+    } // setupHomeSlider closed
+
 
 } // SeeAllLatestItemsFragment

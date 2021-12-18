@@ -9,9 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProductStoreBinding
+import com.example.farmersecom.features.home.presentation.home.adapters.HomeSliderAdapter
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +34,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
 
     private val id = "616fe967f92cd90016fc069";
     private val viewModel:ProductStoreViewModel by viewModels()
+    private lateinit var storeProductsAdapter: StoreProductsAdapter
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductStoreBinding
     {
         return FragmentProductStoreBinding.inflate(inflater,container,false);
@@ -38,11 +45,13 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
         super.onViewCreated(view, savedInstanceState)
 
 
-        viewModel.getStoreDetails(id)
+        // viewModel.getStoreDetails(id)
+
+        setupStoreRecycler(binding.fragmentProductStoreRecyclerView)
         viewModel.getStoreProducts(id)
 
         subscribeToStoreDetailsResponseFlow()
-        subscribeToStoreProducsResponseFlow()
+        subscribeToStoreProductsResponseFlow()
 
 
     } // onViewCreated
@@ -74,7 +83,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
     } // subscribeToSearchResponseFlow
 
 
-    private fun subscribeToStoreProducsResponseFlow()
+    private fun subscribeToStoreProductsResponseFlow()
     {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
@@ -87,6 +96,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
+                            it.data?.let { data -> storeProductsAdapter.submitData(lifecycle, data) }
                             // updateViews(it.data)
                         }
                         is NetworkResource.Error ->
@@ -97,6 +107,15 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
                 } // getProfile closed
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
-    } // subscribeToSearchResponseFlow
+    } // subscribeToStoreResponseFlow
+
+    private fun setupStoreRecycler(recycler: RecyclerView)
+    {
+        storeProductsAdapter = StoreProductsAdapter()
+        recycler.setHasFixedSize(true)
+        recycler.layoutManager = GridLayoutManager(requireContext(), 2)
+        recycler.adapter = storeProductsAdapter
+    } // setupHomeSlider closed
+
 
 } // productStoreFragment

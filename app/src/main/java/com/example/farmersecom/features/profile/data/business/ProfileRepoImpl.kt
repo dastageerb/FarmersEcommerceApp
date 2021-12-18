@@ -58,7 +58,7 @@ class ProfileRepoImpl(
         } // when closed
     } // handle Response closed
 
-    /**   Setup Store  **/
+    /**   Setup com.example.farmersecom.features.productDetails.domain.model.Store  **/
 
 
     override suspend fun setupStore(setupStoreData: SetupStoreData): Response<SetUpStoreResponse>

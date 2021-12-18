@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutHomeChildItemBinding
-import com.example.farmersecom.features.home.domain.model.HomeChildProduct
+import com.example.farmersecom.features.home.domain.model.homeModels.HomeChildProduct
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 
 class HomeLatestChildAdapter(val onProductClicked:(productId:String)->Unit):ListAdapter<HomeChildProduct,HomeLatestChildAdapter.ViewHolder>
@@ -26,9 +26,13 @@ class HomeLatestChildAdapter(val onProductClicked:(productId:String)->Unit):List
 
     inner class ViewHolder(val binding:LayoutHomeChildItemBinding):RecyclerView.ViewHolder(binding.root)
     {
-        fun bind(item:HomeChildProduct)
+        fun bind(item: HomeChildProduct)
         {
-            binding.layoutHomeChildProductThumbnailImageView.load(item.productImg)
+            if(item.thumbnail.isNotEmpty())
+            {
+
+                binding.layoutHomeChildProductThumbnailImageView.load(item.thumbnail)
+            }
             binding.layoutHomeChildProductProductNameTextView.text = item.productName
         }
     } // inner class Closed

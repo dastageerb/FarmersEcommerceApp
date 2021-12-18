@@ -19,7 +19,7 @@ interface ProductStoreApi
 
 
     @GET("api/product/getProductByStoreId")
-    suspend fun getStoreProductsByStoreId(@Query("storeId")id:String,
+    suspend fun getStoreProductsByStoreId(@Query("storeid")id:String,
                                           @Query("page")pageNo:Int,
                                           @Query("size")PageSize:Int): Response<List<Product>>
 

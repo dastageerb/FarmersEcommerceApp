@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/base_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/productDetailsFragment">
 
     <fragment
         android:id="@+id/logInFragment"
@@ -129,6 +129,11 @@
         android:name="com.example.farmersecom.features.home.presentation.seeAllLatestItems.SeeAllLatestItemsFragment"
         android:label="fragment_see_all_latest_items"
         tools:layout="@layout/fragment_see_all_latest_items" />
+    <fragment
+        android:id="@+id/productStoreFragment"
+        android:name="com.example.farmersecom.features.productStore.presentation.ProductStoreFragment"
+        android:label="fragment_product_store"
+        tools:layout="@layout/fragment_product_store" />
 
 
 </navigation>
