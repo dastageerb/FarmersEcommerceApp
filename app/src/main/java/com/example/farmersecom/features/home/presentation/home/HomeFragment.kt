@@ -21,6 +21,7 @@ import com.example.farmersecom.features.home.presentation.HomeViewModel
 import com.example.farmersecom.features.home.presentation.SharedViewModel
 import com.example.farmersecom.features.home.presentation.home.adapters.HomeLatestProductsAdapter
 import com.example.farmersecom.features.home.presentation.home.adapters.HomeSliderAdapter
+import com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -37,6 +38,7 @@ class HomeFragment :BaseFragment<FragmentHomeBinding>()
 
     private val homeViewModel: HomeViewModel by viewModels()
     private val sharedViewModel:SharedViewModel by activityViewModels()
+    private val productDetailsViewModel: ProductDetailsViewModel by activityViewModels()
     private lateinit var homeSliderAdapter:HomeSliderAdapter
     private lateinit var latestProductsAdapter:HomeLatestProductsAdapter
 
@@ -148,6 +150,8 @@ class HomeFragment :BaseFragment<FragmentHomeBinding>()
 
         latestProductsAdapter.setOnChildClickListener()
         {
+            productDetailsViewModel.setProductId(it)
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment)
             Timber.tag(TAG).d("$it")
         } // latestProductsAdapter childClickListener closed
         recycler.layoutManager = LinearLayoutManager(requireContext())

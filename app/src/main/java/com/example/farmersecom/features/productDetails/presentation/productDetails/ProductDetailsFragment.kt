@@ -33,11 +33,8 @@ import timber.log.Timber
 class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
 {
     val id = "61b3062c658dc50016921ad0"
-
-
-
     private val orderViewModel: PlaceOrderViewModel by activityViewModels()
-    private val viewModel: ProductDetailsViewModel by viewModels()
+    private val viewModel: ProductDetailsViewModel by activityViewModels()
     val list = mutableListOf<ProductDetailsResponse>()
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductDetailsBinding
@@ -51,10 +48,19 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getProductDetails(id)
+
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewModel.getProductId.collect()
+            {
+                viewModel.getProductDetails(it)
+            } //
+        } // viewLifeCycleOwner
+
+
+
         subscribeProductDetailsResponseFlow()
-
-
         binding.buttonProductDetailsFragmentBuyNow.setOnClickListener()
         {
 

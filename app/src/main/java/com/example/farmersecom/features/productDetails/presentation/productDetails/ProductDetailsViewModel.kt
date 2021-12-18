@@ -26,6 +26,15 @@ class ProductDetailsViewModel @Inject constructor(private val getProductByIdUseC
 {
 
 
+    val setProductId :MutableStateFlow<String> = MutableStateFlow("")
+    val getProductId :StateFlow<String> = setProductId
+    fun setProductId(query:String)
+    {
+        setProductId.value = query
+    } //
+
+
+
     private val _productDetailsResponse: MutableStateFlow<NetworkResource<ProductDetailsResponse>> = MutableStateFlow(
         NetworkResource.None())
     val productDetailsResponse: StateFlow<NetworkResource<ProductDetailsResponse>> = _productDetailsResponse
