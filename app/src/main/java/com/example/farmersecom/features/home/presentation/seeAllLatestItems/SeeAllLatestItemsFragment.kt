@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
@@ -16,6 +17,7 @@ import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentSeeAllLatestItemsBinding
 import com.example.farmersecom.features.home.presentation.MoreItemsAdapter
 import com.example.farmersecom.features.home.presentation.SharedViewModel
+import com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
@@ -33,6 +35,7 @@ class SeeAllLatestItemsFragment : BaseFragment<FragmentSeeAllLatestItemsBinding>
 
     private lateinit var moreItemsAdapter: MoreItemsAdapter
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val productDetailsViewModel: ProductDetailsViewModel by activityViewModels()
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentSeeAllLatestItemsBinding
     {
         return FragmentSeeAllLatestItemsBinding.inflate(inflater,container,false)
@@ -96,6 +99,10 @@ class SeeAllLatestItemsFragment : BaseFragment<FragmentSeeAllLatestItemsBinding>
     private fun setupMoreItemsRecycler(recycler: RecyclerView)
     {
         moreItemsAdapter = MoreItemsAdapter()
+        {
+            productDetailsViewModel.setProductId(it)
+            findNavController().navigate(R.id.action_seeAllLatestItemsFragment_to_productDetailsFragment)
+        }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = moreItemsAdapter
         // fakeList()

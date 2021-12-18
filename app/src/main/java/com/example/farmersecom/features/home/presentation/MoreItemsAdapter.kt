@@ -11,7 +11,7 @@ import com.example.farmersecom.features.home.domain.model.MoreProductsResponseIt
 import com.example.farmersecom.features.home.domain.model.more.MoreProduct
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 
-class MoreItemsAdapter : ListAdapter<MoreProduct,MoreItemsAdapter.ViewHolder>
+class MoreItemsAdapter(val onProductSelected:(productId:String)->Unit) : ListAdapter<MoreProduct,MoreItemsAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<MoreProduct>()
 {
     override fun areItemsTheSame(oldItem: MoreProduct, newItem: MoreProduct): Boolean
@@ -63,6 +63,12 @@ class MoreItemsAdapter : ListAdapter<MoreProduct,MoreItemsAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         holder.bind(getItem(position))
+
+        holder.itemView.setOnClickListener()
+        {
+            getItem(position)?.productId?.let { it1 -> onProductSelected(it1) }
+        }
+
     } // onBindViewHolder closed
 
 

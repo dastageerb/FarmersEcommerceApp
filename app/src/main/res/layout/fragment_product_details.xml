@@ -9,6 +9,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/scrollViewProductDetails"
+        android:layout_above="@id/buttonProductDetailsFragmentAddToCart"
+        android:layout_alignParentTop="true"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -63,9 +66,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ratingBarFragmentProductDetails"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="Quantity"
-                android:textSize="24sp" />
+                android:layout_marginStart="8dp"
+                android:textSize="22sp" />
 
 
             <TextView
@@ -73,18 +77,69 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ratingBarFragmentProductDetails"
-                android:layout_marginTop="24dp"
-                android:layout_toEndOf="@id/textViewProductQuantityFragmentProductDetails"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toEndOf="@id/textViewProductQuantityFragmentProductDetails"
                 android:text="Unit"
-                android:textSize="24sp" />
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+
+
+            <TextView
+                android:id="@+id/textViewProductDeliveryCharges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery charges:30"
+                android:layout_below="@id/textViewProductQuantityFragmentProductDetails"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:textSize="18sp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/colorGreen"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewProductDeliveryCharges"
+                android:id="@+id/layoutStoreDetails"
+                android:orientation="horizontal"
+                >
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:cardCornerRadius="35dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardBackgroundColor="@color/colorGreen"
+                >
+                    <ImageView
+                        android:id="@+id/imageViewProductDetailsFragmentStoreImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/textViewStoreNameFragmentProductDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:text="Store Name"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textViewProductDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Description"
-                android:layout_below="@id/textViewProductQuantityFragmentProductDetails"
+                android:layout_below="@id/layoutStoreDetails"
                 android:layout_marginTop="16dp"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="16dp"
@@ -106,6 +161,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="32dp"
+
         />
 
 

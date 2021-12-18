@@ -116,6 +116,9 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_orderDetailsFragment"
             app:destination="@id/orderDetailsFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_productStoreFragment"
+            app:destination="@id/productStoreFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"
@@ -126,12 +129,20 @@
         android:id="@+id/moreSliderItemsFragment"
         android:name="com.example.farmersecom.features.home.presentation.moreSliderItems.MoreSliderItemsFragment"
         android:label="fragment_more_slider_items"
-        tools:layout="@layout/fragment_more_slider_items" />
+        tools:layout="@layout/fragment_more_slider_items" >
+        <action
+            android:id="@+id/action_moreSliderItemsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/seeAllLatestItemsFragment"
         android:name="com.example.farmersecom.features.home.presentation.seeAllLatestItems.SeeAllLatestItemsFragment"
         android:label="fragment_see_all_latest_items"
-        tools:layout="@layout/fragment_see_all_latest_items" />
+        tools:layout="@layout/fragment_see_all_latest_items" >
+        <action
+            android:id="@+id/action_seeAllLatestItemsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productStoreFragment"
         android:name="com.example.farmersecom.features.productStore.presentation.ProductStoreFragment"

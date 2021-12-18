@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.farmersecom.features.productStore.domain.model.Product
+import com.example.farmersecom.features.productStore.domain.model.StoreDetailsResponse
 import com.example.farmersecom.features.productStore.domain.usecase.GetStoreByIdUseCase
 import com.example.farmersecom.features.productStore.domain.usecase.GetStoreProductsByStoreIdUseCase
 import com.example.farmersecom.features.search.domain.model.SearchItem
@@ -31,9 +32,9 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
 
 
     /** Get com.example.farmersecom.features.productDetails.domain.model.Store Response **/
-    private val _productStoreResponse: MutableStateFlow<NetworkResource<Product>> = MutableStateFlow(
+    private val _productStoreResponse: MutableStateFlow<NetworkResource<StoreDetailsResponse>> = MutableStateFlow(
         NetworkResource.None())
-    val productStoreResponse: StateFlow<NetworkResource<Product>> = _productStoreResponse
+    val productStoreResponse: StateFlow<NetworkResource<StoreDetailsResponse>> = _productStoreResponse
 
 
     fun getStoreDetails(id:String) = viewModelScope.launch(Dispatchers.IO)
@@ -42,7 +43,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
         try
         {
             val response = getStoreByIdUseCase.getProductStoreById(id)
-          //  _productStoreResponse.value = handleProfileResponse(response)
+            _productStoreResponse.value = handleStoreDetailsResponse(response)
         }catch (e:Exception)
         {
             when (e)
@@ -54,7 +55,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
         } //
     } // getProfile closed
 
-    private fun handleProfileResponse(response: Response<Product>): NetworkResource<Product>
+    private fun handleStoreDetailsResponse(response: Response<StoreDetailsResponse>): NetworkResource<StoreDetailsResponse>
     {
         return when(response.code())
         {
@@ -67,25 +68,48 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
 
     /** Get com.example.farmersecom.features.productDetails.domain.model.Store Products Response  Response **/
 
-    private var _storeProductsResponse:MutableStateFlow<NetworkResource<PagingData<Product>>> =
+    private var _storeProductsResponse:MutableStateFlow<NetworkResource<List<Product>>> =
         MutableStateFlow(NetworkResource.None());
 
-    val storeProductsResponse = _storeProductsResponse;
+    val storeProductsResponse:StateFlow<NetworkResource<List<Product>>> = _storeProductsResponse;
 
-    @InternalCoroutinesApi
+
     fun getStoreProducts(storeId:String) = viewModelScope.launch(Dispatchers.IO)
     {
         _storeProductsResponse.value = NetworkResource.Loading()
 
-        val response =  getStoreProductsByStoreIdUseCase.getStoreProductsByStoreId(storeId).cachedIn(viewModelScope)
-
-        response.collect()
+        try
         {
-            _storeProductsResponse.value = NetworkResource.Success(it)
-        }
-
+            val response = getStoreProductsByStoreIdUseCase.getStoreProductsByStoreId(storeId)
+            _storeProductsResponse.value = handleStoreProductsResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException -> _productStoreResponse.value = NetworkResource.Error("Http Exception")
+                else -> _productStoreResponse.value =
+                    NetworkResource.Error("No Internet Connection: ${e.message}")
+            }
+        } //
     } // searchItem closed
 
+    private fun handleStoreProductsResponse(response: Response<List<Product>>): NetworkResource<List<Product>>
+    {
+        return when(response.code())
+        {
+            200 -> NetworkResource.Success(response.body())
+            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            else -> NetworkResource.Error("Something went wrong ${response.code()}")
+        } // when closed
+    }
+
+    /// Getters Setters
+    val setStoreId :MutableStateFlow<String> = MutableStateFlow("")
+    val getStoreId :StateFlow<String> = setStoreId
+    fun setStoreId(id:String)
+    {
+        setStoreId.value = id
+    } //
 
 
 

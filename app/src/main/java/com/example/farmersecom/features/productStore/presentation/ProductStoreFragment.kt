@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +20,7 @@ import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProductStoreBinding
 import com.example.farmersecom.features.home.presentation.home.adapters.HomeSliderAdapter
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +35,8 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
 {
 
     private val id = "616fe967f92cd90016fc069";
-    private val viewModel:ProductStoreViewModel by viewModels()
+    private val storeViewModel:ProductStoreViewModel by activityViewModels()
+    private val viewModel:ProductStoreViewModel by activityViewModels()
     private lateinit var storeProductsAdapter: StoreProductsAdapter
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductStoreBinding
     {
@@ -45,11 +48,17 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
         super.onViewCreated(view, savedInstanceState)
 
 
-        // viewModel.getStoreDetails(id)
+        viewLifecycleOwner.lifecycleScope.launch()
+        {
+            storeViewModel.getStoreId.collect()
+            {
+                viewModel.getStoreDetails(id)
+            }
+        }
+
 
         setupStoreRecycler(binding.fragmentProductStoreRecyclerView)
-        viewModel.getStoreProducts(id)
-
+        //viewModel.getStoreProducts(id)
         subscribeToStoreDetailsResponseFlow()
         subscribeToStoreProductsResponseFlow()
 
@@ -69,6 +78,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
                     {
                         is NetworkResource.Success ->
                         {
+                            requireContext().showToast(it.data.toString())
                             Timber.tag(Constants.TAG).d("${it.data}")
                             // updateViews(it.data)
                         }
@@ -96,7 +106,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
-                            it.data?.let { data -> storeProductsAdapter.submitData(lifecycle, data) }
+                            storeProductsAdapter.submitList(it.data)
                             // updateViews(it.data)
                         }
                         is NetworkResource.Error ->
@@ -112,7 +122,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
     private fun setupStoreRecycler(recycler: RecyclerView)
     {
         storeProductsAdapter = StoreProductsAdapter()
-        recycler.setHasFixedSize(true)
+   
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
         recycler.adapter = storeProductsAdapter
     } // setupHomeSlider closed

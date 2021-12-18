@@ -15,14 +15,16 @@ import retrofit2.Response
 class ProductStoreRepositoryImpl(private val productStoreApi: ProductStoreApi):ProductStoreRepository
 {
 
-    override suspend fun getStoreById(id: String): Response<JsonObject>
-    {
-        return  productStoreApi.getStoreById(id)
-    }
+    override suspend fun getStoreById(id: String)
+    =   productStoreApi.getStoreById(id)
 
 
-    override suspend fun getStoreProductsByStoreId(id: String): Flow<PagingData<Product>>
-    = Pager(PagingConfig(20)) { StoreProductsPagingSource(productStoreApi,id) }.flow
+
+    override suspend fun getStoreProductsByStoreId(id: String)
+    = productStoreApi.getStoreProductsByStoreId(id,1,200)
+
+
+// = Pager(PagingConfig(20)) { StoreProductsPagingSource(productStoreApi,id) }.flow
 
 
 

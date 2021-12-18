@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutProductStoreItemBinding
 import com.example.farmersecom.features.productStore.domain.model.Product
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 
-class StoreProductsAdapter ()
-    : PagingDataAdapter<Product, StoreProductsAdapter.ViewHolder>
+class  StoreProductsAdapter ()
+    : ListAdapter<Product, StoreProductsAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<Product>()
 {
     override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean

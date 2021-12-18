@@ -20,7 +20,9 @@ import com.example.farmersecom.databinding.FragmentProductDetailsBinding
 import com.example.farmersecom.features.orderDetails.presentation.orderDetails.PlaceOrderViewModel
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.model.ProductPicture
+import com.example.farmersecom.features.productStore.presentation.ProductStoreViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +34,8 @@ import timber.log.Timber
 @AndroidEntryPoint
 class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
 {
-    val id = "61b3062c658dc50016921ad0"
+
+    private val storeViewModel: ProductStoreViewModel by activityViewModels()
     private val orderViewModel: PlaceOrderViewModel by activityViewModels()
     private val viewModel: ProductDetailsViewModel by activityViewModels()
     val list = mutableListOf<ProductDetailsResponse>()
@@ -109,17 +112,31 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         binding.textViewProductQuantityFragmentProductDetails.text = data?.productQuantity.toString()
         binding.textViewProductQuantityUnitFragmentProductDetails.text = data?.productUnit
         binding.textViewProductDescription.text = data?.productDescription
+        binding.ratingBarFragmentProductDetails.rating = data?.productRating!!.toFloat()
+        binding.imageViewProductDetailsFragmentStoreImage.load(data.store?.storeImage)
+        binding.textViewStoreNameFragmentProductDetails.text = data.store?.storeName
+        binding.textViewProductDeliveryCharges.text = "Delivery Charges :"+data.productDeliveryCharges.toString()
 
+        binding.layoutStoreDetails.setOnClickListener()
+        {
+            data.store?.let()
+            {
+                storeViewModel.setStoreId(it.id!!)
+                findNavController().navigate(R.id.action_productDetailsFragment_to_productStoreFragment)
+            }
+
+        }
 
     } // updateView closed
 
 
-    private fun setupRecyclerView(recycler: RecyclerView,list: List<ProductPicture>)
+    private fun setupRecyclerView(recycler: RecyclerView,list: List<ProductPicture>?)
     {
         val adapter = ProductImageAdapter();
         recycler.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL ,false)
         recycler.adapter = adapter
+        recycler.onFlingListener = null;
         var snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recycler);
         adapter.submitList(list)

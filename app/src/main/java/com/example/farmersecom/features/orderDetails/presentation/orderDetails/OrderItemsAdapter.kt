@@ -33,7 +33,7 @@ class OrderItemsAdapter : androidx.recyclerview.widget.ListAdapter<ProductDetail
     {
         fun bind(data:ProductDetailsResponse)
         {
-            binding.imageViewLayoutOrderItemsProductImage.load(data.productPictures[0].img)
+            binding.imageViewLayoutOrderItemsProductImage.load(data.productPictures!![0].img)
             binding.textViewLayoutOrderItemsProductName.text = data.productName
             binding.textViewLayoutOrderItemsItemProductPrice.text = data.productPrice.toString()
         }

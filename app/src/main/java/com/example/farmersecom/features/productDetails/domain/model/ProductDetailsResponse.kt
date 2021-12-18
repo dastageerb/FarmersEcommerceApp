@@ -7,23 +7,27 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ProductDetailsResponse(
     @Json(name = "productCategory")
-    val productCategory: ProductCategory,
+    var productCategory: ProductCategory?,
+    @Json(name = "productDeliveryCharges")
+    var productDeliveryCharges: Int?,
     @Json(name = "productDescription")
-    val productDescription: String,
+    var productDescription: String?,
     @Json(name = "productId")
-    val productId: String,
+    var productId: String?,
     @Json(name = "productLocation")
-    val productLocation: String,
+    var productLocation: String?,
     @Json(name = "productName")
-    val productName: String,
+    var productName: String?,
     @Json(name = "productPictures")
-    val productPictures: List<ProductPicture>,
+    var productPictures: List<ProductPicture>?,
     @Json(name = "productPrice")
-    val productPrice: Int,
+    var productPrice: Int?,
     @Json(name = "productQuantity")
-    val productQuantity: Int,
+    var productQuantity: Int?,
+    @Json(name = "productRating")
+    var productRating: Double?,
     @Json(name = "productUnit")
-    val productUnit: String,
+    var productUnit: String?,
     @Json(name = "store")
     var store: Store?
 )

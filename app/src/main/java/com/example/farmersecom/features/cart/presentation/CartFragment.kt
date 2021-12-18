@@ -33,7 +33,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCartResponse()
+       // viewModel.getCartResponse()
 
     } // onViewCreated closed
 

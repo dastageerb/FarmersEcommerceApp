@@ -31,9 +31,12 @@ class ProductImageAdapter : ListAdapter<ProductPicture, ProductImageAdapter.View
 
     inner class  ViewHolder(private val view: LayoutProductImagesBinding) : RecyclerView.ViewHolder(view.root)
     {
-        fun bind(item:ProductPicture)
+        fun bind(item:ProductPicture,position: Int)
         {
             view.layoutProductImagesImageView.load(item.img)
+            view.layoutProductImagesTextCount.bringToFront()
+            
+            view.layoutProductImagesTextCount.text = ""+position+1+"/"+itemCount
         }
 
     } // viewHolder closed
@@ -46,7 +49,7 @@ class ProductImageAdapter : ListAdapter<ProductPicture, ProductImageAdapter.View
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position),position)
     }
 
 

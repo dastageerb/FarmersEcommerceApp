@@ -10,7 +10,7 @@ import com.example.farmersecom.features.home.domain.model.MoreProductsResponseIt
 import com.example.farmersecom.features.home.domain.model.more.MoreProduct
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 
-class MoreItemsPagingAdapter : PagingDataAdapter<MoreProduct,MoreItemsPagingAdapter.ViewHolder>
+class MoreItemsPagingAdapter(val onProductSelected:(productId:String)->Unit) : PagingDataAdapter<MoreProduct,MoreItemsPagingAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<MoreProduct>()
 {
     override fun areItemsTheSame(oldItem: MoreProduct, newItem: MoreProduct): Boolean
@@ -62,6 +62,12 @@ class MoreItemsPagingAdapter : PagingDataAdapter<MoreProduct,MoreItemsPagingAdap
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         holder.bind(getItem(position))
+
+        holder.itemView.setOnClickListener()
+        {
+            getItem(position)?.productId?.let { it1 -> onProductSelected(it1) }
+        }
+
     } // onBindViewHolder closed
 
 
