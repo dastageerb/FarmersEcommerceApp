@@ -23,6 +23,14 @@ object Utils
 
     } // setAdapter closed
 
+    fun <T>AutoCompleteTextView.setUpAdapter(context:Context,list: List<T>)
+    {
+
+        val arrayAdapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item
+            ,list)
+        this.setAdapter(arrayAdapter)
+
+    } // setAdapter closed
 
 
 } // Adapter setup closed

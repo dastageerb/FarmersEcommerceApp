@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_profileFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_buyerDashboardFragment"
+            app:destination="@id/buyerDashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/setupStoreFragment"
@@ -148,6 +151,28 @@
         android:name="com.example.farmersecom.features.productStore.presentation.ProductStoreFragment"
         android:label="fragment_product_store"
         tools:layout="@layout/fragment_product_store" />
+    <fragment
+        android:id="@+id/buyerDashboardFragment"
+        android:name="com.example.farmersecom.features.buyerSection.presentation.buyerdashboard.BuyerDashboardFragment"
+        android:label="fragment_buyer_dashboard"
+        tools:layout="@layout/fragment_buyer_dashboard" >
+        <action
+            android:id="@+id/action_buyerDashboardFragment_to_buyerOrderHistoryFragment"
+            app:destination="@id/buyerOrderHistoryFragment" />
+        <action
+            android:id="@+id/action_buyerDashboardFragment_to_currentOrdersFragment"
+            app:destination="@id/currentOrdersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderHistoryFragment"
+        android:name="com.example.farmersecom.features.buyerSection.presentation.orderHistory.BuyerOrderHistoryFragment"
+        android:label="fragment_buyer_order_history"
+        tools:layout="@layout/fragment_buyer_order_history" />
+    <fragment
+        android:id="@+id/currentOrdersFragment"
+        android:name="com.example.farmersecom.features.buyerSection.presentation.currentOrders.CurrentOrdersFragment"
+        android:label="fragment_current_orders"
+        tools:layout="@layout/fragment_current_orders" />
 
 
 </navigation>

@@ -47,6 +47,7 @@ class SetupStoreFragment : BaseFragment<FragmentSetupStoreBinding>()
         }
 
 
+
         subscribeSetupResponse();
 
     } // onView Created

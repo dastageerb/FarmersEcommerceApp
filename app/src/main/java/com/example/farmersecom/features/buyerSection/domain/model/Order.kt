@@ -1,4 +1,4 @@
-package com.example.farmersecom.features.buyNow.domain.model.response
+package com.example.farmersecom.features.buyerSection.domain.model
 
 
 import com.squareup.moshi.Json
@@ -10,12 +10,16 @@ data class Order(
     var buyerId: String?,
     @Json(name = "city")
     var city: String?,
+    @Json(name = "contactNumber")
+    var contactNumber: String?,
     @Json(name = "createdAt")
     var createdAt: String?,
     @Json(name = "deliveryCharges")
     var deliveryCharges: Int?,
     @Json(name = "_id")
     var id: String?,
+    @Json(name = "isActive")
+    var isActive: Boolean?,
     @Json(name = "name")
     var name: String?,
     @Json(name = "orderAddress")
@@ -28,14 +32,14 @@ data class Order(
     var orderStatus: String?,
     @Json(name = "paymentOption")
     var paymentOption: String?,
-    @Json(name="subTotal")
-    var subTotal:String,
     @Json(name = "postalCode")
     var postalCode: Int?,
     @Json(name = "productId")
     var productId: String?,
     @Json(name = "storeId")
     var storeId: String?,
+    @Json(name = "subTotal")
+    var subTotal: Int?,
     @Json(name = "totalPrice")
     var totalPrice: Int?,
     @Json(name = "updatedAt")

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentBuyerDashboardBinding
@@ -41,12 +42,25 @@ class BuyerDashboardFragment : BaseFragment<FragmentBuyerDashboardBinding>()
 
         val adapter  = StoreDashBoardAdapter()
         {
-            Timber.tag(Constants.TAG).d(it.itemName)
+            navigateFromDashBoard(it)
+          //  Timber.tag(Constants.TAG).d(it.itemName)
         }
         adapter.itemList = list
         binding.fragmentBuyerDashboardGridView.adapter = adapter
 
     } // initViews closed
+
+    private fun navigateFromDashBoard(position: Int)
+    {
+        when(position)
+        {
+            0 -> findNavController().navigate(R.id.action_buyerDashboardFragment_to_buyerOrderHistoryFragment)
+            1-> findNavController().navigate(R.id.action_buyerDashboardFragment_to_currentOrdersFragment)
+            2 -> {}
+            3 -> {}
+
+        }
+    }
 
 
 } // BuyerDashBoardFragment closed

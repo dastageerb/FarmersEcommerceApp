@@ -17,5 +17,7 @@ data class OrderRequest(
     @Json(name = "postalCode")
     var postalCode: Int?,
     @Json(name = "quantity")
-    var quantity: Int?
+    var quantity: Int?,
+    @Json(name="contactNumber")
+    var contactNumber:String
 )

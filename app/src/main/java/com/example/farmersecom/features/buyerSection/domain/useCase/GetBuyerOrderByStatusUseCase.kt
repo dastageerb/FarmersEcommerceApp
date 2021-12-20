@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class GetBuyerOrderByStatusUseCase  @Inject constructor(private val buyerDashboardRepository: BuyerDashboardRepository)
 {
-    suspend fun getBuyerOrderByStatus(orderStatus:String) = buyerDashboardRepository.getOrdersByStatus(orderStatus)
+    suspend fun getBuyerOrderByStatus(orderStatus:Boolean) = buyerDashboardRepository.getOrdersByStatus(orderStatus)
 }

@@ -7,7 +7,7 @@ import android.widget.BaseAdapter
 import com.example.farmersecom.databinding.LayoutStoreDashboardListItemBinding
 import com.example.farmersecom.features.storeAdmin.domain.model.DashBoardItem
 
-class StoreDashBoardAdapter(val onClick:(item:DashBoardItem)-> Unit) : BaseAdapter()
+class StoreDashBoardAdapter(val onClick:(Int)-> Unit) : BaseAdapter()
 {
 
     var itemList = emptyList<DashBoardItem>()
@@ -47,7 +47,7 @@ class StoreDashBoardAdapter(val onClick:(item:DashBoardItem)-> Unit) : BaseAdapt
         binding.imageViewStoreDashBoard.setImageResource(item.imgId)
         binding.storeDashboardCard.setOnClickListener()
         {
-            onClick(itemList[position])
+            onClick(position)
         }
 
         return binding.root

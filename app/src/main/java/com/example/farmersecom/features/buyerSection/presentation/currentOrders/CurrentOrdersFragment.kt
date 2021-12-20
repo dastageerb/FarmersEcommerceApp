@@ -9,10 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentCurrentOrdersBinding
 import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboardViewModel
+import com.example.farmersecom.features.buyerSection.presentation.OrderStatusAdapter
+import com.example.farmersecom.features.productStore.presentation.StoreProductsAdapter
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,12 +29,13 @@ import timber.log.Timber
 
 
 
-@InternalCoroutinesApi
 @AndroidEntryPoint
 class CurrentOrdersFragment : BaseFragment<FragmentCurrentOrdersBinding>()
 {
 
     private val viewModel:BuyerDashboardViewModel by viewModels()
+    private lateinit var orderStaAdapter: OrderStatusAdapter
+
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentCurrentOrdersBinding
     {
         return FragmentCurrentOrdersBinding.inflate(inflater,container,false)
@@ -39,8 +45,10 @@ class CurrentOrdersFragment : BaseFragment<FragmentCurrentOrdersBinding>()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecycler(binding.fragmentCurrentOrdersRecyclerView)
 
-        viewModel.getBuyerOrderByStatus("Current")
+
+        viewModel.getBuyerOrders(true)
         subscribeToBuyerCurrentOrdersResponseFlow()
 
     } // onViewCreated closed
@@ -63,7 +71,8 @@ class CurrentOrdersFragment : BaseFragment<FragmentCurrentOrdersBinding>()
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
-                            // updateViews(it.data)
+                            orderStaAdapter.submitList(it.data?.orders)
+                        // updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
@@ -75,5 +84,12 @@ class CurrentOrdersFragment : BaseFragment<FragmentCurrentOrdersBinding>()
         } /// lifecycleScope closed
     } // subscribeToSearchResponseFlow
 
+
+    private fun setupRecycler(recycler: RecyclerView)
+    {
+        orderStaAdapter = OrderStatusAdapter()
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+        recycler.adapter = orderStaAdapter
+    } // setupHomeSlider closed
 
 } // CurrentOrdersFragment

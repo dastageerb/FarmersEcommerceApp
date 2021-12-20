@@ -6,15 +6,16 @@ import androidx.paging.PagingData
 import com.example.farmersecom.features.buyerSection.data.framework.BuyerDashboardApi
 import com.example.farmersecom.features.buyerSection.data.framework.paginngSource.BuyerFavouritesPagingSource
 import com.example.farmersecom.features.buyerSection.data.framework.paginngSource.BuyerNotificationPagingSource
-import com.example.farmersecom.features.buyerSection.data.framework.paginngSource.BuyerOrderByStatusPagingSource
 import com.example.farmersecom.features.buyerSection.domain.BuyerDashboardRepository
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
 
 class BuyerDashBoardRepositoryImpl(private val buyerDashboardApi: BuyerDashboardApi):BuyerDashboardRepository
 {
-    override suspend fun getOrdersByStatus(orderStatus: String): Flow<PagingData<JsonObject>>
-            = Pager(PagingConfig(20)) { BuyerOrderByStatusPagingSource(buyerDashboardApi,orderStatus) }.flow
+    override suspend fun getOrdersByStatus(orderStatus:Boolean)
+    = buyerDashboardApi.getOrdersByStatus(orderStatus)
+
+//= Pager(PagingConfig(20)) { BuyerOrderByStatusPagingSource(buyerDashboardApi,orderStatus) }.flow
 
     override suspend fun getBuyerNotifications(): Flow<PagingData<JsonObject>>
             = Pager(PagingConfig(20)) { BuyerNotificationPagingSource(buyerDashboardApi) }.flow

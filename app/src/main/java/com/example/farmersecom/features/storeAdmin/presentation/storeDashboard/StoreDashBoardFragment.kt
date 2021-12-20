@@ -12,6 +12,7 @@ import com.example.farmersecom.features.storeAdmin.domain.model.DashBoardItem
 import com.example.farmersecom.utils.constants.Constants.TAG
 import timber.log.Timber
 
+
 class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),View.OnClickListener
 {
 
@@ -37,7 +38,7 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
         list.add(DashBoardItem("Seller Feedback", R.drawable.ic_baseline_live_orders_24))
         val adapter  = StoreDashBoardAdapter()
         {
-            Timber.tag(TAG).d(it.itemName)
+            //Timber.tag(TAG).d(it.itemName)
         }
         adapter.itemList = list
         binding.storeDashboardListView.adapter = adapter

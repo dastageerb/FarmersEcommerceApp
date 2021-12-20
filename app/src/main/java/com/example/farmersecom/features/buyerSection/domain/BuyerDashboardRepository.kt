@@ -1,6 +1,7 @@
 package com.example.farmersecom.features.buyerSection.domain
 
 import androidx.paging.PagingData
+import com.example.farmersecom.features.buyerSection.domain.model.OrderStatusResponse
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
@@ -12,7 +13,7 @@ interface BuyerDashboardRepository
 
 
 
-    suspend fun getOrdersByStatus(orderStatus:String) : Flow<PagingData<JsonObject>>
+    suspend fun getOrdersByStatus(orderStatus:Boolean) : Response<OrderStatusResponse>
 
 
     suspend fun getBuyerNotifications() : Flow<PagingData<JsonObject>>

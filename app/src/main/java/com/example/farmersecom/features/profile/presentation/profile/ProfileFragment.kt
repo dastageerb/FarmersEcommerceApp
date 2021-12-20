@@ -65,6 +65,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         super.onViewCreated(view, savedInstanceState)
 
 
+        Timber.tag(TAG).d("${viewModel.getAuthToken()}")
         if(viewModel.getAuthToken()==null)
         {
             findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
@@ -124,6 +125,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         binding.buttonSetupStore.setOnClickListener(this)
         binding.buttonGoToStore.setOnClickListener(this)
         binding.buttonChangePhoto.setOnClickListener(this)
+        binding.buttonBuyersSection.setOnClickListener(this)
 
 
         viewModel.getProfile()
@@ -160,6 +162,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             }
             R.id.buttonGoToStore -> findNavController().navigate(R.id.action_profileFragment_to_storeFragment)
             R.id.buttonChangePhoto -> changePhoto();
+            R.id.buttonBuyersSection ->
+            {
+                findNavController().navigate(R.id.action_profileFragment_to_buyerDashboardFragment)
+            }
         } // when closed
     } // onClick closed
 
