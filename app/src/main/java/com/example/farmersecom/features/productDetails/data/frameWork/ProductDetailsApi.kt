@@ -12,7 +12,6 @@ interface ProductDetailsApi
 //    @GET("api/product/get/61b3062c658dc50016921ad0")
 //    suspend fun getProductById(@Query("id")id:String):Response<JsonObject>
 
-    // TODO
     @GET("api/product/get/{id}")
     suspend fun getProductById(@Path("id")id:String):Response<ProductDetailsResponse>
 

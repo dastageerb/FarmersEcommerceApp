@@ -1,10 +1,7 @@
 package com.example.farmersecom.features.productStore.domain
 
-import androidx.paging.PagingData
-import com.example.farmersecom.features.productStore.domain.model.Product
-import com.example.farmersecom.features.productStore.domain.model.StoreDetailsResponse
-import com.google.gson.JsonObject
-import kotlinx.coroutines.flow.Flow
+import com.example.farmersecom.features.productStore.domain.model.storeDetails.StoreDetailsResponse
+import com.example.farmersecom.features.productStore.domain.model.storeProducts.StoreProducts
 import retrofit2.Response
 
 interface ProductStoreRepository
@@ -14,7 +11,7 @@ interface ProductStoreRepository
     suspend fun getStoreById(id:String): Response<StoreDetailsResponse>
 
 
-    suspend fun getStoreProductsByStoreId(id:String): Response<List<Product>>
+    suspend fun getStoreProductsByStoreId(id:String): Response<StoreProducts>
 
 
 

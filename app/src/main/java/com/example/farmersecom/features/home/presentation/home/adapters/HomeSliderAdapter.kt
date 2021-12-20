@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutHomeSliderItemBinding
 import com.example.farmersecom.features.home.domain.model.sliderModels.HomeSlider
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 class HomeSliderAdapter(val onSliderItemSelected: (sliderQuery:String) -> Unit):ListAdapter<HomeSlider, HomeSliderAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<HomeSlider>()

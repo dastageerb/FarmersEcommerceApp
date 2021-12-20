@@ -22,7 +22,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.BuildConfig
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
@@ -69,6 +68,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         if(viewModel.getAuthToken()==null)
         {
             findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
+            onDestroy()
         }
 
             initViews()
@@ -101,10 +101,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                         is NetworkResource.Success ->
                         {
                             Timber.tag(TAG).d("${it.data}")
+
                             updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
+                            requireContext().showToast(it.msg.toString())
+                            findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
                             Timber.tag(TAG).d("${it.msg}")
                         }
                     }// when closed

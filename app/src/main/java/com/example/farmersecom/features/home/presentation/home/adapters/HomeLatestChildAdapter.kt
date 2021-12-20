@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutHomeChildItemBinding
 import com.example.farmersecom.features.home.domain.model.homeModels.HomeChildProduct
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 class HomeLatestChildAdapter(val onProductClicked:(productId:String)->Unit):ListAdapter<HomeChildProduct,HomeLatestChildAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<HomeChildProduct>()

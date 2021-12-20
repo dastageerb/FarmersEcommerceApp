@@ -9,7 +9,7 @@ import com.example.farmersecom.databinding.LayoutCartItemViewBinding
 import com.example.farmersecom.databinding.LayoutProductImagesBinding
 import com.example.farmersecom.features.cart.domain.CartItem
 import com.example.farmersecom.features.productDetails.domain.model.ProductPicture
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 class ProductImageAdapter : ListAdapter<ProductPicture, ProductImageAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<ProductPicture>()

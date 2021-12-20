@@ -2,13 +2,12 @@ package com.example.farmersecom.features.productStore.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutProductStoreItemBinding
-import com.example.farmersecom.features.productStore.domain.model.Product
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.features.productStore.domain.model.storeProducts.Product
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 class  StoreProductsAdapter ()
     : ListAdapter<Product, StoreProductsAdapter.ViewHolder>
@@ -32,7 +31,7 @@ class  StoreProductsAdapter ()
 
         fun bind(product: Product?)
         {
-            binding.layoutProductStoreItemImageView.load(product!!.productPictures[0].img)
+            binding.layoutProductStoreItemImageView.load(product?.productPictures!![0].img)
         }
     }
 

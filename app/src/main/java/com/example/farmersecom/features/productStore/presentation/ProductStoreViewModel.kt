@@ -1,24 +1,18 @@
 package com.example.farmersecom.features.productStore.presentation
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.example.farmersecom.features.productStore.domain.model.Product
-import com.example.farmersecom.features.productStore.domain.model.StoreDetailsResponse
+import com.example.farmersecom.features.productStore.domain.model.storeDetails.StoreDetailsResponse
 import com.example.farmersecom.features.productStore.domain.usecase.GetStoreByIdUseCase
 import com.example.farmersecom.features.productStore.domain.usecase.GetStoreProductsByStoreIdUseCase
-import com.example.farmersecom.features.search.domain.model.SearchItem
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
-import com.google.gson.JsonObject
+import com.example.farmersecom.features.productStore.domain.model.storeProducts.Product
+import com.example.farmersecom.features.productStore.domain.model.storeProducts.StoreProducts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -66,7 +60,7 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
     }
 
 
-    /** Get com.example.farmersecom.features.productDetails.domain.model.Store Products Response  Response **/
+    /** Get .Store Products Response  Response **/
 
     private var _storeProductsResponse:MutableStateFlow<NetworkResource<List<Product>>> =
         MutableStateFlow(NetworkResource.None());
@@ -93,11 +87,11 @@ class ProductStoreViewModel @Inject constructor (private  val getStoreByIdUseCas
         } //
     } // searchItem closed
 
-    private fun handleStoreProductsResponse(response: Response<List<Product>>): NetworkResource<List<Product>>
+    private fun handleStoreProductsResponse(response: Response<StoreProducts>): NetworkResource<List<Product>>
     {
         return when(response.code())
         {
-            200 -> NetworkResource.Success(response.body())
+            200 -> NetworkResource.Success(response.body()?.products)
             400 -> NetworkResource.Error(response.errorBody()?.getMessage())
             else -> NetworkResource.Error("Something went wrong ${response.code()}")
         } // when closed

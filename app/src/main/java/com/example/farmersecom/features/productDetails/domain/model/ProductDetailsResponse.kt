@@ -28,6 +28,8 @@ data class ProductDetailsResponse(
     var productRating: Double?,
     @Json(name = "productUnit")
     var productUnit: String?,
+    @Json(name = "sellerId")
+    var sellerId: String?,
     @Json(name = "store")
     var store: Store?
 )

@@ -3,8 +3,6 @@ package com.example.farmersecom.features.buyerSection.data.framework.paginngSour
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.farmersecom.features.buyerSection.data.framework.BuyerDashboardApi
-import com.example.farmersecom.features.search.data.frameWork.SearchApi
-import com.example.farmersecom.features.search.domain.model.SearchItem
 import com.google.gson.JsonObject
 import retrofit2.HttpException
 import java.io.IOException

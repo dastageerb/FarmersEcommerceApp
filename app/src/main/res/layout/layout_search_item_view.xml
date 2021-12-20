@@ -3,72 +3,93 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
+
         <ImageView
-            android:id="@+id/imageViewLayoutSearchItemProductImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@color/colorPrimary"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            />
-        <TextView
-            android:id="@+id/textViewLayoutSearchItemProductName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageViewLayoutSearchItemProductImage"
-            android:text="Product Name"
-            android:textSize="18sp"
-            android:layout_marginTop="8dp"
-            android:textStyle="bold"
-            />
-
-
-
-        <RatingBar
-            android:id="@+id/ratingBarLayoutSearchItem"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewLayoutSearchItemProductName"
+            android:id="@+id/layoutSearchItemsImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/imageViewLayoutSearchItemProductImage"
-            android:layout_marginTop="8dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:stepSize="0.1" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageViewLayoutSearchItemProductImage"
-            android:layout_below="@id/ratingBarLayoutSearchItem"
-            android:text="@string/description"
-            android:layout_marginStart="2dp"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitXY"
             />
-
-
         <TextView
-            android:id="@+id/textViewLayoutSearchItemProductPrice"
+            android:id="@+id/layoutSearchItemsProductNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Price"
-            android:textSize="18sp"
-            android:layout_marginTop="8dp"
+            android:text="Product Name"
+            android:layout_toEndOf="@id/layoutSearchItemsImageView"
+            android:layout_marginTop="48dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             />
+
+        <TextView
+            android:id="@+id/layoutSearchItemsProductCategoryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="category"
+            android:layout_toEndOf="@id/layoutSearchItemsImageView"
+            android:layout_below="@id/layoutSearchItemsProductNameTextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/layoutSearchItemsProductQuantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_toEndOf="@id/layoutSearchItemsImageView"
+            android:layout_below="@id/layoutSearchItemsProductCategoryTextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            />
+        <TextView
+            android:id="@+id/layoutSearchItemsProductQuantityUnitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kil0"
+            android:layout_toEndOf="@id/layoutSearchItemsProductQuantityTextView"
+            android:layout_below="@id/layoutSearchItemsProductCategoryTextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/layoutSearchItemsProductPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutSearchItemsProductQuantityUnitTextView"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/layoutSearchItemsImageView"
+            android:text="120"
+            android:textColor="@color/colorRed"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/layoutSearchItemsProductLocationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutSearchItemsProductQuantityUnitTextView"
+            android:layout_alignParentEnd="true"
+            android:text="Location"
+            android:layout_marginEnd="16dp"
+            android:textSize="20sp" />
 
 
 
     </RelativeLayout>
+
 
 
 </com.google.android.material.card.MaterialCardView>

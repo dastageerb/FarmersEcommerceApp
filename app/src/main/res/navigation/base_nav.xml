@@ -122,9 +122,9 @@
     </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"
-        android:name="com.example.farmersecom.features.orderDetails.presentation.orderDetails.OrderDetailsFragment"
+        android:name="com.example.farmersecom.features.buyNow.presentation.orderDetails.BuyNowOrderDetailsFragment"
         android:label="fragment_order_details"
-        tools:layout="@layout/fragment_order_details" />
+        tools:layout="@layout/fragment_buy_now_details" />
     <fragment
         android:id="@+id/moreSliderItemsFragment"
         android:name="com.example.farmersecom.features.home.presentation.moreSliderItems.MoreSliderItemsFragment"

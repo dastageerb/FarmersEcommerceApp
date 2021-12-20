@@ -1,26 +1,52 @@
 package com.example.farmersecom.features.search.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutSearchItemViewBinding
-import com.example.farmersecom.features.search.domain.model.SearchItem
+import com.example.farmersecom.features.home.domain.model.more.MoreProduct
+import com.example.farmersecom.features.search.domain.model.Product
+import com.example.farmersecom.features.search.domain.model.SearchResponse
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 
+class SearchItemAdapter ()
+    : ListAdapter<Product, SearchItemAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Product>()
+{
+    override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean
+    {
+        return oldItem == newItem
+    }
 
-class SearchItemAdapter (diffUtil: DiffUtil.ItemCallback<SearchItem>)
-    : PagingDataAdapter<SearchItem, SearchItemAdapter.ViewHolder>(diffUtil)
+    override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean
+    {
+        return oldItem.toString() == newItem.toString()
+    }
+})
 {
 
 
 
-    inner  class  ViewHolder(binding: LayoutSearchItemViewBinding) : RecyclerView.ViewHolder(binding.root)
+    inner  class  ViewHolder(val binding: LayoutSearchItemViewBinding) : RecyclerView.ViewHolder(binding.root)
     {
 
-        fun bind(searchItem: SearchItem?)
+        fun bind(product: Product?)
         {
-
+            binding.apply()
+            {
+                if (product?.productPicture?.isNotEmpty() == true)
+                {
+                    layoutSearchItemsImageView.load(product?.productPicture)
+                }
+                layoutSearchItemsProductNameTextView.text = product?.productName
+                layoutSearchItemsProductCategoryTextView.text = product?.productCategory
+                layoutSearchItemsProductQuantityTextView.text = product?.productQuantity.toString()
+                layoutSearchItemsProductQuantityUnitTextView.text = product?.productUnit
+                layoutSearchItemsProductPriceTextView.text = product?.productPrice.toString()
+                layoutSearchItemsProductLocationTextView.text = product?.productLocation
+//
+            }
         }
     }
 

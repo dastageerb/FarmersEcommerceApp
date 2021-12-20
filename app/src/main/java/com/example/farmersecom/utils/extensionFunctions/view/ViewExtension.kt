@@ -21,16 +21,6 @@ object ViewExtension
         this.visibility = View.GONE
     }
 
-    fun ImageView.load(url:String?)
-    {
-        Picasso.get().load(url).into(this)
-    }
-
-
-    fun ImageView.load(url: String?, placeHolder: Int)
-    {
-        Picasso.get().load(url).placeholder(placeHolder).into(this)
-    }
 
 
 

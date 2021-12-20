@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,14 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProductDetailsBinding
-import com.example.farmersecom.features.orderDetails.presentation.orderDetails.PlaceOrderViewModel
+import com.example.farmersecom.features.buyNow.presentation.orderDetails.PlaceOrderViewModel
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.model.ProductPicture
 import com.example.farmersecom.features.productStore.presentation.ProductStoreViewModel
 import com.example.farmersecom.utils.constants.Constants
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.utils.constants.Constants.TAG
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
-import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -66,10 +65,8 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         subscribeProductDetailsResponseFlow()
         binding.buttonProductDetailsFragmentBuyNow.setOnClickListener()
         {
-
-            orderViewModel.setList(list)
+            orderViewModel.product = list[0]
             findNavController().navigate(R.id.action_productDetailsFragment_to_orderDetailsFragment)
-
         }
 
     } // onViewCreated
@@ -121,6 +118,7 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         {
             data.store?.let()
             {
+                Timber.tag(TAG).d(""+it)
                 storeViewModel.setStoreId(it.id!!)
                 findNavController().navigate(R.id.action_productDetailsFragment_to_productStoreFragment)
             }

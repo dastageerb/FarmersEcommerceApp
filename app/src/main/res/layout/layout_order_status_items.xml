@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        >
+        <ImageView
+            android:id="@+id/layoutOrderStatusImageView"
+            android:layout_width="100dp"
+            android:layout_height="110dp"
+            android:layout_centerVertical="true"
+            android:src="@color/colorPrimary"
+            android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/layoutOrderStatusProductNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/layoutOrderStatusImageView"
+            android:text="Product Name" />
+        <TextView
+            android:id="@+id/layoutOrderStatusOrderQuantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/layoutOrderStatusImageView"
+            android:layout_below="@id/layoutOrderStatusProductNameTextView"
+            android:layout_marginTop="8dp"
+            android:text="Item Quantity"
+            android:layout_marginStart="8dp"
+            />
+
+
+        <TextView
+            android:id="@+id/textStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/layoutOrderStatusImageView"
+            android:layout_below="@id/layoutOrderStatusOrderQuantityTextView"
+            android:layout_marginTop="8dp"
+            android:text="status"
+            android:layout_marginStart="8dp"
+            />
+        <TextView
+            android:id="@+id/layoutOrderStatusOrderStatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/textStatus"
+            android:layout_below="@id/layoutOrderStatusOrderQuantityTextView"
+            android:layout_marginTop="8dp"
+            android:text="active"
+            android:layout_marginStart="8dp"
+            />
+        <TextView
+            android:id="@+id/layoutOrderStatusTotalPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/layoutOrderStatusImageView"
+            android:layout_below="@id/layoutOrderStatusOrderStatusTextView"
+            android:layout_marginTop="8dp"
+            android:text="Total Price"
+            android:layout_marginStart="8dp"
+            />
+
+    </RelativeLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

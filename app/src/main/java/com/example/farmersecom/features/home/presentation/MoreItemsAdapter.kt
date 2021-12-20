@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutMoreItemBinding
 import com.example.farmersecom.features.home.domain.model.MoreProductsResponseItem
 import com.example.farmersecom.features.home.domain.model.more.MoreProduct
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 class MoreItemsAdapter(val onProductSelected:(productId:String)->Unit) : ListAdapter<MoreProduct,MoreItemsAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<MoreProduct>()

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutMoreItemBinding
 import com.example.farmersecom.features.home.domain.model.MoreProductsResponseItem
 import com.example.farmersecom.features.home.domain.model.more.MoreProduct
-import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.load
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 class MoreItemsPagingAdapter(val onProductSelected:(productId:String)->Unit) : PagingDataAdapter<MoreProduct,MoreItemsPagingAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<MoreProduct>()

@@ -7,9 +7,13 @@ object PicassoExtensions
 {
 
 
-    fun ImageView.load(url: String?)
+    fun ImageView.load(url:String?)
     {
-        Picasso.get().load(url).into(this)
+        if(url!!.isNotEmpty())
+        {
+            Picasso.get().load(url).into(this)
+        }
+
     }
 
 
@@ -17,5 +21,6 @@ object PicassoExtensions
     {
         Picasso.get().load(url).placeholder(placeHolder).into(this)
     }
+
 
 }

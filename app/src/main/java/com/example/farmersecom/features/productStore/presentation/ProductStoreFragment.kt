@@ -1,5 +1,6 @@
 package com.example.farmersecom.features.productStore.presentation
 
+import android.nfc.Tag
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,8 +20,11 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProductStoreBinding
 import com.example.farmersecom.features.home.presentation.home.adapters.HomeSliderAdapter
+import com.example.farmersecom.features.productStore.domain.model.storeDetails.StoreDetailsResponse
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +38,7 @@ import timber.log.Timber
 class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
 {
 
-    private val id = "616fe967f92cd90016fc069";
+
     private val storeViewModel:ProductStoreViewModel by activityViewModels()
     private val viewModel:ProductStoreViewModel by activityViewModels()
     private lateinit var storeProductsAdapter: StoreProductsAdapter
@@ -48,17 +52,23 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
+
         viewLifecycleOwner.lifecycleScope.launch()
         {
             storeViewModel.getStoreId.collect()
             {
-                viewModel.getStoreDetails(id)
+                Timber.tag(TAG).d("storeID = "+it)
+                viewModel.getStoreDetails(it)
+                viewModel.getStoreProducts(it)
             }
         }
 
 
         setupStoreRecycler(binding.fragmentProductStoreRecyclerView)
-        //viewModel.getStoreProducts(id)
+
+
         subscribeToStoreDetailsResponseFlow()
         subscribeToStoreProductsResponseFlow()
 
@@ -78,9 +88,8 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
                     {
                         is NetworkResource.Success ->
                         {
-                            requireContext().showToast(it.data.toString())
                             Timber.tag(Constants.TAG).d("${it.data}")
-                            // updateViews(it.data)
+                            updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
@@ -91,6 +100,29 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
     } // subscribeToSearchResponseFlow
+
+    private fun updateViews(data: StoreDetailsResponse?)
+    {
+        binding.apply()
+        {
+
+            data?.let()
+            {
+                data->
+
+                fragmentProductStoreSellerImageViewView.load(data.owner?.profilePicture)
+                fragmentProductStoreStoreImageView.load(data.storeImage)
+
+                fragmentProductStoreNameTextView.text = data.storeName
+                fragmentProductStoreDescriptionTextView.text = data.about
+
+                fragmentProductStoreSellerNameTextView.text = data.owner?.firstName
+
+            }
+
+
+        }
+    } // updateViews closed
 
 
     private fun subscribeToStoreProductsResponseFlow()
@@ -107,7 +139,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
                             storeProductsAdapter.submitList(it.data)
-                            // updateViews(it.data)
+
                         }
                         is NetworkResource.Error ->
                         {

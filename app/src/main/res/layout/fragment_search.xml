@@ -19,33 +19,53 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:elevation="10dp"
         android:layout_below="@id/fragmentSearchFiltersImageView"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/fragmentSearchSearchImageView"
         >
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/editTextSearchFragmentSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_baseline_search_24"
             android:hint="Search Product Here"
             android:paddingStart="32dp"
-            android:paddingEnd="22dp" />
+            android:paddingEnd="22dp"
+            android:inputType="text"
+            />
     </com.google.android.material.card.MaterialCardView>
 
+    <ImageView
+        android:id="@+id/fragmentSearchSearchImageView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/fragmentSearchFiltersImageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_search_24"
+        android:layout_marginEnd="8dp"
+        />
 
+    <ProgressBar
+        android:id="@+id/fragmentSearchProgressbar"
+        android:layout_below="@id/cardView"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearchFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cardView"
-        android:layout_marginTop="16dp"
-        />
+        android:layout_below="@id/fragmentSearchProgressbar"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>
