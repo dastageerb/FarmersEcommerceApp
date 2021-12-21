@@ -104,12 +104,12 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
             // product info
             binding.fragmentOrderDetailsForBuyerProductNameTextView.text = data?.productName
             binding.fragmentOrderDetailsForBuyerProductDefaultQuantityUnitTextView.text ="yet to code"
-            binding.fragmentOrderDetailsForBuyerProductDPriceTextView.text = "yet to code"
+            binding.fragmentOrderDetailsForBuyerProductDPriceTextView.text = data?.productprice.toString()
             binding.fragmentOrderDetailsForBuyerProductDefaultQuantityUnitTextView.text = data?.unit
             // orderInfo
             binding.fragmentOrderDetailsForBuyerOrderIdTextView.text = data?.id
             binding.fragmentOrderDetailsForBuyerOrderQuantityTextView.text = data?.orderQuantity.toString()
-            binding.fragmentOrderDetailsForBuyerOderDateTextView.text = "yet to code"
+            binding.fragmentOrderDetailsForBuyerOderDateTextView.text = data?.date?.substring(0,10)
             binding.fragmentOrderDetailsForBuyerOrderDeliveryChargesTextView.text = "yet to code"
             binding.fragmentOrderDetailsForBuyerOrderSubtotalTextView.text = data?.subTotal.toString()
             binding.fragmentOrderDetailsForBuyerOrderTotalTextView.text = data?.totalPrice.toString()

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutOrderStatusItemsBinding
 import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.Order
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 class OrderStatusAdapter(private val onOrderClicked:(String)->Unit) : ListAdapter<Order, OrderStatusAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<Order>()
@@ -31,9 +32,12 @@ class OrderStatusAdapter(private val onOrderClicked:(String)->Unit) : ListAdapte
 
         fun bind(order: Order?)
         {
+
+            binding.layoutOrderStatusProductNameTextView.text = order?.productName
+            binding.layoutOrderStatusImageView.load(order?.productImage)
+
             binding.layoutOrderStatusOrderQuantityTextView.text = order?.orderQuantity.toString()
             binding.layoutOrderStatusOrderStatusTextView.text = order?.orderStatus.toString()
-
             binding.layoutOrderStatusTotalPriceTextView.text = order?.totalPrice.toString()
 
             when(order?.orderStatus)

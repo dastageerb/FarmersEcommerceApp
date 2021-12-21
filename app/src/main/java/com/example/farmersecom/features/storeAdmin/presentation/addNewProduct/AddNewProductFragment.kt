@@ -37,10 +37,18 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import android.util.Base64
+import androidx.core.view.PointerIconCompat.TYPE_TEXT
+import com.example.farmersecom.features.storeAdmin.data.framework.entities.NewProduct
+import com.example.farmersecom.features.storeAdmin.domain.model.categories.Category
 import com.example.farmersecom.features.storeAdmin.presentation.StoreProductViewModel
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.imageUtils.ImageCropHelper
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.File
 
 
 @AndroidEntryPoint
@@ -50,6 +58,9 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
     private lateinit var firstImageUri: Uri
     private lateinit var secondImageUri: Uri
     private lateinit var thirdImageUri: Uri
+
+     lateinit var categoryId:String
+
     private val viewModel: StoreProductViewModel by viewModels()
 
 
@@ -76,6 +87,8 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
         initView();
 
+        viewModel.getAllCategories()
+        subscribeToGetALLCategoriesFlow()
         subscribeAddNetProductResponseFlow()
 
     } // onViewCreated closed
@@ -89,9 +102,10 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
         binding.buttonAddProductFragSubmit.setOnClickListener(this)
 
         // these list will come from server
-        binding.autoCompleteAddNewProductProductQuantity.inputType = InputType.TYPE_NULL
-        binding.autoCompleteAddNewProductProductQuantity.setUpAdapter(requireContext(), R.array.Product_Quantity)
+       // binding.autoCompleteAddNewProductProductQuantity.inputType = InputType.TYPE_NULL
+       // binding.autoCompleteAddNewProductProductQuantity.setUpAdapter(requireContext(), R.array.Product_Quantity)
 
+         binding.autoCompleteAddNewProductProductCategory.inputType = InputType.TYPE_NULL
         binding.autoCompleteAddNewProductProductCategory.inputType = InputType.TYPE_NULL
         binding.autoCompleteAddNewProductProductCategory.setUpAdapter(requireContext(), R.array.Product_Category)
 
@@ -171,9 +185,57 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
 
 
+    private fun subscribeToGetALLCategoriesFlow()
+    {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                viewModel.categoriesResponse.collect()
+                {
+                    when(it)
+                    {
+                        is NetworkResource.Loading ->
+                        {
+                            requireContext().showToast("Loading Categories")
+                            binding.fragmentAddNewProductProgressBar.show()
+                            Timber.tag(Constants.TAG).d("Loading")
+                        }
+                        is NetworkResource.Success ->
+                        {
+                            binding.fragmentAddNewProductProgressBar.hide()
+                            val categoriesAdapter =
+                                CategoriesAdapter(
+                                    {
+                                        //binding.autoCompleteAddNewProductProductCategory.inputType =
+                                        binding.autoCompleteAddNewProductProductCategory.setText(it.name)
+                                        categoryId = it.id.toString()
+                                    },requireContext(),
+                                    R.layout.layout_categories_item,
+                                    it.data?.categoryList as MutableList<Category>)
+                            binding.autoCompleteAddNewProductProductCategory.setAdapter(categoriesAdapter)
+                            Timber.tag(Constants.TAG).d("Fragment  ${it.data}")
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            binding.fragmentAddNewProductProgressBar.hide()
+                            Timber.tag(Constants.TAG).d(" Fragment  ${it.msg}")
+                        }
+                    }// when closed
+                } // getProfile closed
+            } // repeatOnLife cycle closed
+        } /// lifecycleScope closed
+
+    } // subscribeProfileResponseFlow closed
+
+
+
 
     private fun addNewProduct()
     {
+
+
+
         binding.apply()
         {
 
@@ -186,20 +248,16 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
             val quantityUnit = buttonProductQuantityUnitGroup
                 .findViewById<MaterialButton>(quantityButtonId).text.toString()
 
-            val productQuantity = autoCompleteAddNewProductProductQuantity.text.toString().trim()
+         //   val productQuantity = autoCompleteAddNewProductProductQuantity.text.toString().trim()
             val productCategory = autoCompleteAddNewProductProductCategory.text.toString().trim()
-
 
 
             val productPriceInRupees = editTextAddNewProductPriceInRupees.text.toString().trim()
 
-
-
             if( validateData(productName,productDescription, quantityUnit,
-                                        productQuantity,productCategory,productPriceInRupees) &&
-                validateImageViews(firstImageUri) )
+                                        productCategory,productPriceInRupees) &&
+                validateImageViews() )
             {
-
                 var file = firstImageUri.toFile()
 
                 if(file.exists())
@@ -212,35 +270,15 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
                 val requestFile = file.asRequestBody(requireContext().contentResolver.getType(getImageURi())?.toMediaTypeOrNull())
                 val productImage = MultipartBody.Part.createFormData("productPicture", file.path, requestFile)
 
-//
-//                val reqBodyName:RequestBody = createPartFromString(productName)
-////                val reqBodyPrice = productName.toRequestBody("text/plain".toMediaTypeOrNull())
-////                val reqBodyDescription = productName.toRequestBody("text/plain".toMediaTypeOrNull())
-////                val reqBodyCategory = productName.toRequestBody("text/plain".toMediaTypeOrNull())
-////                val reqBodyUnit = productName.toRequestBody("text/plain".toMediaTypeOrNull())
-////                val reqBodyQuantity = productName.toRequestBody("text/plain".toMediaTypeOrNull())
-//
-//
-                val map = mutableMapOf<String,String>()
-                //map.put("name",reqBodyName)
+                val product = NewProduct(productName
+                    ,productPriceInRupees.toInt()
+                    ,productDescription
+                    ,categoryId
+                    ,quantityUnit,
+                    "MPS",1)
+                viewModel.addNewProductViewModel(product,productImage)
 
-                map["name"] = productName
-                map["price"] = productName
-                map["description"] = productName
-                map["category"] = productName
-                map["unit"] = productName
-                map["quantity"] = productName
-//
-                viewModel.addNewProductViewModel(map,productImage)
 
-////                val newProduct  = NewProduct(
-////                    productName,
-////                    productPriceInRupees.toInt()
-////                    ,productDescription
-////                    ,productCategory
-////                    ,quantityUnit
-////                    ,productQuantity.toInt(),convertUriToBase64(firstImageUri))
-///               viewModel.addNewProductViewModel(newProduct)
 
 
             } // if closed
@@ -249,6 +287,7 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
 
     } // AddNewProduct closed
+
 
     fun createPartFromString(string: String?): RequestBody
     {
@@ -268,23 +307,32 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
 
 
-    private fun validateData(name: String,description: String,unit: String,quantity: String,category: String,
+    private fun validateData(name: String,description: String,unit: String,category: String,
                              productPrice: String) :Boolean
     {
 
+
+        if (!this::categoryId.isInitialized)
+        {
+            requireContext().showToast("Select Category")
+        }
         return name.nonEmpty { binding.editTextAddNewProductName.error = it }
                 && description.nonEmpty { binding.editTextAddNewProductDescription.error = it}
                 && unit.nonEmpty { requireContext().showToast("Please Select Product Unit") }
-                && quantity.nonEmpty() { binding.autoCompleteAddNewProductProductQuantity.error = it }
                 && category.nonEmpty() { binding.autoCompleteAddNewProductProductCategory.error = it }
                 && productPrice.nonEmpty() { binding.editTextAddNewProductPriceInRupees.error = it }
 
     } // validate Data closed
 
 
-    private fun validateImageViews(firstImageUri: Uri): Boolean
+    private fun validateImageViews(): Boolean
     {
-        return firstImageUri.toString().nonEmpty() { requireContext().showToast("Select First Image")}
+        if(!this::firstImageUri.isInitialized)
+        {
+            requireContext().showToast("Select First Image")
+            return false
+        }
+        return true
 //                &&
 //        return secondImageUri.toString().nonEmpty() { requireContext().showToast("Select Second Image")}
 //                &&

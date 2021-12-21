@@ -30,7 +30,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
 
 
     private val  viewModel: StoreDashboardViewModel by activityViewModels()
-
+    val orderStatusList = arrayOf("pending","inProcess","delivered","completed")
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentOrderDetailsForSellerBinding
     {
         return FragmentOrderDetailsForSellerBinding.inflate(inflater,container,false)
@@ -41,6 +41,12 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
     {
         super.onViewCreated(view, savedInstanceState)
 
+
+        binding.fragmentOrderDetailsForSellerButtonChangStatus.setOnClickListener()
+        {
+
+        }
+
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
@@ -50,6 +56,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
                     getOrderDetails(it)
                 } // collect
             } // repeatOnLife cycle closed
+
         } /// lifecycleScope closed
     } // onViewCreated
 
@@ -112,17 +119,27 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
             // product info
             binding.fragmentOrderDetailsForSellerProductNameTextView.text = data?.productName
             binding.fragmentOrderDetailsForSellerProductDefaultQuantityTextView.text  = "yet to code"
-            binding.fragmentOrderDetailsForSellerProductDPriceTextView.text = "yet to code"
+            binding.fragmentOrderDetailsForSellerProductDPriceTextView.text = data?.productprice.toString()
 
             // Order info
             binding.fragmentOrderDetailsForSellerOrderIdTextView.text = data?.id
-            binding.fragmentOrderDetailsForSellerOderDateTextView.text = "ye to code"
+            binding.fragmentOrderDetailsForSellerOderDateTextView.text = data?.date?.substring(0,10)
             binding.fragmentOrderDetailsForSellerOrderQuantityTextView.text = data?.orderQuantity.toString()
             binding.fragmentOrderDetailsForSellerOrderDeliveryChargesTextView.text = "yet to code"
 
             binding.fragmentOrderDetailsForSellerOrderSubtotalTextView.text = data?.subTotal.toString()
             binding.fragmentOrderDetailsForSellerOrderTotalTextView.text = data?.totalPrice.toString()
             binding.fragmentOrderDetailsForSellerOrderStatusTextView.text = data?.orderStatus
+
+
+            orderStatusList.forEachIndexed()
+            {
+                index: Int, status: String ->
+                if(data?.orderStatus.equals(status) && index < orderStatusList.size-1)
+                {
+                    binding.fragmentOrderDetailsForSellerButtonChangStatus.text = orderStatusList.get(index+1)
+                } // if closed
+            }
 
         } // apply closed
     }// updateView closed

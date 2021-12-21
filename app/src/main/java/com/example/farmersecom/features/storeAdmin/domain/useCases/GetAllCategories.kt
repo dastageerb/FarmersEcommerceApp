@@ -7,9 +7,9 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
 
-class AddProductUseCase @Inject constructor(private val storeAdminRepository: StoreAdminRepository)
+class GetAllCategories @Inject constructor(private val storeAdminRepository: StoreAdminRepository)
 {
 
-    suspend fun addNewProduct(newProduct:NewProduct,file: MultipartBody.Part) = storeAdminRepository.addNewProduct(newProduct,file)
+    suspend fun getAllCategories() = storeAdminRepository.getAllCategories()
 
 } // addProductUseCase closed

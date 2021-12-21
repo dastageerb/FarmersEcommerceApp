@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.example.farmersecom.R
+import com.example.farmersecom.features.storeAdmin.domain.model.categories.Category
 
 object Utils
 {

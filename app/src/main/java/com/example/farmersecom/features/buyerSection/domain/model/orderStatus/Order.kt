@@ -12,10 +12,8 @@ data class Order(
     var city: String?,
     @Json(name = "contactNumber")
     var contactNumber: String?,
-    @Json(name = "createdAt")
-    var createdAt: String?,
-    @Json(name = "deliveryCharges")
-    var deliveryCharges: Int?,
+    @Json(name = "date")
+    var date: String?,
     @Json(name = "_id")
     var id: String?,
     @Json(name = "isActive")
@@ -30,20 +28,14 @@ data class Order(
     var orderQuantity: Int?,
     @Json(name = "orderStatus")
     var orderStatus: String?,
-    @Json(name = "paymentOption")
-    var paymentOption: String?,
-    @Json(name = "postalCode")
-    var postalCode: Int?,
     @Json(name = "productId")
     var productId: String?,
-    @Json(name = "storeId")
-    var storeId: String?,
+    @Json(name = "productImage")
+    var productImage: String?,
+    @Json(name = "productName")
+    var productName: String?,
     @Json(name = "subTotal")
     var subTotal: Int?,
     @Json(name = "totalPrice")
-    var totalPrice: Int?,
-    @Json(name = "updatedAt")
-    var updatedAt: String?,
-    @Json(name = "__v")
-    var v: Int?
+    var totalPrice: Int?
 )
