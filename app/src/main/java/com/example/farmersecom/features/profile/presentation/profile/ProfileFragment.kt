@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.BuildConfig
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -26,12 +27,14 @@ import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProfileBinding
+import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
 import com.example.farmersecom.features.profile.domain.model.Profile
 import com.example.farmersecom.utils.constants.Constants.APP_PACKAGE_NAME
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasCameraPermission
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasStoragePermission
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 import com.example.farmersecom.utils.imageUtils.ImageCropHelper
 import com.example.farmersecom.utils.imageUtils.ImageUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,16 +68,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         super.onViewCreated(view, savedInstanceState)
 
 
-        Timber.tag(TAG).d("${viewModel.getAuthToken()}")
-        if(viewModel.getAuthToken()==null)
+        Timber.tag(TAG).d("token = ${viewModel.getAuthToken()}")
+        if(viewModel.getAuthToken()?.isEmpty() == true)
         {
             findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
-            onDestroy()
         }
 
             initViews()
             subscribeProfileResponseFlow()
-            subscribeChangeImageResponseFlow()
+
 
 
     } // onViewCreate closed
@@ -82,10 +84,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     override fun onStart()
     {
         super.onStart()
-//        if(viewModel.getAuthToken()==null)
-//        {
-//            findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
-//        }
+
     }
 
 
@@ -99,16 +98,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                 {
                     when(it)
                     {
+                        is NetworkResource.Loading ->
+                        {
+                            Timber.tag(TAG).d("Loading")
+
+                        }
                         is NetworkResource.Success ->
                         {
-                            Timber.tag(TAG).d("${it.data}")
-
+                            Timber.tag(TAG).d(""+it.data)
                             updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
+                          //  findNavController().popBackStack()
                             requireContext().showToast(it.msg.toString())
-                            findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
+                           // viewModel.clearToken()
+                            //findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
                             Timber.tag(TAG).d("${it.msg}")
                         }
                     }// when closed
@@ -132,9 +137,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
     } /// init Views
 
-    private fun updateViews(data: Profile?) = binding.apply()
+    private fun updateViews(data: ProfileNetworkEntity?) = binding.apply()
     {
-      //  imageViewProfile.load(data?.userImgUrl)
+        imageViewProfile.load(data?.userImgUrl)
         textViewProfileFragName.text = data?.fullName
         if(data?.isSeller==true)
         {
@@ -155,13 +160,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             {
                 viewModel.clearToken()
                 findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+                this.onDestroy()
             }
             R.id.buttonSetupStore ->
             {
                 findNavController().navigate(R.id.action_profileFragment_to_setupStoreFragment)
             }
             R.id.buttonGoToStore -> findNavController().navigate(R.id.action_profileFragment_to_storeFragment)
-            R.id.buttonChangePhoto -> changePhoto();
+            R.id.buttonChangePhoto ->
+            {
+                changePhoto();
+                subscribeChangeImageResponseFlow()
+            }
             R.id.buttonBuyersSection ->
             {
                 findNavController().navigate(R.id.action_profileFragment_to_buyerDashboardFragment)
@@ -268,6 +278,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     { uri: Uri? ->
         uri?.let()
         {
+            binding.imageViewProfile.load(uri.toString())
             binding.imageViewProfile.setImageURI(uri)
             // pass the uri to  image cropper
             cropGalleryImage.launch(uri)

@@ -35,10 +35,9 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
         list.add(DashBoardItem("Discontinued Products", R.drawable.ic_baseline_discountinued_24))
         list.add(DashBoardItem("Active Order", R.drawable.ic_baseline_live_orders_24))
         list.add(DashBoardItem("Completed Order", R.drawable.ic_baseline_live_orders_24))
-        list.add(DashBoardItem("Seller Feedback", R.drawable.ic_baseline_live_orders_24))
         val adapter  = StoreDashBoardAdapter()
         {
-            //Timber.tag(TAG).d(it.itemName)
+            navigateFromDashBoard(it)
         }
         adapter.itemList = list
         binding.storeDashboardListView.adapter = adapter
@@ -54,5 +53,18 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
             R.id.fragmentStoreDashboardAddNewProductButton -> findNavController().navigate(R.id.action_storeFragment_to_addNewProductFragment)
         } // when closed
     } // onClick closed
+
+
+    private fun navigateFromDashBoard(position: Int)
+    {
+        when(position)
+        {
+            0 -> findNavController().navigate(R.id.action_storeFragment_to_activeProductsFragment)
+            1 -> findNavController().navigate(R.id.action_storeFragment_to_discontinuedProductsFragment)
+            2 -> findNavController().navigate(R.id.action_storeFragment_to_activeOrdersFragment)
+            3 -> findNavController().navigate(R.id.action_storeFragment_to_completedOrdersFragment)
+        }
+    }
+
 
 } // StoreFragment

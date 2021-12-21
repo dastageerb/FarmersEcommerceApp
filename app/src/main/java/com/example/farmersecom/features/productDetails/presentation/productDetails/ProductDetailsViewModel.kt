@@ -25,7 +25,7 @@ import javax.inject.Inject
 class ProductDetailsViewModel @Inject constructor(private val getProductByIdUseCase: GetProductByIdUseCase) :ViewModel()
 {
 
-
+     // for shared Use
     val setProductId :MutableStateFlow<String> = MutableStateFlow("")
     val getProductId :StateFlow<String> = setProductId
     fun setProductId(query:String)

@@ -1,6 +1,7 @@
 package com.example.farmersecom.features.profile.domain
 
 import com.example.farmersecom.features.profile.data.framework.entities.ChangePhotoNetworkEntity
+import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.profile.data.framework.entities.SetUpStoreResponse
 import com.example.farmersecom.features.profile.data.framework.entities.SetupStoreData
@@ -14,7 +15,7 @@ interface ProfileRepository
 {
 
 
-    suspend fun getProfile() : Flow<NetworkResource<Profile>>
+    suspend fun getProfile() : Response<ProfileNetworkEntity>
 
     suspend fun setupStore(setupStoreData: SetupStoreData):Response<SetUpStoreResponse>
 

@@ -7,13 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutOrderStatusItemsBinding
-import com.example.farmersecom.databinding.LayoutProductStoreItemBinding
-import com.example.farmersecom.features.buyerSection.domain.model.Order
-import com.example.farmersecom.features.productStore.domain.model.storeProducts.Product
-import com.example.farmersecom.features.productStore.presentation.StoreProductsAdapter
-import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
+import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.Order
 
-class OrderStatusAdapter : ListAdapter<Order, OrderStatusAdapter.ViewHolder>
+class OrderStatusAdapter(private val onOrderClicked:(String)->Unit) : ListAdapter<Order, OrderStatusAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<Order>()
 {
     override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean
@@ -61,5 +57,12 @@ class OrderStatusAdapter : ListAdapter<Order, OrderStatusAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         holder.bind(getItem(position))
+
+        holder.itemView.setOnClickListener()
+        {
+            getItem(position).id?.let { it1 -> onOrderClicked(it1) }
+        }
+
+
     } // onBindViewHolder closed
 }

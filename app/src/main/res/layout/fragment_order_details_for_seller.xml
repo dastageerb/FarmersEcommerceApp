@@ -1,308 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.storeAdmin.presentation.orderDetailsForSeller.OrderDetailsForSellerFragment"
     >
 
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/orderDetailsForSellerFragmentProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        />
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         >
-
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/fragmentOrderDetailsForSellerDetailsLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Buyer Info"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-
-            />
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="buyer name"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buyer Info"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerBuyerNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Deepak" />
+                />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Postal code"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="buyer name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerPostalCodeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="76260" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="City"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerCityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Mps" />
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerBuyerNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Deepak" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Address"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Postal code"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerAddressTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Meer Colony" />
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerPostalCodeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="76260" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Contact No"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="City"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerContactNoTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="575757775557" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Product info"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Product Name"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerProductNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Potato" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Default Quantity"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerProductDefaultQuantityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="1" />
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerCityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Mps" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Product Price"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Address"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerProductDPriceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="125" />
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerAddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Meer Colony" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Order info"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Contact No"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerContactNoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="575757775557" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Order Id"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product info"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                />
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerOrderIdTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="1234Xsfefr" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Product Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerOderDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Place At"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerProductNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Potato" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:text="22/4/2022" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Default Quantity"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Order Quantity"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerOrderQuantityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Delivery Charges"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerOrderDeliveryChargesTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="125" />
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerProductDefaultQuantityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="1" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Sub total "
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Product Price"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerOrderSubtotalTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="80" />
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerProductDPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="125" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="total "
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerOrderTotalTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="280" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:text="Status "
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/fragmentOrderDetailsForSellerOrderStatusTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Active" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order info"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                />
 
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Order Id"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerOrderIdTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="1234Xsfefr" />
+
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerOderDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Place At"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="22/4/2022" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Order Quantity"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerOrderQuantityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Delivery Charges"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerOrderDeliveryChargesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="125" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Sub total "
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerOrderSubtotalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="80" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="total "
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerOrderTotalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="280" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="Status "
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fragmentOrderDetailsForSellerOrderStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Active" />
+        </LinearLayout>
+
+    </ScrollView>
 
 
 
-</ScrollView>
+
+</RelativeLayout>

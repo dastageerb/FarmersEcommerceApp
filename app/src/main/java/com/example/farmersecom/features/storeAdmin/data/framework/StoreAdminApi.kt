@@ -1,7 +1,7 @@
 package com.example.farmersecom.features.storeAdmin.data.framework
 
+import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.OrderStatusResponse
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
-import com.example.farmersecom.features.storeAdmin.domain.model.OrderStatus
 import com.example.farmersecom.features.storeAdmin.domain.model.ProductStatus
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -30,11 +30,8 @@ interface  StoreAdminApi
 
 
     // TODO
-    @GET("api/product/")
-    suspend fun getOrderByStatus(
-        @Query("pageNo")pageNo:Int,
-        @Query("pageSize")pageSize:Int,
-        @Query("orderStatus")orderStatus:String): Response<List<OrderStatus>>
+    @GET("api/store/order/getStoreOrders")
+    suspend fun getOrderByStatus(@Query("isActive")orderStatus:Boolean): Response<OrderStatusResponse>
 
 
 } // storeAdminApi

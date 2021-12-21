@@ -1,8 +1,8 @@
 package com.example.farmersecom.features.storeAdmin.domain
 
 import androidx.paging.PagingData
+import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.OrderStatusResponse
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
-import com.example.farmersecom.features.storeAdmin.domain.model.OrderStatus
 import com.example.farmersecom.features.storeAdmin.domain.model.ProductStatus
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -15,6 +15,6 @@ interface StoreAdminRepository
 
     suspend fun getProductByStatus(isActive:Boolean): Flow<PagingData<ProductStatus>>
 
-    suspend fun getOrdersByStatus(orderStatus:String): Flow<PagingData<OrderStatus>>
+    suspend fun getOrdersByStatus(orderStatus:Boolean): Response<OrderStatusResponse>
 
 } //

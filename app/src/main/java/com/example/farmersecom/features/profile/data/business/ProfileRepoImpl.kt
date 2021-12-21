@@ -29,19 +29,7 @@ class ProfileRepoImpl(
 
 
     /**   Profile  **/
-    override suspend fun getProfile() = flow<NetworkResource<Profile>>
-    {
-        emit(NetworkResource.Loading())
-         try
-        {
-            val response = profileApi.getProfile()
-            emit(handleProfileResponse(response))
-        }catch (e:Exception)
-        {
-            emit(NetworkResource.Error(e.handleException()))
-        } //
-    } // getProfile closed
-
+    override suspend fun getProfile() = profileApi.getProfile()
 
 
 

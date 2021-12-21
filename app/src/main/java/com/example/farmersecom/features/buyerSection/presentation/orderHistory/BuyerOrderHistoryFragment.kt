@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentBuyerOrderHistoryBinding
 import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboardViewModel
@@ -29,7 +32,8 @@ import timber.log.Timber
 class BuyerOrderHistoryFragment : BaseFragment<FragmentBuyerOrderHistoryBinding>()
 {
 
-    private val viewModel:BuyerDashboardViewModel by viewModels()
+
+    private val viewModel:BuyerDashboardViewModel by activityViewModels()
     private lateinit var orderStaAdapter: OrderStatusAdapter
 
 
@@ -82,6 +86,10 @@ class BuyerOrderHistoryFragment : BaseFragment<FragmentBuyerOrderHistoryBinding>
     private fun setupRecycler(recycler: RecyclerView)
     {
         orderStaAdapter = OrderStatusAdapter()
+        {
+            viewModel.setOrderId(it)
+            findNavController().navigate(R.id.action_buyerOrderHistoryFragment_to_orderDetailsForBuyerFragment)
+        }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = orderStaAdapter
     } // setupHomeSlider closed

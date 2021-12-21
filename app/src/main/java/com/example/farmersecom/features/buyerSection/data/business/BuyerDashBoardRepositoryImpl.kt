@@ -7,13 +7,21 @@ import com.example.farmersecom.features.buyerSection.data.framework.BuyerDashboa
 import com.example.farmersecom.features.buyerSection.data.framework.paginngSource.BuyerFavouritesPagingSource
 import com.example.farmersecom.features.buyerSection.data.framework.paginngSource.BuyerNotificationPagingSource
 import com.example.farmersecom.features.buyerSection.domain.BuyerDashboardRepository
+import com.example.farmersecom.features.buyerSection.domain.model.orderDetails.OrderDetailsResponse
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 
 class BuyerDashBoardRepositoryImpl(private val buyerDashboardApi: BuyerDashboardApi):BuyerDashboardRepository
 {
+
     override suspend fun getOrdersByStatus(orderStatus:Boolean)
     = buyerDashboardApi.getOrdersByStatus(orderStatus)
+
+
+    override suspend fun getOrderDetailsById(orderId:String): Response<OrderDetailsResponse>
+    = buyerDashboardApi.getOrderDetailsById(orderId)
+
 
 //= Pager(PagingConfig(20)) { BuyerOrderByStatusPagingSource(buyerDashboardApi,orderStatus) }.flow
 

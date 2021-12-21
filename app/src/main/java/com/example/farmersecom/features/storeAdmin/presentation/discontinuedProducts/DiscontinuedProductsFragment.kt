@@ -42,8 +42,8 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
     {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getProductByStatus(false)
-        subscribeToActiveProductsResponse()
+      //  viewModel.getProductByStatus(false)
+      //  subscribeToActiveProductsResponse()
 
     } // onViewCreated closed
 
@@ -52,27 +52,27 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
     private fun subscribeToActiveProductsResponse()
     {
 
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
-        {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
-            {
-                viewModel.productByStatusResponse.collect()
-                {
-                    when(it)
-                    {
-                        is NetworkResource.Success ->
-                        {
-                            Timber.tag(Constants.TAG).d("${it.data}")
-                            // updateViews(it.data)
-                        }
-                        is NetworkResource.Error ->
-                        {
-                            Timber.tag(Constants.TAG).d("${it.msg}")
-                        }
-                    }// when closed
-                } // getProfile closed
-            } // repeatOnLife cycle closed
-        } /// lifecycleScope closed
+      //  viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+       // {
+          //  viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+          //  {
+//                viewModel.productByStatusResponse.collect()
+//                {
+//                    when(it)
+//                    {
+//                        is NetworkResource.Success ->
+//                        {
+//                            Timber.tag(Constants.TAG).d("${it.data}")
+//                            // updateViews(it.data)
+//                        }
+//                        is NetworkResource.Error ->
+//                        {
+//                            Timber.tag(Constants.TAG).d("${it.msg}")
+//                        }
+//                    }// when closed
+//                } // getProfile closed
+//            } // repeatOnLife cycle closed
+//        } /// lifecycleScope closed
     } // subscribeToActiveProductsResponse
 
 

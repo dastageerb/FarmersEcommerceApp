@@ -1,21 +1,17 @@
-package com.example.farmersecom.features.buyerSection.domain.model
+package com.example.farmersecom.features.buyerSection.domain.model.orderDetails
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Order(
+data class OrderDetailsResponse(
     @Json(name = "buyerId")
     var buyerId: String?,
     @Json(name = "city")
     var city: String?,
     @Json(name = "contactNumber")
     var contactNumber: String?,
-    @Json(name = "createdAt")
-    var createdAt: String?,
-    @Json(name = "deliveryCharges")
-    var deliveryCharges: Int?,
     @Json(name = "_id")
     var id: String?,
     @Json(name = "isActive")
@@ -30,20 +26,22 @@ data class Order(
     var orderQuantity: Int?,
     @Json(name = "orderStatus")
     var orderStatus: String?,
-    @Json(name = "paymentOption")
-    var paymentOption: String?,
-    @Json(name = "postalCode")
-    var postalCode: Int?,
     @Json(name = "productId")
     var productId: String?,
+    @Json(name = "productImage")
+    var productImage: String?,
+    @Json(name = "productName")
+    var productName: String?,
     @Json(name = "storeId")
     var storeId: String?,
+    @Json(name = "storeImage")
+    var storeImage: String?,
+    @Json(name = "storeName")
+    var storeName: String?,
     @Json(name = "subTotal")
     var subTotal: Int?,
     @Json(name = "totalPrice")
     var totalPrice: Int?,
-    @Json(name = "updatedAt")
-    var updatedAt: String?,
-    @Json(name = "__v")
-    var v: Int?
+    @Json(name = "unit")
+    var unit: String?
 )

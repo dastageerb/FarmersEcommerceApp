@@ -1,10 +1,11 @@
 package com.example.farmersecom.features.buyerSection.data.framework
 
-import com.example.farmersecom.features.buyerSection.domain.model.OrderStatusResponse
-import com.example.farmersecom.features.storeAdmin.domain.model.OrderStatus
+import com.example.farmersecom.features.buyerSection.domain.model.orderDetails.OrderDetailsResponse
+import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.OrderStatusResponse
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface BuyerDashboardApi
@@ -15,10 +16,9 @@ interface BuyerDashboardApi
     suspend fun getOrdersByStatus(@Query("isActive")orderStatus:Boolean,
                                 ) :Response<OrderStatusResponse>
 
+    @GET("api/order/get/{id}")
+    suspend fun getOrderDetailsById(@Path("id")id:String):Response<OrderDetailsResponse>
 
-    @GET("api/buyer/order/getBuyerOrders")
-    suspend fun getOrders(@Query("isActive")orderStatus:Boolean,
-    ) :Response<Any>
 
 
     // TODO

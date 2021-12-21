@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetOrdersByStatusUseCase @Inject constructor(private val storeAdminRepository: StoreAdminRepository)
 {
 
-    suspend fun getProductsByStatus(orderStatus:String) = storeAdminRepository.getOrdersByStatus(orderStatus)
+    suspend fun getProductsByStatus(orderStatus:Boolean) = storeAdminRepository.getOrdersByStatus(orderStatus)
 
 
 } // addProductUseCase closed

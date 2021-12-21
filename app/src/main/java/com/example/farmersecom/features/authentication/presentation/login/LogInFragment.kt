@@ -58,11 +58,11 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
     override fun onStart()
     {
         super.onStart()
-        if(loginViewModel.getAuthToken()!=null)
-        {
-            findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
-        }
-
+        Timber.tag(TAG).d(""+loginViewModel.getAuthToken())
+      //  if(loginViewModel.getAuthToken()!=null)
+        //{
+          //  findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
+        //}
     }
 
 
@@ -97,6 +97,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                                 loginViewModel.saveAuthToken(it.token.toString())
                                 findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
                             }
+
                         }
                         else -> {}
                     } // when closed
