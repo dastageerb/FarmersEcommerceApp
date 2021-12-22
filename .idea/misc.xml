@@ -23,6 +23,7 @@
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_cart.xml" value="0.2" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_completed_orders.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_current_orders.xml" value="0.1" />
+        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_discontinued_products.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_filters.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_more_slider_items.xml" value="0.1675213675213675" />
@@ -50,6 +51,7 @@
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_payment_options_item.xml" value="0.22" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_product_active_item.xml" value="0.33" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_product_images.xml" value="0.33" />
+        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_product_status_item.xml" value="0.25287356321839083" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_product_store_item.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_search_item_view.xml" value="0.25864453665283543" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_store_dashboard_list_item.xml" value="0.67" />

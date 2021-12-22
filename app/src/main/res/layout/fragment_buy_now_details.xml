@@ -147,9 +147,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewLayoutOrderItemsItemProductPrice"
-                android:layout_toEndOf="@id/imageViewLayoutOrderItemsProductImage"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_toEndOf="@id/imageViewLayoutOrderItemsProductImage"
                 android:text="Unit"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -83,10 +83,14 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
     private fun setupProductDetails(data: ProductDetailsResponse)
     {
 
-        binding.imageViewLayoutOrderItemsProductImage.load(data.productPictures!![0].img)
+        if(!data.productPictures.isNullOrEmpty())
+        {
+            binding.imageViewLayoutOrderItemsProductImage.load(data.productPictures!![0].img)
+        }
         binding.textViewLayoutOrderItemsProductName.text = data.productName
         binding.textViewLayoutOrderItemsItemProductPrice.text = data.productPrice.toString()
         binding.layoutOrderItemsQuantityTextView.text =data.productQuantity.toString()
+        binding.textViewLayoutOrderItemsItemUnit.text = data.productUnit
 
         subTotal = data.productQuantity?.let { data.productPrice?.times(it) }!!
         total = subTotal+ data.productDeliveryCharges!!

@@ -14,10 +14,157 @@
 
 
     <string-array name="Sindh">
+        <item>Arslan Domki</item>
+        <item>Badin</item>
+        <item>Bakrani</item>
+        <item>Bandhi</item>
+        <item>Basti Sughrana</item>
+        <item>Bhiria City</item>
+        <item>Bhiria Road</item>
+        <item>Bhirkhan</item>
+        <item>Boriri</item>
+        <item>Bulhri Shah Karim</item>
+        <item>Chamber</item>
+        <item>Chak</item>
+        <item>Chor</item>
         <item>Dadu</item>
+        <item>Daharki</item>
+        <item>Dahli</item>
+        <item>Daulatpur</item>
+        <item>Daur</item>
+        <item>Dhoronaro</item>
+        <item>Digri</item>
+        <item>Diplo</item>
+        <item>Doda Pur</item>
+        <item>Dokri</item>
+        <item>Faiz Ganj</item>
+        <item>Gaman Brohi</item>
+        <item>Gambat</item>
+        <item>Garhi Yasin</item>
+        <item>Gharo</item>
+        <item>Ghorabari</item>
+        <item>Ghotki</item>
+        <item>Ghouspur</item>
+        <item>Golarchi</item>
+        <item>Goth Tharri Muhabbat</item>
+        <item>Guddu Barrage</item>
+        <item>Hala</item>
+        <item>Hussain Bux Mari</item>
+        <item>Hyderabad</item>
+        <item>Islamkot</item>
+        <item>Jacobabad</item>
+        <item>Jamshoro</item>
+        <item>Jam Nawaz Ali</item>
+        <item>Jam sahib</item>
+        <item>Jati</item>
+        <item>Jhando Mari</item>
+        <item>Jhol</item>
+        <item>Jhudo</item>
+        <item>Johi</item>
+        <item>Kaloi</item>
+        <item>kandhkot</item>
+        <item>Kandiaro</item>
+        <item>Karachi</item>
+        <item>Karachi Central</item>
+        <item>Karachi East</item>
+        <item>Karachi North</item>
+        <item>Karachi South</item>
+        <item>Karachi West</item>
+        <item>Kashmore</item>
+        <item>Kazi Ahmend</item>
+        <item>Keti Bandar</item>
+        <item>Kairpur</item>
+        <item>Khahi</item>
+        <item>Khairpur Mirs</item>
+        <item>Khairpur Nathanshah</item>
+        <item>Khanpur</item>
+        <item>Kharo Chan</item>
+        <item>Khipro</item>
+        <item>Khairo</item>
+        <item>Khehbar</item>
+        <item>Kiamari</item>
+        <item>Kingri</item>
+        <item>Korangi</item>
+        <item>Kot Diji</item>
+        <item>Kot Ghulam Muhammand</item>
+        <item>Kotri</item>
+        <item>Kunri</item>
+        <item>Lakhi Shah Saddar</item>
+        <item>Lakhi Ghulam Shah</item>
+        <item>Larkana</item>
+        <item>Latifabad Hyd</item>
+        <item>Medeji</item>
+        <item>Malir</item>
+        <item>Manjhand</item>
+        <item>Maqsoodo Rind</item>
+        <item>Matiari</item>
+        <item>Mehar</item>
+        <item>Mehrabpur</item>
+        <item>Main Sahib</item>
+        <item>Miranpur</item>
+        <item>Miro Khan</item>
+        <item>Mirpur Bathoro</item>
+        <item>Mirpurkhas</item>
+        <item>Mirpur Mathelo</item>
+        <item>Mirpur Sakro</item>
+        <item>Mithani</item>
+        <item>Mithi</item>
+        <item>Moro</item>
+        <item>NagarParkar</item>
+        <item>Nasirabad</item>
+        <item>Naudero</item>
+        <item>Nawabshah</item>
+        <item>Nooriabad</item>
+        <item>Nuashahro Feroze</item>
+        <item>Oderolal</item>
+        <item>Pano Aqil</item>
+        <item>Pir Bakhsh Bhutto</item>
+        <item>Pir Jo Goth</item>
+        <item>Piryalo</item>
+        <item>Pithoro</item>
+        <item>Qambar</item>
+        <item>Qazi Ahmed</item>
+        <item>Qubo saeed Khan</item>
+        <item>Radhan</item>
+        <item>Rajo Khanani</item>
+        <item>Ranipur</item>
+        <item>Ratodero</item>
+        <item>Rohri</item>
+        <item>Sakrand</item>
+        <item>Samaro</item>
+        <item>Sanghar</item>
+        <item>Sann</item>
+        <item>Sehwan Sharif</item>
+        <item>Shahbandar</item>
+        <item>Shahdadkot</item>
+        <item>Shahdadpur</item>
+        <item>Shaheed Benazirabad</item>
+        <item>Shahpur Chakar</item>
+        <item>Shahpur Jahania</item>
+        <item>Shikarpur</item>
+        <item>Shujaabad</item>
+        <item>Sijawal junejo</item>
+        <item>Sinjhoro</item>
+        <item>Sindhri</item>
+        <item>Sita Road</item>
+        <item>Sobho Dero</item>
         <item>Sukkur</item>
-        <item>Morro</item>
+        <item>Tando Adam Khan</item>
+        <item>Tando Allahyar</item>
+        <item>Tando Bago</item>
+        <item>Tando Mohammand Khan</item>
+        <item>Tangwani</item>
+        <item>Thahri Jadosheed</item>
+        <item>Thano Bulla Khan</item>
+        <item>Thari Mirwah</item>
+        <item>Tharushah</item>
+        <item>Thatta</item>
+        <item>Thul</item>
+        <item>Ubaruro</item>
         <item>Umerkot</item>
+        <item>Wahi Pandhi</item>
+        <item>Warah</item>
+        <item>Zaffarabad</item>
     </string-array>
 
 

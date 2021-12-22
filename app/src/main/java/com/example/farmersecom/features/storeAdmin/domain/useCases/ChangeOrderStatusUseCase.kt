@@ -7,10 +7,11 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
 
-class GetProductsByStatusUseCase @Inject constructor(private val storeAdminRepository: StoreAdminRepository)
+class ChangeOrderStatusUseCase @Inject constructor(private val storeAdminRepository: StoreAdminRepository)
 {
 
-    suspend fun getProductsByStatus(isActive:Boolean) = storeAdminRepository.getProductsByStatus(isActive)
+    suspend fun changeOrderStatus(status:String,orderId:String)
+    = storeAdminRepository.changeOrderStatus(status,orderId)
 
 
 } // addProductUseCase closed

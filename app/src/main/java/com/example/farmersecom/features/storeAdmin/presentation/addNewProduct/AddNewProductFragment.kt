@@ -291,7 +291,12 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
     fun createPartFromString(string: String?): RequestBody
     {
+
         return string!!.toRequestBody(MultipartBody.FORM)
+
+
+
+
     }
 
 

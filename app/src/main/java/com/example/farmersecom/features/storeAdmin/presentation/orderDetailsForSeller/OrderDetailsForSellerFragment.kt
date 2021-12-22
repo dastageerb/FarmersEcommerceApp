@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.farmersecom.R
@@ -16,11 +17,14 @@ import com.example.farmersecom.features.buyerSection.domain.model.orderDetails.O
 import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboardViewModel
 import com.example.farmersecom.features.storeAdmin.presentation.StoreDashboardViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -30,7 +34,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
 
 
     private val  viewModel: StoreDashboardViewModel by activityViewModels()
-    val orderStatusList = arrayOf("pending","inProcess","delivered","completed")
+    val orderStatusList = arrayOf("pending","inProcess","shipped","complete")
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentOrderDetailsForSellerBinding
     {
         return FragmentOrderDetailsForSellerBinding.inflate(inflater,container,false)
@@ -44,7 +48,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
 
         binding.fragmentOrderDetailsForSellerButtonChangStatus.setOnClickListener()
         {
-
+                changeStatus()
         }
 
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
@@ -58,16 +62,39 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
             } // repeatOnLife cycle closed
 
         } /// lifecycleScope closed
+
+        subscribeToOrderDetails()
+        subscribeToStatusChange()
+
     } // onViewCreated
 
+    private fun changeStatus() = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+    {
+        val status = binding.fragmentOrderDetailsForSellerButtonChangStatus.text.toString()
+        orderStatusList.forEachIndexed()
+        {
+            index,sts ->
+            if(status == sts)
+            {
+                viewModel.getOrderId.collect()
+                {
+                    Timber.tag(TAG).d(""+it )
+                    viewModel.changeOrderStatus(status,it)
+                    delay(500)
+                    getOrderDetails(it)
+                }
+            }
+        }
 
+    } // changeStatus
 
 
     private fun getOrderDetails(orderId: String)
     {
         viewModel.orderDetails(orderId)
-        subscribeToOrderDetails()
+
     }  // getOrderDetailsClosed
+
 
 
     private fun subscribeToOrderDetails()
@@ -103,7 +130,42 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
                 } // getProfile closed
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
+    } //  subscribeToOrderDetails
+
+
+    private fun subscribeToStatusChange()
+    {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                viewModel.statusMsgResponse.collect()
+                {
+                    when(it)
+                    {
+                        is NetworkResource.Loading ->
+                        {
+                           // binding.orderDetailsForSellerFragmentProgressBar.show()
+                        }
+                        is NetworkResource.Success ->
+                        {
+                          //  binding.orderDetailsForSellerFragmentProgressBar.hide()
+                            Timber.tag(Constants.TAG).d("${it.data?.messege}")
+                            //updateViews(it.data)
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            binding.orderDetailsForSellerFragmentProgressBar.show()
+                            binding.fragmentOrderDetailsForSellerDetailsLayout.hide()
+                            Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                    }// when closed
+                } // getProfile closed
+            } // repeatOnLife cycle closed
+        } /// lifecycleScope closed
     }
+
+
 
     private fun updateViews(data: OrderDetailsResponse?)
     {

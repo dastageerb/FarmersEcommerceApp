@@ -35,6 +35,8 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
         list.add(DashBoardItem("Discontinued Products", R.drawable.ic_baseline_discountinued_24))
         list.add(DashBoardItem("Active Order", R.drawable.ic_baseline_live_orders_24))
         list.add(DashBoardItem("Completed Order", R.drawable.ic_baseline_live_orders_24))
+        list.add(DashBoardItem("Settings", R.drawable.ic_baseline_live_orders_24))
+
         val adapter  = StoreDashBoardAdapter()
         {
             navigateFromDashBoard(it)
