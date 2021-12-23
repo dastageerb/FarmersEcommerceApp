@@ -1,20 +1,38 @@
 package com.example.farmersecom.features.cart.data.business
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.example.farmersecom.features.buyerSection.data.framework.paginngSource.BuyerFavouritesPagingSource
-import com.example.farmersecom.features.cart.data.framework.CartApi
-import com.example.farmersecom.features.cart.data.framework.pagingSource.CartPagingSource
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.farmersecom.features.cart.data.framework.CartDao
+import com.example.farmersecom.features.cart.domain.CartItem
 import com.example.farmersecom.features.cart.domain.CartRepository
-import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
 
-class CartRepositoryImpl(private val cartApi: CartApi):CartRepository
+class CartRepositoryImpl(private val cartDao: CartDao):CartRepository
 {
 
-    override suspend fun getCartItems(): Flow<PagingData<JsonObject>>
-    = Pager(PagingConfig(20)) { CartPagingSource(cartApi) }.flow
+
+
+    override suspend fun insertCartItem(cartItem: CartItem?)
+    = cartDao.insertCartItem(cartItem)
+
+
+    override fun getAllCartItems(): Flow<List<CartItem>>
+    = cartDao.getAllCartItems()
+
+    override suspend fun deleteAll()
+    = cartDao.deleteAll()
+
+    override suspend fun deleteCartItem(cartItem: CartItem?)
+    =cartDao.deleteCartItem(cartItem)
+
+    override suspend fun onQuantityChanged(productId: String, quantity: Int)
+     = cartDao.onQuantityChanged(productId,quantity)
+
+    override fun getSubTotal() = cartDao.getSubTotal()
+
+    override fun getTotal(): Flow<Int> = cartDao.geTotal()
+
+    override fun getTotalDeliveryCharges(): Flow<Int> = cartDao.getTotalDeliveryCharges()
 
 
 

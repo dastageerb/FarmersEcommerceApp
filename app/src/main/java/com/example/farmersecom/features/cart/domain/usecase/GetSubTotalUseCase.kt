@@ -3,7 +3,7 @@ package com.example.farmersecom.features.cart.domain.usecase
 import com.example.farmersecom.features.cart.domain.CartRepository
 import javax.inject.Inject
 
-class GetCartItemsUseCase @Inject constructor(private val cartRepository: CartRepository)
+class GetSubTotalUseCase @Inject constructor(private val cartRepository: CartRepository)
 {
-     fun getCartItems() = cartRepository.getAllCartItems()
+     fun getSubTotal() = cartRepository.getSubTotal()
 }

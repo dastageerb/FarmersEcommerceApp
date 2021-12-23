@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,6 +18,8 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProductDetailsBinding
 import com.example.farmersecom.features.buyNow.presentation.orderDetails.PlaceOrderViewModel
+import com.example.farmersecom.features.cart.domain.CartItem
+import com.example.farmersecom.features.cart.presentation.CartViewModel
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.model.ProductPicture
 import com.example.farmersecom.features.productStore.presentation.ProductStoreViewModel
@@ -37,6 +40,7 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
     private val storeViewModel: ProductStoreViewModel by activityViewModels()
     private val orderViewModel: PlaceOrderViewModel by activityViewModels()
     private val viewModel: ProductDetailsViewModel by activityViewModels()
+    private val cartViewModel: CartViewModel by viewModels()
     val list = mutableListOf<ProductDetailsResponse>()
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductDetailsBinding
@@ -61,6 +65,18 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         } // viewLifeCycleOwner
 
 
+        binding.buttonProductDetailsFragmentAddToCart.setOnClickListener()
+        {
+            val product = list[0]
+            val cartItem = CartItem(
+                product.productId!!,
+                product.productName!!,
+                product.productQuantity!!,
+                product.productPrice!!,
+                product.productUnit!!,
+                product.productPictures?.get(0)?.img!!,product.productDeliveryCharges!!)
+            cartViewModel.insertCartItem(cartItem)
+        }
 
         subscribeProductDetailsResponseFlow()
         binding.buttonProductDetailsFragmentBuyNow.setOnClickListener()
@@ -138,7 +154,6 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         var snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recycler);
         adapter.submitList(list)
-
 
     } // setupRecyclerView
 

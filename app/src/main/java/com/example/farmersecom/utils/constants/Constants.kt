@@ -12,9 +12,9 @@ object Constants
 
     // DataBase
 
-    const val DATABASE_VERSION = 3
+    const val DATABASE_VERSION = 5
     const val DATABASE_NAME = "FARMERS_ECOMMERCE"
-    const val PROFILE_TABLE = "PROFILE_TABLE"
+    const val CART_TABLE = "CART_TABLE"
 
 
 
