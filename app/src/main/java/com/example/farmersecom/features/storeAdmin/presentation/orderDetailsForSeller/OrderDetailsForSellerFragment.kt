@@ -1,20 +1,16 @@
 package com.example.farmersecom.features.storeAdmin.presentation.orderDetailsForSeller
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentOrderDetailsForSellerBinding
 import com.example.farmersecom.features.buyerSection.domain.model.orderDetails.OrderDetailsResponse
-import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboardViewModel
 import com.example.farmersecom.features.storeAdmin.presentation.StoreDashboardViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
@@ -24,7 +20,6 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -34,7 +29,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
 
 
     private val  viewModel: StoreDashboardViewModel by activityViewModels()
-    val orderStatusList = arrayOf("pending","inProcess","shipped","complete")
+    val orderStatusList = arrayOf("pending","inProcess","ship","complete")
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentOrderDetailsForSellerBinding
     {
         return FragmentOrderDetailsForSellerBinding.inflate(inflater,container,false)
@@ -150,7 +145,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
                         is NetworkResource.Success ->
                         {
                           //  binding.orderDetailsForSellerFragmentProgressBar.hide()
-                            Timber.tag(Constants.TAG).d("${it.data?.messege}")
+                            Timber.tag(Constants.TAG).d("${it.data?.message}")
                             //updateViews(it.data)
                         }
                         is NetworkResource.Error ->

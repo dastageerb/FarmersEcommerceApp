@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.storeAdmin.presentation.storeSettings.StoreSettingFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentStoreSettingInfoLayout"
+        >
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/imageCardView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:id="@+id/fragmentStoreSettingStoreImageImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@color/colorPrimaryDark" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <Button
+            android:id="@+id/fragmentStoreSettingsChangeStoreImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="2dp"
+            android:layout_toEndOf="@id/imageCardView"
+            android:background="@color/colorTransparent"
+            android:text="change Photo"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/fragmentStoreSettingStoreNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageCardView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/store_name"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragmentStoreSettingStoreDescriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_below="@id/fragmentStoreSettingStoreNameTextView"
+            android:text="@string/store_desc"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/fragmentStoreSettingStoreDeliveryInfoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragmentStoreSettingStoreDescriptionTextView"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Offers Delivery Out Of city"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/fragmentStoreSettingsDeliveryInfoSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="No"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_below="@id/fragmentStoreSettingStoreDescriptionTextView"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/fragmentStoreSettingUpdateStoreLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/store_name"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="32dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragmentStoreSettingStoreNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:hint="@string/description"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragmentStoreSettingStoreDescriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+
+            android:id="@+id/fragmentStoreSettingsStoreUpdateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/button_bg"
+            android:text="@string/update"
+            android:textColor="@color/white"
+            android:layout_marginTop="36dp"
+            android:textAllCaps="false"
+            />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        />
+
+</RelativeLayout>

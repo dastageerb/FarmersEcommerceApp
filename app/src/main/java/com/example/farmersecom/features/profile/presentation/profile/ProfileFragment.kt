@@ -129,7 +129,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         binding.buttonUpdateInfo.setOnClickListener(this)
         binding.buttonSetupStore.setOnClickListener(this)
         binding.buttonGoToStore.setOnClickListener(this)
-        binding.buttonChangePhoto.setOnClickListener(this)
         binding.buttonBuyersSection.setOnClickListener(this)
 
 
@@ -167,11 +166,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                 findNavController().navigate(R.id.action_profileFragment_to_setupStoreFragment)
             }
             R.id.buttonGoToStore -> findNavController().navigate(R.id.action_profileFragment_to_storeFragment)
-            R.id.buttonChangePhoto ->
-            {
-                changePhoto();
-                subscribeChangeImageResponseFlow()
-            }
+//            R.id.buttonChangePhoto ->
+//            {
+//                changePhoto();
+//                subscribeChangeImageResponseFlow()
+//            }
             R.id.buttonBuyersSection ->
             {
                 findNavController().navigate(R.id.action_profileFragment_to_buyerDashboardFragment)

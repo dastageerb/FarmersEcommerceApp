@@ -1,7 +1,6 @@
 package com.example.farmersecom.features.storeAdmin.presentation.discontinuedProducts
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
-import com.example.farmersecom.databinding.FragmentActiveProductsBinding
 import com.example.farmersecom.databinding.FragmentDiscontinuedProductsBinding
 import com.example.farmersecom.features.storeAdmin.presentation.ProductStatusAdapter
 import com.example.farmersecom.features.storeAdmin.presentation.StoreDashboardViewModel
@@ -71,7 +68,7 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
-                            requireContext().showToast(it.data?.messege.toString())
+                            requireContext().showToast(it.data?.message.toString())
                         }
                         is NetworkResource.Error ->
                         {

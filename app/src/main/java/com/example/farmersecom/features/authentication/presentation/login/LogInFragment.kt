@@ -127,7 +127,6 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
         if(validation(email,password))
         {
             Timber.tag(TAG).d("validate email and password $email , $password")
-            requireContext().showToast("$email:$password")
             loginViewModel.loginUser(LogInData(email,password))
         } // if closed
     } // validDateAndLogin closed

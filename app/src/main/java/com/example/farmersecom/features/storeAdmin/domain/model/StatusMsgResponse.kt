@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class StatusMsgResponse(
     @Json(name = "message")
-    var messege: String?,
+    var message: String?,
     @Json(name = "status")
     var status: String?
 )

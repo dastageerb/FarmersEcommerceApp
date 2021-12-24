@@ -6,7 +6,8 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
 import com.example.farmersecom.features.profile.domain.model.ChangePhotoResponse
-import com.example.farmersecom.features.profile.domain.model.Profile
+import com.example.farmersecom.features.profile.domain.model.UserInfoResponse.UserInfoResponse
+import com.example.farmersecom.features.profile.domain.usecase.GetUserFullProfileUseCase
 import com.example.farmersecom.features.profile.domain.usecase.GetUserProfileUseCase
 import com.example.farmersecom.features.profile.domain.usecase.UploadUserImageUseCase
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
@@ -23,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val getUserProfileUseCase: GetUserProfileUseCase,
                                            private val userImageUseCase: UploadUserImageUseCase,
+                                           private val getUserFullProfileUseCase: GetUserFullProfileUseCase,
                                            private val sharedPrefsHelper:SharedPrefsHelper) :ViewModel()
 {
 
@@ -71,16 +73,74 @@ class ProfileViewModel @Inject constructor(private val getUserProfileUseCase: Ge
 
     fun uploadUserImg(file:MultipartBody.Part) = viewModelScope.launch(Dispatchers.IO)
     {
-        userImageUseCase.uploadUserImage(file).collect()
+        _uploadUserImgResponse.value = NetworkResource.Loading()
+        try
         {
-            _uploadUserImgResponse.value = it
-        } // getProfileUseCase closed
+            val response = userImageUseCase.uploadUserImage(file)
+            _uploadUserImgResponse.value = handleUploadImageResponse(response)
+
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException -> _uploadUserImgResponse.value = NetworkResource.Error("Something went wrong")
+                else -> _uploadUserImgResponse.value = NetworkResource.Error("No Internet Connection")
+            } // when closed
+        }
+
+
     } //  getProfile closed
 
 
 
+    private fun handleUploadImageResponse(response: Response<ChangePhotoResponse>): NetworkResource<ChangePhotoResponse>
+    {
+        return when(response.code())
+        {
+            200,201 -> NetworkResource.Success(response.body())
+            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
+        } // when closed
+    } // handleUploadImageResponse closed
+
+    /** Get full user profile **/
 
 
+    private val _userFullProfileResponse:MutableStateFlow<NetworkResource<UserInfoResponse>> = MutableStateFlow(
+        NetworkResource.None())
+    val userFullProfileResponse:StateFlow<NetworkResource<UserInfoResponse>> = _userFullProfileResponse
+
+
+    fun getFullUserProfile() = viewModelScope.launch(Dispatchers.IO)
+    {
+        try
+        {
+            val response = getUserFullProfileUseCase.getUserFullProfile()
+            _userFullProfileResponse.value = handleFullUserProfileResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException -> _userFullProfileResponse.value = NetworkResource.Error("Something went wrong")
+                else -> _userFullProfileResponse.value = NetworkResource.Error("No Internet Connection")
+            } // when closed
+        } // catch closed
+    } //  getProfile closed
+
+    private fun handleFullUserProfileResponse(response: Response<UserInfoResponse>): NetworkResource<UserInfoResponse>
+    {
+        return when(response.code())
+        {
+            200,201 -> NetworkResource.Success(response.body())
+            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
+        } // when closed
+    }
+
+    
+    
+    
+    
 
 
     fun getAuthToken() : String? = sharedPrefsHelper.getToken()

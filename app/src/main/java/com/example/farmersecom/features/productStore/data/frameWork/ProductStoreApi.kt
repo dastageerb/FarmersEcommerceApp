@@ -11,13 +11,9 @@ interface ProductStoreApi
 {
 
 
-//    // TODO
-//    @GET("api/product/get/{id}")
-//    suspend fun getProductById(@Path("id")id:String):Response<ProductDetailsResponse>
 
 
 
-    // TODO
     @GET("api/store/get/{id}")
     suspend fun getStoreById(@Path("id")id:String): Response<StoreDetailsResponse>
     // Response store Id , StoreName, store Desc , Seller Id, seller Name , seller Image

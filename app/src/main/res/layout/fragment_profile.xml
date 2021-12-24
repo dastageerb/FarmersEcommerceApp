@@ -21,18 +21,6 @@
             android:background="@color/colorPrimaryDark" />
     </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/buttonChangePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="2dp"
-        android:layout_toEndOf="@id/imageCardView"
-        android:background="@color/colorTransparent"
-        android:text="change Photo"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/textViewProfileFragName"

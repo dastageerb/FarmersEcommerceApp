@@ -15,7 +15,7 @@ interface CartDao
 
 
 
-    @Query("SELECT * FROM CART_TABLE order by date desc")
+    @Query("SELECT * FROM CART_TABLE order by date asc")
     fun getAllCartItems():Flow<List<CartItem>>
 
 

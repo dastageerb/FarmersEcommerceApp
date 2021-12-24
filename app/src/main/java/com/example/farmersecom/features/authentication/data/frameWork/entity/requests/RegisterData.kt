@@ -22,8 +22,6 @@ data class RegisterData(
     val gender: String,
     @Json(name = "dateOfBirth")
     val dateOfBirth: String,
-    @Json(name = "province")
-    val province: String,
     @Json(name = "city")
     val city: String,
     @Json(name = "address")

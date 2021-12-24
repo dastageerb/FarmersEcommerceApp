@@ -20,9 +20,7 @@ import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -68,7 +66,7 @@ class ActiveProductsFragment : BaseFragment<FragmentActiveProductsBinding>()
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
-                            requireContext().showToast(it.data?.messege.toString())
+                            requireContext().showToast(it.data?.message.toString())
                         }
                         is NetworkResource.Error ->
                         {

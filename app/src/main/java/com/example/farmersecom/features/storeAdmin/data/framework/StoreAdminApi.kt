@@ -1,10 +1,13 @@
 package com.example.farmersecom.features.storeAdmin.data.framework
 
 import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.OrderStatusResponse
+import com.example.farmersecom.features.productStore.domain.model.storeDetails.StoreDetailsResponse
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.productStatusResponse.ProductStatus
 import com.example.farmersecom.features.storeAdmin.domain.model.categories.CategoriesResponse
+import com.example.farmersecom.features.storeAdmin.domain.model.changeStoreImage.ChangeStoreImageResponse
+import com.example.farmersecom.features.storeAdmin.domain.model.updateStore.UpdateStore
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -68,6 +71,24 @@ interface  StoreAdminApi
     @POST("api/store/order/changeOrderStatusById")
     suspend fun changeOrderStatus(@Query("status")status:String,
     @Query("orderId")orderId:String):Response<StatusMsgResponse>
+
+
+    //@GET // by auth
+    suspend fun getStoreDetails(): Response<StoreDetailsResponse>
+
+    //@POST
+    suspend fun editStoreCashOnDelivery(yesORNo:Boolean): Response<StatusMsgResponse>
+
+
+    @POST("api/store/edit")
+    suspend fun updateStoreInfo(@Body updateStore: UpdateStore)
+    : Response<StatusMsgResponse>
+
+    @Multipart
+    @PUT("api/store/changeStorePhoto")
+    suspend fun updateStoreImage(@Part file:MultipartBody.Part) : Response<ChangeStoreImageResponse>
+
+
 
 
 

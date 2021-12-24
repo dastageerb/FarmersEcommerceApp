@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentCartBinding
 import com.example.farmersecom.features.cart.presentation.CartViewModel
@@ -31,6 +33,13 @@ class CartFragment : BaseFragment<FragmentCartBinding>()
         super.onViewCreated(view, savedInstanceState)
         setupRecycler(binding.cartFragmentRecyclerView)
         subscribeToCartResponseFlow()
+
+
+        binding.buttonCartFragmentCheckOut.setOnClickListener()
+        {
+            findNavController().navigate(R.id.action_cartFragment_to_cartCheckOutFragment)
+        }
+
     } // onViewCreated closed
 
 

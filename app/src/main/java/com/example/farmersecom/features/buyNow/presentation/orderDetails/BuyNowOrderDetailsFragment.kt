@@ -33,7 +33,6 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
 
 
     private val orderViewModel: PlaceOrderViewModel by activityViewModels()
-    private lateinit var paymentOption:String
 
     private var subTotal = 0;
     private var total =0
@@ -65,15 +64,13 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
 
 
         val paymentOptionList = mutableListOf<String>()
-        paymentOptionList.add("COD")
-        paymentOptionList.add("Card")
+        paymentOptionList.add("Cash On Delivery")
         binding.fragmentBuyNowCustomerPaymentOptionAutoComplete.inputType = InputType.TYPE_NULL
         binding.fragmentBuyNowCustomerPaymentOptionAutoComplete.setUpAdapter(requireContext(),paymentOptionList)
 
 
-        //binding.fragmentBuyNowCustomerPaymentOptionAutoComplete.setonclick
 
-        orderViewModel?.product?.let { setupProductDetails(it) }
+        orderViewModel.product?.let { setupProductDetails(it) }
 
 
 
@@ -139,7 +136,6 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
             binding.fragmentBuyNowSubTotalTextView.text = subTotal.toString()
             binding.fragmentBuyNowTotalPriceTextView.text = total.toString()
         }
-
     }
 
     private fun confirmOrder()

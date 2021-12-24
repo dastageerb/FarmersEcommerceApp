@@ -6,7 +6,9 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.LogInData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.LogInResponse
+import com.example.farmersecom.features.authentication.domain.useCases.ForgotPasswordUseCase
 import com.example.farmersecom.features.authentication.domain.useCases.LogInViaEmail
+import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
+                                        private val forgotPasswordUseCase: ForgotPasswordUseCase,
                                          private val sharedPrefsHelper: SharedPrefsHelper) : ViewModel()
 {
 
@@ -58,11 +61,51 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
 
 
 
-
-
-
     fun saveAuthToken(token: String) = sharedPrefsHelper.saveToken(token)
     fun getAuthToken() :String? = sharedPrefsHelper.getToken()
+
+
+    // forgotPassword UseCase
+
+
+    private var _forgotPasswordResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
+            = MutableStateFlow(NetworkResource.None())
+    val forgotPasswordResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+            = _forgotPasswordResponse
+
+
+    fun forgotPassword(email:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _forgotPasswordResponse.value = NetworkResource.Loading()
+        try
+        {
+            val response =  forgotPasswordUseCase.forgotPasswordUseCase(email)
+            _forgotPasswordResponse.value = handleForgotPasswordResponse(response)
+
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->  _forgotPasswordResponse.value = NetworkResource.Error("Something went wrong")
+                else ->
+                {
+                    _forgotPasswordResponse.value = NetworkResource.Error(""+e.message)
+                }
+            } // when closed
+        }
+    } //  changeProductStatus closed
+
+
+
+    private fun handleForgotPasswordResponse(response: Response<StatusMsgResponse>): NetworkResource<StatusMsgResponse>
+    {
+        return when(response.code())
+        {
+            200,201 -> NetworkResource.Success(response.body())
+            400,404 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
+        } // when closed
+    }
 
 
 

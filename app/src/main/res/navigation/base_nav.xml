@@ -18,6 +18,9 @@
             android:id="@+id/action_logInFragment_to_profileFragment"
             app:destination="@id/profileFragment"
     />
+        <action
+            android:id="@+id/action_logInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -110,7 +113,11 @@
         android:id="@+id/cartFragment"
         android:name="com.example.farmersecom.features.cart.presentation.cart.CartFragment"
         android:label="Cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cartFragment_to_cartCheckOutFragment"
+            app:destination="@id/cartCheckOutFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.farmersecom.features.search.presentation.SearchFragment"
@@ -235,6 +242,16 @@
         android:name="com.example.farmersecom.features.storeAdmin.presentation.orderDetailsForSeller.OrderDetailsForSellerFragment"
         android:label="fragment_order_details_for_seller"
         tools:layout="@layout/fragment_order_details_for_seller" />
+    <fragment
+        android:id="@+id/cartCheckOutFragment"
+        android:name="com.example.farmersecom.features.cart.presentation.cartCheckOut.CartCheckOutFragment"
+        android:label="fragment_cart_check_out"
+        tools:layout="@layout/fragment_cart_check_out" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.farmersecom.features.authentication.presentation.login.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 
 
 </navigation>

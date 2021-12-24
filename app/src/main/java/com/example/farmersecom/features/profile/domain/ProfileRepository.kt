@@ -7,9 +7,11 @@ import com.example.farmersecom.features.profile.data.framework.entities.SetUpSto
 import com.example.farmersecom.features.profile.data.framework.entities.SetupStoreData
 import com.example.farmersecom.features.profile.domain.model.ChangePhotoResponse
 import com.example.farmersecom.features.profile.domain.model.Profile
+import com.example.farmersecom.features.profile.domain.model.UserInfoResponse.UserInfoResponse
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import retrofit2.Response
+import retrofit2.http.GET
 
 interface ProfileRepository
 {
@@ -19,8 +21,10 @@ interface ProfileRepository
 
     suspend fun setupStore(setupStoreData: SetupStoreData):Response<SetUpStoreResponse>
 
-    suspend fun uploadUserImage(file:MultipartBody.Part):Flow<NetworkResource<ChangePhotoResponse>>
+    suspend fun uploadUserImage(file:MultipartBody.Part):Response<ChangePhotoResponse>
 
+
+    suspend fun getFullUserProfile() : Response<UserInfoResponse>
 
 
 }

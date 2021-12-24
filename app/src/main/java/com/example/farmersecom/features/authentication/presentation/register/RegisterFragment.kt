@@ -103,24 +103,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
             autoCompleteCity.isEnabled = false
 
             // make autocompletes UnClickable preventing the keyboard from poping up
+
             autoCompleteProvince.inputType = InputType.TYPE_NULL //
             autoCompleteCity.inputType = InputType.TYPE_NULL
+            autoCompleteCity.setUpAdapter(requireContext(), R.array.Sindh)
 
-            // set Adapter for province autoCompleteView
-            autoCompleteProvince.setUpAdapter(requireContext(), R.array.Province)
 
-            // set cities when Province is selected (clicked)
-            autoCompleteProvince.onItemClickListener = AdapterView.OnItemClickListener() { parent, _, position, _ ->
-                // enable autoCompleteCity when province is selected
-                autoCompleteCity.isEnabled = true
-                when (parent.getItemAtPosition(position))
-                {
-                    "Sindh" -> autoCompleteCity.setUpAdapter(requireContext(), R.array.Sindh)
-                    "Balochistan" -> autoCompleteCity.setUpAdapter(requireContext(), R.array.Balochistan)
-                    "Punjab" -> autoCompleteCity.setUpAdapter(requireContext(), R.array.Punjab)
-                    "Kpk" -> autoCompleteCity.setUpAdapter(requireContext(), R.array.KPK)
-                } // when closed
-            } // autoCompleteProvince OnClickListener
+
         }
     } /// initView closed
 
@@ -155,7 +144,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
             .findViewById<RadioButton>(radioButtonId).text.toString()
 
         val dateOfBirth = binding.editTextRegisterFragDate.text.toString().trim() // date input
-        val province = binding.autoCompleteProvince.text.toString().trim()
         val city = binding.autoCompleteCity.text.toString().trim()
         val address = binding.editTextRegisterFragAddress.text.toString().trim()
         val postalCode = binding.editTextRegisterFragPostalCode.text.toString().trim()
@@ -163,14 +151,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
         val validPersonalInfo = isPersonalInfoValid(fName,lName,contact,email,pass,rePass)
         val validDob = isValidDate(dateOfBirth)
-        val validProvince = isProvinceValid(province)
-        val validCity =  isCityValid(city,province)
+        val validCity =  isCityValid(city)
         val validPostalInfo = isPostalInfoValid(address,postalCode)
 
-        if(validPersonalInfo && validDob && validProvince && validCity && validPostalInfo)
+        if(validPersonalInfo && validDob &&   validCity && validPostalInfo)
         {
             val registerEntity = RegisterData(fName,lName,contact,email,rePass,
-                gender,dateOfBirth,province,city,address,postalCode.toInt())
+                gender,dateOfBirth,city,address,postalCode.toInt())
             viewModel.register(registerEntity)
         }
 
@@ -233,30 +220,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
     }  // isValidDate
 
 
-    /** check province  is not empty
-     * get list from resource and perform check
-     * check the entered values is in the list or no
-     * */
 
-    private fun isProvinceValid(province: String): Boolean
-    {
-        return if(province.isEmpty())
-        {
-            binding.autoCompleteProvince.error = "Please select a province"
-            return false
-        }
-        // R.array.id.getList(resource) is an extension function that returns a list based on id
-        else if(!R.array.Province.getList(resources).contains(province))
-        {
-            binding.autoCompleteProvince.error = "invalid province"
-            false
-        }
-        else
-        {
-            binding.autoCompleteProvince.error = null
-            true
-        }
-    } // isProvinceValid
 
 
 
@@ -264,47 +228,16 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
     /** check if city is not empty
      *  selected from a valid province
      */
-    private fun isCityValid(city: String, province: String): Boolean
+    private fun isCityValid(city: String): Boolean
     {
         // province will not be empty because it is validated first so no need to check below
-        return if(city.isEmpty())
+        if(city.isEmpty())
         {
             binding.autoCompleteCity.error = "Please select a city"
             return false
         }
-       else when(province)
-        {
-            // get province and search the city through its city list
-            "Sindh" -> checkCityInProvince(R.array.Sindh.getList(resources),city)
-            "Balochistan" -> checkCityInProvince(R.array.Balochistan.getList(resources),city)
-            "Punjab" ->checkCityInProvince(R.array.Punjab.getList(resources),city)
-            "Kpk" -> checkCityInProvince(R.array.KPK.getList(resources),city)
-           else ->
-           {
-               binding.autoCompleteCity.error = "Invalid city"
-               false
-           }
-       } /// when closed
+       return true
     } // isCity valid
-
-
-    /** checkCityInProvince takes a list of cities
-     * and check wether the entered(input) city is from the list or not */
-
-    private fun checkCityInProvince(list: Array<String>, city: String): Boolean
-    {
-        return if(!list.contains(city))
-        {
-            binding.autoCompleteCity.error = "City does not belongs to this province"
-            false
-        }else
-        {
-            binding.autoCompleteCity.error = null
-            true
-        }
-
-    } // checkCityInProvince
-
 
 
 

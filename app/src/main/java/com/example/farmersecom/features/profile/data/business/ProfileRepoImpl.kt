@@ -12,6 +12,7 @@ import com.example.farmersecom.features.profile.data.framework.entities.SetupSto
 import com.example.farmersecom.features.profile.domain.ProfileRepository
 import com.example.farmersecom.features.profile.domain.model.ChangePhotoResponse
 import com.example.farmersecom.features.profile.domain.model.Profile
+import com.example.farmersecom.features.profile.domain.model.UserInfoResponse.UserInfoResponse
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.example.farmersecom.utils.extensionFunctions.handleErros.HandleErrorExtension.handleException
 import kotlinx.coroutines.flow.Flow
@@ -33,22 +34,6 @@ class ProfileRepoImpl(
 
 
 
-    private fun handleProfileResponse(response: Response<ProfileNetworkEntity>): NetworkResource<Profile>
-    {
-        return when(response.code())
-        {
-            200,201 ->
-            {
-                val responseBody = profileNetworkEntityMapper.entityToModel(response.body()!!)
-                NetworkResource.Success(responseBody)
-            } 400 -> NetworkResource.Error(response.errorBody()?.getMessage())
-            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
-        } // when closed
-    } // handle Response closed
-
-    /**   Setup com.example.farmersecom.features.productDetails.domain.model.Store  **/
-
-
     override suspend fun setupStore(setupStoreData: SetupStoreData): Response<SetUpStoreResponse>
     {
         return profileApi.setupStore(setupStoreData)
@@ -58,37 +43,19 @@ class ProfileRepoImpl(
     /** Upload UserImage */
 
 
-    override suspend fun uploadUserImage(file: MultipartBody.Part) = flow <NetworkResource<ChangePhotoResponse>>
-    {
-        emit(NetworkResource.Loading())
-
-        try
-            {
-                val response = profileApi.uploadImage(file)
-                emit(handleUploadImageResponse(response))
-            }catch (e:Exception)
-            {
-                emit(NetworkResource.Error(e.handleException()))
-            } //
+    override suspend fun uploadUserImage(file: MultipartBody.Part) = profileApi.uploadImage(file)
 
 
-    } // uploadUserImage closed
 
 
     // handleUploadImageResponse
 
-    private fun handleUploadImageResponse(response: Response<ChangePhotoNetworkEntity>): NetworkResource<ChangePhotoResponse>
-    {
-        return when(response.code())
-        {
-            200,201 ->
-            {
-                val responseBody = changePhotoMapper.entityToModel(response.body()!!)
-                NetworkResource.Success(responseBody)
-            } 400 -> NetworkResource.Error(response.errorBody()?.getMessage())
-            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
-        } // when closed
-    }
+
+
+     /// Get Ful UserProfile
+
+    override suspend fun getFullUserProfile(): Response<UserInfoResponse>
+    = profileApi.getFullUserProfile()
 
 
 } // ProfileRepoImpl

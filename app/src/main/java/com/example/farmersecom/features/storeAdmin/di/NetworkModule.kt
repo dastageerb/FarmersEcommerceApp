@@ -24,7 +24,7 @@ object NetworkModule
 
     @Provides
     @Singleton
-    fun providesProfileApi(@AuthRetrofit retrofit: Retrofit): StoreAdminApi = retrofit.create(StoreAdminApi::class.java)
+    fun providesStoreAdminApi(@AuthRetrofit retrofit: Retrofit): StoreAdminApi = retrofit.create(StoreAdminApi::class.java)
 
 
 

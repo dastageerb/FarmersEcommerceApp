@@ -35,6 +35,14 @@
     <string name="status">Status</string>
     <string name="discontinue">Discontinue</string>
     <string name="active">Active</string>
+    <string name="submit">Submit</string>
+    <string name="forgot_password">forgot Password</string>
+    <string name="store_desc">Store Description</string>
+    <string name="update">Update</string>
+    <string name="change_photo">change Photo</string>
+    <string name="dateofbith">Date Of Birth</string>
+    <string name="city" >city</string>
+    <string name="gender">Gender</string>
 
 
 </resources>
