@@ -1,11 +1,11 @@
-package com.example.farmersecom.features.authentication.data.frameWork.entity.responses
+package com.example.farmersecom.features.profile.domain.model.editPersonalProfile
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class User(
+data class EditPersonalInfoEntity(
     @Json(name = "address")
     var address: String?,
     @Json(name = "city")
@@ -14,18 +14,12 @@ data class User(
     var contactNumber: String?,
     @Json(name = "dateOfBirth")
     var dateOfBirth: String?,
-    @Json(name = "email")
-    var email: String?,
-    @Json(name = "fullName")
-    var fullName: String?,
+    @Json(name = "firstName")
+    var firstName: String?,
     @Json(name = "gender")
     var gender: String?,
-    @Json(name = "_id")
-    var id: String?,
-    @Json(name = "isSeller")
-    var isSeller: Boolean?,
+    @Json(name = "lastName")
+    var lastName: String?,
     @Json(name = "postalCode")
-    var postalCode: Int?,
-    @Json(name = "profilePicture")
-    var profilePicture: String?
+    var postalCode: Int?
 )

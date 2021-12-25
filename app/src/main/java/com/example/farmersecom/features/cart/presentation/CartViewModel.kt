@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.buyNow.domain.model.request.OrderRequest
 import com.example.farmersecom.features.buyNow.domain.model.response.OrderResponse
 import com.example.farmersecom.features.buyNow.domain.usecase.PlaceOrderUseCase
@@ -34,7 +35,8 @@ class CartViewModel @Inject constructor
      private val deleteCartItemUseCase: DeleteCartItemUseCase,
      private val deleteAllCartItemsUseCase: DeleteAllCartItemsUseCase,
      private val changeQuantityUseCase: ChangeQuantityUseCase,
-     private val placeOrderUseCase: PlaceOrderUseCase
+     private val placeOrderUseCase: PlaceOrderUseCase,
+     private val sharedPrefsHelper: SharedPrefsHelper
     ) : ViewModel()
 {
 
@@ -140,7 +142,8 @@ class CartViewModel @Inject constructor
 
     } // handle response
 
-
+    // get user
+    fun getUser() = sharedPrefsHelper.getUser()
 
 
 } // CartViewModel

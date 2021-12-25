@@ -2,10 +2,8 @@ package com.example.farmersecom.features.profile.presentation.profile
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +16,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.BuildConfig
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -28,7 +25,7 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProfileBinding
 import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
-import com.example.farmersecom.features.profile.domain.model.Profile
+import com.example.farmersecom.features.profile.presentation.ProfileViewModel
 import com.example.farmersecom.utils.constants.Constants.APP_PACKAGE_NAME
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
@@ -41,13 +38,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import timber.log.Timber
 
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
 import okhttp3.RequestBody.Companion.asRequestBody
 
 
@@ -77,7 +71,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             initViews()
             subscribeProfileResponseFlow()
 
-
+            subscribeChangeImageResponseFlow()
 
     } // onViewCreate closed
 
@@ -100,21 +94,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                     {
                         is NetworkResource.Loading ->
                         {
+                            binding.fragmentProfileProgressBar.show()
                             Timber.tag(TAG).d("Loading")
 
                         }
                         is NetworkResource.Success ->
                         {
+
+                            binding.fragmentProfileProgressBar.hide()
                             Timber.tag(TAG).d(""+it.data)
                             updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
-                          //  findNavController().popBackStack()
+
+                            binding.fragmentProfileProgressBar.hide()
                             requireContext().showToast(it.msg.toString())
-                           // viewModel.clearToken()
-                            //findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
-                            Timber.tag(TAG).d("${it.msg}")
+                          Timber.tag(TAG).d("${it.msg}")
                         }
                     }// when closed
                 } // getProfile closed
@@ -126,7 +122,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     private fun initViews()
     {
         binding.buttonProfileFragLogout.setOnClickListener(this)
-        binding.buttonUpdateInfo.setOnClickListener(this)
+        binding.fragmentProfileFullProfileButton.setOnClickListener(this)
         binding.buttonSetupStore.setOnClickListener(this)
         binding.buttonGoToStore.setOnClickListener(this)
         binding.buttonBuyersSection.setOnClickListener(this)
@@ -138,7 +134,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
     private fun updateViews(data: ProfileNetworkEntity?) = binding.apply()
     {
-        imageViewProfile.load(data?.userImgUrl)
+
+        imageViewProfile.load(data?.userImgUrl,R.drawable.ic_baseline_profile_24)
         textViewProfileFragName.text = data?.fullName
         if(data?.isSeller==true)
         {
@@ -149,14 +146,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             buttonSetupStore.show()
             buttonGoToStore.hide()
         }
+
+        binding.fragmentProfileDetailsLayout.show()
+
     } // populateViewClosed
 
     override fun onClick(v: View?)
     {
         when(v?.id)
         {
+            R.id.fragmentProfileFullProfileButton ->
+            {
+                findNavController().navigate(R.id.action_profileFragment_to_fullUserProfileFragment)
+            }
             R.id.buttonProfileFragLogout ->
             {
+                //changePhoto()
                 viewModel.clearToken()
                 findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
                 this.onDestroy()
@@ -166,11 +171,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                 findNavController().navigate(R.id.action_profileFragment_to_setupStoreFragment)
             }
             R.id.buttonGoToStore -> findNavController().navigate(R.id.action_profileFragment_to_storeFragment)
-//            R.id.buttonChangePhoto ->
-//            {
-//                changePhoto();
-//                subscribeChangeImageResponseFlow()
-//            }
             R.id.buttonBuyersSection ->
             {
                 findNavController().navigate(R.id.action_profileFragment_to_buyerDashboardFragment)

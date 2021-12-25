@@ -50,7 +50,8 @@ object NetworkModule
                      .addInterceptor(loggingInterceptor)
                 .addInterceptor(interceptor)
                 .readTimeout(30, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(1, TimeUnit.MINUTES)
+                    .writeTimeout(1,TimeUnit.MINUTES)
                 .build()
     } // provideOkHttpClient
 

@@ -8,7 +8,9 @@ object Constants
 
     // SharedPrefsStore
     const val TOKEN = "TOKEN"
-    const val TOKEN_PREFS = "TOKEN_PREFS"
+    const val USER = "USER"
+    const val NAVIGATION = "NAVIGATION"
+    const val SAVED_PREFS = "SAVED_PREFS"
 
     // DataBase
 

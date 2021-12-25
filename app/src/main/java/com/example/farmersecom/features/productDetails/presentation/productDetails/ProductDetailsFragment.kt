@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,7 @@ import com.example.farmersecom.databinding.FragmentProductDetailsBinding
 import com.example.farmersecom.features.buyNow.presentation.orderDetails.PlaceOrderViewModel
 import com.example.farmersecom.features.cart.domain.CartItem
 import com.example.farmersecom.features.cart.presentation.CartViewModel
+import com.example.farmersecom.features.productDetails.domain.model.NavigationEntity
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.model.ProductPicture
 import com.example.farmersecom.features.productStore.presentation.ProductStoreViewModel
@@ -34,7 +36,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
+class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , View.OnClickListener
 {
 
     private val storeViewModel: ProductStoreViewModel by activityViewModels()
@@ -56,34 +58,21 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
             viewModel.getProductId.collect()
             {
                 viewModel.getProductDetails(it)
+
             } //
         } // viewLifeCycleOwner
 
 
-        binding.buttonProductDetailsFragmentAddToCart.setOnClickListener()
-        {
-            val product = list[0]
-            val cartItem = CartItem(
-                product.productId!!,
-                product.productName!!,
-                product.productQuantity!!,
-                product.productPrice!!,
-                product.productUnit!!,
-                product.productPictures?.get(0)?.img!!,product.productDeliveryCharges!!)
-            cartViewModel.insertCartItem(cartItem)
-        }
-
+        binding.buttonProductDetailsFragmentAddToCart.setOnClickListener(this)
         subscribeProductDetailsResponseFlow()
-        binding.buttonProductDetailsFragmentBuyNow.setOnClickListener()
-        {
-            orderViewModel.product = list[0]
-            findNavController().navigate(R.id.action_productDetailsFragment_to_orderDetailsFragment)
-        }
+        binding.buttonProductDetailsFragmentBuyNow.setOnClickListener(this)
 
     } // onViewCreated
 
@@ -156,5 +145,42 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>()
         adapter.submitList(list)
 
     } // setupRecyclerView
+
+    override fun onClick(v: View?)
+    {
+        if(viewModel.getAuthToken()?.isEmpty() == true)
+        {
+            findNavController().navigate(R.id.action_productDetailsFragment_to_logInFragment)
+        }else
+        {
+            when(v?.id)
+            {
+                R.id.buttonProductDetailsFragmentAddToCart ->
+                {
+                    addToCart()
+                }
+                R.id.buttonProductDetailsFragmentBuyNow ->
+                {
+                    orderViewModel.product = list[0]
+                    findNavController().navigate(R.id.action_productDetailsFragment_to_orderDetailsFragment)
+                }
+            }
+
+        } // else closed
+
+    } // onClick closed
+
+    private fun addToCart()
+    {
+        val product = list[0]
+        val cartItem = CartItem(
+            product.productId!!,
+            product.productName!!,
+            product.productQuantity!!,
+            product.productPrice!!,
+            product.productUnit!!,
+            product.productPictures?.get(0)?.img!!,product.productDeliveryCharges!!)
+        cartViewModel.insertCartItem(cartItem)
+    } // addToCartClosed
 
 } // ProductDetailsFragment

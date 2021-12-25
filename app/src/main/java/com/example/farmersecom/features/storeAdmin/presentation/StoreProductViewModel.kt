@@ -2,6 +2,7 @@ package com.example.farmersecom.features.storeAdmin.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.storeAdmin.data.framework.StoreAdminApi
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.NewProduct
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -31,7 +32,9 @@ class StoreProductViewModel @Inject constructor(
     private  val addProductUseCaseCase: AddProductUseCase,
     private val deleteProductById: DeleteProductById,
     private val changeProductStatusUseCase: ChangeProductStatusUseCase,
-    private val getAllCategories: GetAllCategories) : ViewModel()
+    private val getAllCategories: GetAllCategories,
+    private val sharedPrefsHelper: SharedPrefsHelper
+    ) : ViewModel()
 {
 
 
@@ -125,9 +128,7 @@ class StoreProductViewModel @Inject constructor(
           try
             {
                 val response = addProductUseCaseCase.addNewProduct(newProduct,file);
-              //  Timber.tag(TAG).d("viewmodel :"+response.body())
-             //   Timber.tag(TAG).d("viewmodel "+response.code())
-               // Timber.tag(TAG).d("viewmodel "+response.errorBody()?.getMessage())
+
                  _addNewProductResponse.value = handleResponse(response)
 
             }catch (e:Exception)
@@ -207,8 +208,9 @@ class StoreProductViewModel @Inject constructor(
 
 
 
+    /// Get User for adding city of product
 
-
+    fun getUserCity() = sharedPrefsHelper.getUser()?.city!!
 
 
 } // RegisterViewModel closed

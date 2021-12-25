@@ -31,7 +31,10 @@ class  StoreProductsAdapter ()
 
         fun bind(product: Product?)
         {
-            binding.layoutProductStoreItemImageView.load(product?.productPictures!![0].img)
+            if(product?.productPictures?.size!! > 0)
+            {
+                binding.layoutProductStoreItemImageView.load(product?.productPictures!![0].img)
+            }
         }
     }
 

@@ -22,5 +22,7 @@ data class StoreDetailsResponse(
     @Json(name = "updatedAt")
     var updatedAt: String?,
     @Json(name = "__v")
-    var v: Int?
+    var v: Int?,
+    @Json(name = "deliveryOutCity")
+    var deliversOfOutCity:Boolean
 )

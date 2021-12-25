@@ -7,10 +7,8 @@ import androidx.paging.cachedIn
 import com.example.farmersecom.features.buyerSection.data.framework.BuyerDashboardApi
 import com.example.farmersecom.features.buyerSection.domain.model.orderDetails.OrderDetailsResponse
 import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.OrderStatusResponse
-import com.example.farmersecom.features.buyerSection.domain.useCase.GetBuyerFavouritesUseCase
-import com.example.farmersecom.features.buyerSection.domain.useCase.GetBuyerNotificationUseCase
-import com.example.farmersecom.features.buyerSection.domain.useCase.GetBuyerOrderByStatusUseCase
-import com.example.farmersecom.features.buyerSection.domain.useCase.GetOrderDetailsById
+import com.example.farmersecom.features.buyerSection.domain.useCase.*
+import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -31,7 +29,11 @@ class BuyerDashboardViewModel @Inject constructor(
     private val getBuyerOrderByStatusUseCase: GetBuyerOrderByStatusUseCase,
     private val getBuyerNotificationUseCase: GetBuyerNotificationUseCase,
     private val getBuyerFavouritesUseCase: GetBuyerFavouritesUseCase,
-    private val getOrderDetailsById: GetOrderDetailsById
+    private val getOrderDetailsById: GetOrderDetailsById,
+    private val productRatingUseCase:RateProductUseCase,
+    private val cancelOrderUseCase: CancelOrderUseCase,
+    private val addProductsToFavourites:AddProductToFavouritesUseCase,
+    private val removeProductFromFavourites: RemoveProductFromFavourites
     ) :ViewModel()
 {
 
@@ -144,24 +146,113 @@ class BuyerDashboardViewModel @Inject constructor(
     } // buyerNotifications closed
 
 
+    /** Same response flow used for below requests
+     * cancel order - response -> Status & Msg
+     * rate a product - response -> Status & Msg
+     * add product to favourites
+     * remove product from favourites
+     * **/
 
 
-// fun getResponse() = viewModelScope.launch(Dispatchers.IO)
-// {
-//     try
-//     {
-//         val response = buyerDashboardApi.getOrders(true)
-//         Timber.tag(TAG).d("${response.body()}")
-//         Timber.tag(TAG).d("${response.code()}")
-//
-//     }catch (e:java.lang.Exception)
-//     {
-//         Timber.tag(TAG).d("${e}")
-//     }
-//
-//
-// }
+    private var _statusMsgResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
+            = MutableStateFlow(NetworkResource.None())
+    val statusMsgResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+            = _statusMsgResponse
 
+
+    fun rateProduct(productId:String,rating:Float) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.value = NetworkResource.Loading()
+        try
+        {
+            val response = productRatingUseCase.rateProduct(productId,rating)
+            _statusMsgResponse.value = handleStatusMessageResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                else ->
+                {
+                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                }
+            } // when closed
+        }
+    } //   closed
+
+
+    fun cancelOrder(orderId:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.value = NetworkResource.Loading()
+        try
+        {
+            val response = cancelOrderUseCase.cancelOrder(orderId)
+            _statusMsgResponse.value = handleStatusMessageResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                else ->
+                {
+                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                }
+            } // when closed
+        }
+    } //   closed
+
+
+    fun addProductToFavourites(productId:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.value = NetworkResource.Loading()
+        try
+        {
+            val response = addProductsToFavourites.addProductToFavourites(productId)
+            _statusMsgResponse.value = handleStatusMessageResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                else ->
+                {
+                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                }
+            } // when closed
+        }
+    } //   closed
+
+    fun removeProductsFromFavourites(productId:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.value = NetworkResource.Loading()
+        try
+        {
+            val response = removeProductFromFavourites.removeProductFromFavourites(productId)
+            _statusMsgResponse.value = handleStatusMessageResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                else ->
+                {
+                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                }
+            } // when closed
+        }
+    } //   closed
+
+
+
+    private fun handleStatusMessageResponse(response: Response<StatusMsgResponse>): NetworkResource<StatusMsgResponse>
+    {
+        return when(response.code())
+        {
+            200,201 -> NetworkResource.Success(response.body())
+            400,404 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
+        } // when closed
+    } /// HandleStatusMessageResponse closed
 
 
 

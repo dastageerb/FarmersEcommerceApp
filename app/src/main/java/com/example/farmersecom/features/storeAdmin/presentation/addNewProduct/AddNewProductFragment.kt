@@ -275,7 +275,7 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
                     ,productDescription
                     ,categoryId
                     ,quantityUnit,
-                    "MPS",1)
+                    viewModel.getUserCity(),1)
                 viewModel.addNewProductViewModel(product,productImage)
 
 

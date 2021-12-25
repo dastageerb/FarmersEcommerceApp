@@ -104,8 +104,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
             // make autocompletes UnClickable preventing the keyboard from poping up
 
-            autoCompleteProvince.inputType = InputType.TYPE_NULL //
-            autoCompleteCity.inputType = InputType.TYPE_NULL
             autoCompleteCity.setUpAdapter(requireContext(), R.array.Sindh)
 
 

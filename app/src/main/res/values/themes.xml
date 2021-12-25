@@ -13,12 +13,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textColorHint">@color/hintColor</item>
-
-
     <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox
     </item>
-
     </style>
+
+
+
 
     <style name="textInputLayout" parent="Widget.Design.TextInputLayout">
 

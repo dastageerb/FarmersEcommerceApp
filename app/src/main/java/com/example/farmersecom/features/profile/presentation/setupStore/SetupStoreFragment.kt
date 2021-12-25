@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -46,6 +47,17 @@ class SetupStoreFragment : BaseFragment<FragmentSetupStoreBinding>()
             setupStore();
         }
 
+        binding.fragmentStoreSetupDeliveryInfoSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener
+        { _, isChecked ->
+
+            if(isChecked)
+            {
+                binding.fragmentStoreSetupDeliveryInfoSwitch.text = getString(R.string.yes)
+            }else
+            {
+                binding.fragmentStoreSetupDeliveryInfoSwitch.text = getString(R.string.no)
+            }
+        })
 
 
         subscribeSetupResponse();
@@ -94,10 +106,12 @@ class SetupStoreFragment : BaseFragment<FragmentSetupStoreBinding>()
     {
         val name = binding.editTextStoreName.text.toString().trim()
         val description = binding.editTextStoreDescription.text.toString().trim()
+        val deliversOutOfCity = binding.fragmentStoreSetupDeliveryInfoSwitch.isChecked
+
 
         if(validation(name,description))
         {
-            val storeData = SetupStoreData(name,description)
+            val storeData = SetupStoreData(name,description,deliversOutOfCity)
             viewModel.setupStore(storeData)
         } // if closed
 

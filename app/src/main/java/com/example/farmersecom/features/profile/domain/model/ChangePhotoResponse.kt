@@ -5,10 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ChangePhotoResponse(
-    @Json(name = "message")
-    val message: String,
     @Json(name = "status")
     val status: String,
-    @Json(name = "userImgUrl")
+    @Json(name = "profilePicture")
     val userImgUrl: String
 )

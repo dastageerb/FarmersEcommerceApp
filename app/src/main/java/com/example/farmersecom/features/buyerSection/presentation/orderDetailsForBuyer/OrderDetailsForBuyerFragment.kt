@@ -15,6 +15,7 @@ import com.example.farmersecom.databinding.FragmentOrderDetailsForBuyerBinding
 import com.example.farmersecom.features.buyerSection.domain.model.orderDetails.OrderDetailsResponse
 import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboardViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -103,21 +104,50 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
             binding.fragmentOrderDetailsForBuyerStoreNameTextView.text = data?.storeName
             // product info
             binding.fragmentOrderDetailsForBuyerProductNameTextView.text = data?.productName
-            binding.fragmentOrderDetailsForBuyerProductDefaultQuantityUnitTextView.text ="yet to code"
+            binding.fragmentOrderDetailsForBuyerProductDefaultQuantityUnitTextView.text =data?.productQuantity.toString()
             binding.fragmentOrderDetailsForBuyerProductDPriceTextView.text = data?.productprice.toString()
             binding.fragmentOrderDetailsForBuyerProductDefaultQuantityUnitTextView.text = data?.unit
             // orderInfo
             binding.fragmentOrderDetailsForBuyerOrderIdTextView.text = data?.id
             binding.fragmentOrderDetailsForBuyerOrderQuantityTextView.text = data?.orderQuantity.toString()
             binding.fragmentOrderDetailsForBuyerOderDateTextView.text = data?.date?.substring(0,10)
-            binding.fragmentOrderDetailsForBuyerOrderDeliveryChargesTextView.text = "yet to code"
+            binding.fragmentOrderDetailsForBuyerOrderDeliveryChargesTextView.text = data?.deliveryCharges.toString()
             binding.fragmentOrderDetailsForBuyerOrderSubtotalTextView.text = data?.subTotal.toString()
             binding.fragmentOrderDetailsForBuyerOrderTotalTextView.text = data?.totalPrice.toString()
             binding.fragmentOrderDetailsForBuyerOrderStatusTextView.text = data?.orderStatus
 
-
         } // apply closed
     }// updateView closed
+
+
+    private fun subscribeToStatusMessageResponses()
+    {
+        // Same method used for cancel order or rate product response
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                viewModel.statusMsgResponse.collect()
+                {
+                    when (it)
+                    {
+                        is NetworkResource.Success ->
+                        {
+                            Timber.tag(Constants.TAG).d("${it.data}")
+                            requireContext().showToast(it.data?.message.toString())
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                    }// when closed
+                } // getProfile closed
+            } // repeatOnLife cycle closed
+        } /// lifecycleScope closed
+    }
+
+
 
 
 } // OrderDetailsForBuyerFragment closed

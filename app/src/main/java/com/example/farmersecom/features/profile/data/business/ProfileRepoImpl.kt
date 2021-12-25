@@ -13,11 +13,15 @@ import com.example.farmersecom.features.profile.domain.ProfileRepository
 import com.example.farmersecom.features.profile.domain.model.ChangePhotoResponse
 import com.example.farmersecom.features.profile.domain.model.Profile
 import com.example.farmersecom.features.profile.domain.model.UserInfoResponse.UserInfoResponse
+import com.example.farmersecom.features.profile.domain.model.editPersonalProfile.EditPersonalInfoEntity
+import com.example.farmersecom.features.profile.domain.model.editPersonalProfile.EditPersonalInfoResponse
+import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.example.farmersecom.utils.extensionFunctions.handleErros.HandleErrorExtension.handleException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Response
 
 
@@ -56,6 +60,17 @@ class ProfileRepoImpl(
 
     override suspend fun getFullUserProfile(): Response<UserInfoResponse>
     = profileApi.getFullUserProfile()
+
+    override suspend fun editUserProfile(editPersonalInfoEntity: EditPersonalInfoEntity): Response<EditPersonalInfoResponse>
+    =profileApi.editUserProfile(editPersonalInfoEntity)
+
+    override suspend fun changePassword(oldPassword: String, newPassword: String): Response<StatusMsgResponse>
+    {
+        val body = JSONObject()
+        body.put("oldPassword", oldPassword)
+        body.put("newPassword", newPassword)
+        return  profileApi.changePassword(body)
+    }
 
 
 } // ProfileRepoImpl

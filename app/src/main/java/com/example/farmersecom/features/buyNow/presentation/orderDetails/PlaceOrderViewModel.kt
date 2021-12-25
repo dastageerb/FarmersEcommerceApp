@@ -2,8 +2,10 @@ package com.example.farmersecom.features.buyNow.presentation.orderDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.RegisterResponse
+import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.buyNow.domain.model.request.OrderRequest
 import com.example.farmersecom.features.buyNow.domain.model.response.Order
 import com.example.farmersecom.features.buyNow.domain.model.response.OrderResponse
@@ -23,7 +25,10 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class PlaceOrderViewModel @Inject constructor(private val placeOrderUseCase: PlaceOrderUseCase) : ViewModel()
+class PlaceOrderViewModel @Inject constructor(
+   private val placeOrderUseCase: PlaceOrderUseCase,
+   private val sharedPrefsHelper: SharedPrefsHelper
+   ) : ViewModel()
 {
 
    var product:ProductDetailsResponse? =null
@@ -63,6 +68,12 @@ class PlaceOrderViewModel @Inject constructor(private val placeOrderUseCase: Pla
       } // when closed
 
    } // handle response
+
+
+
+   // Get User Info
+
+   fun getUser() = sharedPrefsHelper.getUser()
 
 
 } // PlaceOrderViewModel

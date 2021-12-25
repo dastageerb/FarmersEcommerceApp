@@ -14,6 +14,8 @@ data class OrderDetailsResponse(
     var contactNumber: String?,
     @Json(name = "date")
     var date: String?,
+    @Json(name = "deliveryCharges")
+    var deliveryCharges: Int?,
     @Json(name = "_id")
     var id: String?,
     @Json(name = "isActive")
@@ -28,12 +30,16 @@ data class OrderDetailsResponse(
     var orderQuantity: Int?,
     @Json(name = "orderStatus")
     var orderStatus: String?,
+    @Json(name = "postalCode")
+    var postalCode: Int?,
     @Json(name = "productId")
     var productId: String?,
     @Json(name = "productImage")
     var productImage: String?,
     @Json(name = "productName")
     var productName: String?,
+    @Json(name = "productQuantity")
+    var productQuantity: Int?,
     @Json(name = "productprice")
     var productprice: Int?,
     @Json(name = "storeId")

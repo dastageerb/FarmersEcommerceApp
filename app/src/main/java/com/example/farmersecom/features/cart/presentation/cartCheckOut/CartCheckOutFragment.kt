@@ -63,6 +63,17 @@ class CartCheckOutFragment : BaseFragment<FragmentCartCheckOutBinding>()
         binding.fragmentCartCheckOutCustomerPaymentOptionAutoComplete.setUpAdapter(requireContext(),paymentOptionList)
 
 
+        cartViewModel.getUser()?.let()
+        {
+            binding.fragmentCartCheckOutCustomerNameEditText.setText(it.fullName)
+            binding.fragmentCartCheckOutCustomerContactEditText.setText(it.contactNumber)
+            binding.fragmentCartCheckOutCustomerPostalCodeEditText.setText(it.postalCode.toString())
+            binding.fragmentCartCheckOutCustomerAddressEditText.setText(it.address)
+            binding.fragmentCartCheckOutCustomerCityAutoComplete.setText(it.city)
+        }
+        
+        
+        
         cartViewModel.getAllCartItems.asLiveData().observe(viewLifecycleOwner)
         {
             list.addAll(it)

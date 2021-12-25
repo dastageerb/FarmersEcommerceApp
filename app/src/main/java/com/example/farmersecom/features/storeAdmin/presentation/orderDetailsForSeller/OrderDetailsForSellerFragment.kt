@@ -168,21 +168,21 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
         {
             // buyer info
             binding.fragmentOrderDetailsForSellerBuyerNameTextView.text = data?.name
-            binding.fragmentOrderDetailsForSellerPostalCodeTextView.text = "yet to code"
+            binding.fragmentOrderDetailsForSellerPostalCodeTextView.text = data?.postalCode.toString()
             binding.fragmentOrderDetailsForSellerCityTextView.text = data?.city
             binding.fragmentOrderDetailsForSellerAddressTextView.text = data?.orderAddress
             binding.fragmentOrderDetailsForSellerContactNoTextView.text =data?.contactNumber
 
             // product info
             binding.fragmentOrderDetailsForSellerProductNameTextView.text = data?.productName
-            binding.fragmentOrderDetailsForSellerProductDefaultQuantityTextView.text  = "yet to code"
+            binding.fragmentOrderDetailsForSellerProductDefaultQuantityTextView.text  = data?.productQuantity.toString()
             binding.fragmentOrderDetailsForSellerProductDPriceTextView.text = data?.productprice.toString()
 
             // Order info
             binding.fragmentOrderDetailsForSellerOrderIdTextView.text = data?.id
             binding.fragmentOrderDetailsForSellerOderDateTextView.text = data?.date?.substring(0,10)
             binding.fragmentOrderDetailsForSellerOrderQuantityTextView.text = data?.orderQuantity.toString()
-            binding.fragmentOrderDetailsForSellerOrderDeliveryChargesTextView.text = "yet to code"
+            binding.fragmentOrderDetailsForSellerOrderDeliveryChargesTextView.text = data?.deliveryCharges.toString()
 
             binding.fragmentOrderDetailsForSellerOrderSubtotalTextView.text = data?.subTotal.toString()
             binding.fragmentOrderDetailsForSellerOrderTotalTextView.text = data?.totalPrice.toString()

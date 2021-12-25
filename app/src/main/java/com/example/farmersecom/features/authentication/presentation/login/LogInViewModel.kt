@@ -6,6 +6,7 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.LogInData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.LogInResponse
+import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.authentication.domain.useCases.ForgotPasswordUseCase
 import com.example.farmersecom.features.authentication.domain.useCases.LogInViaEmail
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
@@ -63,7 +64,7 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
 
     fun saveAuthToken(token: String) = sharedPrefsHelper.saveToken(token)
     fun getAuthToken() :String? = sharedPrefsHelper.getToken()
-
+    fun saveUser(user:User ) = sharedPrefsHelper.saveUser(user)
 
     // forgotPassword UseCase
 

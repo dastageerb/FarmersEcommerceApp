@@ -41,8 +41,10 @@
     <string name="update">Update</string>
     <string name="change_photo">change Photo</string>
     <string name="dateofbith">Date Of Birth</string>
-    <string name="city" >city</string>
+    <string name="city">city</string>
     <string name="gender">Gender</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
 </resources>

@@ -9,5 +9,7 @@ data class SetupStoreData(
     @Json(name = "about")
     val description: String,
     @Json(name = "storeName")
-    val shopName: String
+    val shopName: String,
+    @Json(name = "deliveryOutCity")
+    val deliversOutOfCity:Boolean,
 )

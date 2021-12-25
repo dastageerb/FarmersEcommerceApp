@@ -2,7 +2,7 @@ package com.example.farmersecom.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.farmersecom.utils.constants.Constants.TOKEN_PREFS
+import com.example.farmersecom.utils.constants.Constants.SAVED_PREFS
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ object SharedPrefsModule
     @Provides
     fun provideSharedPrefs(@ApplicationContext context: Context): SharedPreferences
     {
-        return  context.getSharedPreferences(TOKEN_PREFS, Context.MODE_PRIVATE);
+        return  context.getSharedPreferences(SAVED_PREFS, Context.MODE_PRIVATE);
     }
 
 

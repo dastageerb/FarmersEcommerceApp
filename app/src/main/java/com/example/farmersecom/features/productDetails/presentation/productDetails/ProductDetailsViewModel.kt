@@ -2,6 +2,8 @@ package com.example.farmersecom.features.productDetails.presentation.productDeta
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.farmersecom.SharedPrefsHelper
+import com.example.farmersecom.features.productDetails.domain.model.NavigationEntity
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.useCase.GetProductByIdUseCase
 import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
@@ -22,7 +24,10 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductDetailsViewModel @Inject constructor(private val getProductByIdUseCase: GetProductByIdUseCase) :ViewModel()
+class ProductDetailsViewModel @Inject constructor(
+    private val getProductByIdUseCase: GetProductByIdUseCase,
+    private val sharedPrefsHelper:SharedPrefsHelper)
+    :ViewModel()
 {
 
      // for shared Use
@@ -68,7 +73,12 @@ class ProductDetailsViewModel @Inject constructor(private val getProductByIdUseC
             400 -> NetworkResource.Error(response.errorBody()?.getMessage())
             else -> NetworkResource.Error("Something went wrong ${response.code()}")
         } // when closed
-    }
+    } //
+
+
+
+    fun getAuthToken() : String? = sharedPrefsHelper.getToken()
+
 
 
 }

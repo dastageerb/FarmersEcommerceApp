@@ -9,19 +9,19 @@ import javax.inject.Inject
 
 class ChangePhotoNetworkEntityMapper @Inject constructor():EntityMapper<ChangePhotoNetworkEntity,ChangePhotoResponse>
 {
-    override fun entityToModel(entity: ChangePhotoNetworkEntity): ChangePhotoResponse
-    {
-        return  ChangePhotoResponse(message = entity.message
-            , status = entity.status
-            , userImgUrl = entity.userImgUrl )
-    }
-
-    override fun modelToEntity(model: ChangePhotoResponse): ChangePhotoNetworkEntity
-    {
-       return  ChangePhotoNetworkEntity(message = model.message
-           , status = model.status
-           , userImgUrl = model.userImgUrl)
-    }
+//    override fun entityToModel(entity: ChangePhotoNetworkEntity): ChangePhotoResponse
+//    {
+//        return  ChangePhotoResponse(message = entity.message
+//            , status = entity.status
+//            , userImgUrl = entity.userImgUrl )
+//    }
+//
+//    override fun modelToEntity(model: ChangePhotoResponse): ChangePhotoNetworkEntity
+//    {
+//       return  ChangePhotoNetworkEntity(message = model.message
+//           , status = model.status
+//           , userImgUrl = model.userImgUrl)
+//    }
 
 
 }

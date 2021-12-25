@@ -16,8 +16,10 @@ import com.example.farmersecom.R
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.LogInData
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentLogInBinding
+import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.google.gson.Gson
 import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import dagger.hilt.android.AndroidEntryPoint
@@ -94,10 +96,13 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                             Timber.tag(TAG).d(it.data.toString())
                             it.data?.let()
                             {
-                                loginViewModel.saveAuthToken(it.token.toString())
-                                findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
-                            }
+                                data ->
+                                data.token?.let { it1 -> loginViewModel.saveAuthToken(it1) }
+                                data.user?.let { it1 -> loginViewModel.saveUser(it1) }
 
+                                findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
+
+                            }
                         }
                         else -> {}
                     } // when closed
@@ -108,6 +113,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
 
 
     } // subscribeLoginResponseFlow closed
+
+
 
     override fun onClick(v: View?)
     {
@@ -140,7 +147,6 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
             .addErrorCallback{ binding.editTextEmail.error = it }
             .check() &&
         password.nonEmpty { binding.editTextPassword.error = it }
-
     } //
 
 

@@ -6,9 +6,9 @@ interface EntityMapper<Entity,Model>
 {
 
 
-    fun entityToModel(entity: Entity):Model
-
-    fun modelToEntity(model:Model):Entity
+//    fun entityToModel(entity: Entity):Model
+//
+//    fun modelToEntity(model:Model):Entity
 
 
 }

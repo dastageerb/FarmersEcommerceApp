@@ -1,15 +1,17 @@
-package com.example.farmersecom.features.profile.presentation.profile
+package com.example.farmersecom.features.profile.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.SharedPrefsHelper
+import com.example.farmersecom.features.cart.domain.usecase.DeleteAllCartItemsUseCase
 import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
 import com.example.farmersecom.features.profile.domain.model.ChangePhotoResponse
 import com.example.farmersecom.features.profile.domain.model.UserInfoResponse.UserInfoResponse
-import com.example.farmersecom.features.profile.domain.usecase.GetUserFullProfileUseCase
-import com.example.farmersecom.features.profile.domain.usecase.GetUserProfileUseCase
-import com.example.farmersecom.features.profile.domain.usecase.UploadUserImageUseCase
+import com.example.farmersecom.features.profile.domain.model.editPersonalProfile.EditPersonalInfoEntity
+import com.example.farmersecom.features.profile.domain.model.editPersonalProfile.EditPersonalInfoResponse
+import com.example.farmersecom.features.profile.domain.usecase.*
+import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,15 +24,24 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val getUserProfileUseCase: GetUserProfileUseCase,
-                                           private val userImageUseCase: UploadUserImageUseCase,
-                                           private val getUserFullProfileUseCase: GetUserFullProfileUseCase,
-                                           private val sharedPrefsHelper:SharedPrefsHelper) :ViewModel()
+class ProfileViewModel @Inject constructor(
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val userImageUseCase: UploadUserImageUseCase,
+    private val getUserFullProfileUseCase: GetUserFullProfileUseCase,
+    private val deleteAllCartItemsUseCase: DeleteAllCartItemsUseCase,
+    private val sharedPrefsHelper:SharedPrefsHelper,
+    private val editPersonalInfoUseCase: EditPersonalInfoUseCase,
+    private val changePasswordUseCase: ChangePasswordUseCase) :ViewModel()
 {
 
 
-    /** Get Profile Use Case*/
+    /// sharing entity for fragment
+    var userInfoResponse:UserInfoResponse? =null
 
+
+
+
+    /** Get Profile Use Case*/
     private val _userNetworkEntity:MutableStateFlow<NetworkResource<ProfileNetworkEntity>> = MutableStateFlow(
         NetworkResource.None())
     val userNetworkEntity:StateFlow<NetworkResource<ProfileNetworkEntity>> = _userNetworkEntity
@@ -84,7 +95,7 @@ class ProfileViewModel @Inject constructor(private val getUserProfileUseCase: Ge
             when (e)
             {
                 is HttpException -> _uploadUserImgResponse.value = NetworkResource.Error("Something went wrong")
-                else -> _uploadUserImgResponse.value = NetworkResource.Error("No Internet Connection")
+                else -> _uploadUserImgResponse.value = NetworkResource.Error("No Internet Connection"+e.message)
             } // when closed
         }
 
@@ -132,15 +143,88 @@ class ProfileViewModel @Inject constructor(private val getUserProfileUseCase: Ge
         return when(response.code())
         {
             200,201 -> NetworkResource.Success(response.body())
-            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            400 ,404-> NetworkResource.Error(response.errorBody()?.getMessage())
             else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
         } // when closed
     }
 
-    
-    
-    
-    
+
+    /** Edit Personal info */
+
+
+
+    private val _editPersonalInfoResponse:MutableStateFlow<NetworkResource<EditPersonalInfoResponse>> = MutableStateFlow(
+        NetworkResource.None())
+    val editPersonalInfoResponse:StateFlow<NetworkResource<EditPersonalInfoResponse>> = _editPersonalInfoResponse
+
+    fun editPersonalInfoUseCase(personalInfoEntity: EditPersonalInfoEntity) = viewModelScope.launch(Dispatchers.IO)
+    {
+        try
+        {
+            val response = editPersonalInfoUseCase.editPersonalInfo(personalInfoEntity)
+            _editPersonalInfoResponse.value = handleEditPersonalInfoResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException -> _editPersonalInfoResponse.value = NetworkResource.Error("Something went wrong")
+                else -> _editPersonalInfoResponse.value = NetworkResource.Error("No Internet Connection")
+            } // when closed
+        } // catch closed
+    } //  getProfile closed
+
+
+    private fun handleEditPersonalInfoResponse(response: Response<EditPersonalInfoResponse>): NetworkResource<EditPersonalInfoResponse>
+    {
+        return when(response.code())
+        {
+            200,201 -> NetworkResource.Success(response.body())
+            400 ,404-> NetworkResource.Error(response.errorBody()?.getMessage())
+            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
+        } // when closed
+    } // handleEditPersonalInfoResponse
+
+    /*****/
+
+
+    /** Change Password **/
+
+
+    private var _statusMsgResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
+            = MutableStateFlow(NetworkResource.None())
+    val statusMsgResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+            = _statusMsgResponse
+
+
+    fun changePassword(oldPassword:String,newPassword:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.value = NetworkResource.Loading()
+        try
+        {
+            val response = changePasswordUseCase.changePasswordUseCase(oldPassword,newPassword)
+            _statusMsgResponse.value = handleStatusMessageResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                else ->
+                {
+                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                }
+            } // when closed
+        }
+    } //   closed
+
+    private fun handleStatusMessageResponse(response: Response<StatusMsgResponse>): NetworkResource<StatusMsgResponse>
+    {
+        return when(response.code())
+        {
+            200,201 -> NetworkResource.Success(response.body())
+            400 ,404-> NetworkResource.Error(response.errorBody()?.getMessage())
+            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
+        } // when closed
+    }
 
 
     fun getAuthToken() : String? = sharedPrefsHelper.getToken()
@@ -148,6 +232,11 @@ class ProfileViewModel @Inject constructor(private val getUserProfileUseCase: Ge
     fun clearToken()  = sharedPrefsHelper.clearToken()
 
 
+    //TODO
+    fun clearCartOnLogout() = viewModelScope.launch(Dispatchers.IO)
+    {
+        deleteAllCartItemsUseCase.deleteAllCartItem()
+    }
 
 
 

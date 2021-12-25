@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.farmersecom.features.authentication.presentation.register.RegisterFragment">
+    tools:context=".features.profile.presentation.editPersonalInfo.EditPersonalInfoFragment"
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,62 +70,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/email"
-            >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragEmail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textEmailAddress"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/password"
-            app:counterEnabled="true"
-            app:counterMaxLength="16"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragPassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/re_enter_password"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragReEnterPassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword"
-              />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/headerGender"
@@ -136,7 +83,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             />
-
         <RadioGroup
 
             android:id="@+id/radioGroupRegisterFrag"
@@ -147,17 +93,15 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             >
-
-
             <RadioButton
-                android:id="@+id/radioButtonMale"
+                android:id="@+id/fragmentEditPersonalInfoRadioButtonMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_male"
                 android:buttonTint="@color/design_default_color_primary"
                 />
             <RadioButton
-                android:id="@+id/radiobButtomFemale"
+                android:id="@+id/fragmentEditPersonalInfoRadioButtonFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_female"
@@ -229,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text"
-             />
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -258,44 +202,29 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonRegFragRegister"
+            android:id="@+id/buttonRegFragUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register"
+            android:text="@string/update"
             android:textColor="@color/white"
             android:background="@drawable/button_bg"
             android:layout_marginTop="18dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="32dp"
             />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textNoAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="15dp"
-            android:text="Already Have Account?"
-            />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonRegFragLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@android:color/transparent"
-            android:text="@string/login_here"
-            android:textAllCaps="false"
-            android:textColor="@color/design_default_color_primary" />
 
         <ProgressBar
-            android:id="@+id/progressBarRegisterFrag"
+            android:id="@+id/progressBarEditPersonalInfoFrag"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             />
 
-
     </LinearLayout>
+
+
+
 
 </ScrollView>

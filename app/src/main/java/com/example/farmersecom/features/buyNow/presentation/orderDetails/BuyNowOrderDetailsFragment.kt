@@ -33,9 +33,8 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
 
 
     private val orderViewModel: PlaceOrderViewModel by activityViewModels()
-
     private var subTotal = 0;
-    private var total =0
+    private var total = 0
 
    // private var itemsList:List<String> = emptyList<String>()
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentBuyNowDetailsBinding
@@ -67,6 +66,16 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
         paymentOptionList.add("Cash On Delivery")
         binding.fragmentBuyNowCustomerPaymentOptionAutoComplete.inputType = InputType.TYPE_NULL
         binding.fragmentBuyNowCustomerPaymentOptionAutoComplete.setUpAdapter(requireContext(),paymentOptionList)
+
+
+        orderViewModel.getUser()?.let()
+        {
+            binding.fragmentBuyNowCustomerNameEditText.setText(it.fullName)
+            binding.fragmentBuyNowCustomerContactEditText.setText(it.contactNumber)
+            binding.fragmentBuyNowCustomerPostalCodeEditText.setText(it.postalCode.toString())
+            binding.fragmentBuyNowCustomerAddressEditText.setText(it.address)
+            binding.fragmentBuyNowCustomerCityAutoComplete.setText(it.city)
+        }
 
 
 

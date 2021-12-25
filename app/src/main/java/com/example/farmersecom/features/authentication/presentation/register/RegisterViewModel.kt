@@ -6,6 +6,7 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.RegisterResponse
 import com.example.farmersecom.features.authentication.domain.useCases.Register
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +30,7 @@ class RegisterViewModel @Inject constructor(private  val register: Register) : V
 
     fun register(registerData: RegisterData) = viewModelScope.launch(Dispatchers.IO)
     {
+        Timber.tag(TAG).d(registerData.toString())
         _registerResponse.value = NetworkResource.Loading()
           try
             {
