@@ -47,6 +47,11 @@
     <string name="no">No</string>
     <string name="rate">Rate</string>
     <string name="offers_delivery_out_of_city">Offers Delivery Out Of city</string>
+    <string name="plz_select_city">Please Select City</string>
+    <string name="re_enter_new_password">Re Enter New Password</string>
+    <string name="enter_old_password">Enter Old Password</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="confirm">Confirm</string>
 
 
 </resources>

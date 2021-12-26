@@ -44,7 +44,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
 
         binding.buttonLoginFragLogin.setOnClickListener(this)
         binding.buttonLoginFragRegister.setOnClickListener(this)
-
+        binding.buttonLoginFragForgotPassword.setOnClickListener(this)
 
 
      //   Timber.tag(TAG).d("token from prefs"+loginViewModel.sharedPrefGetToken())
@@ -86,6 +86,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                         is NetworkResource.Error ->
                         {
                             binding.progressBarLogIn.hide()
+
                             Timber.tag(TAG).d("error  "+it.msg)
                             requireContext().showToast("error: ${it.msg}")
                         }
@@ -122,6 +123,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
         {
            R.id.buttonLoginFragLogin -> validateAndLogIn()
            R.id.buttonLoginFragRegister -> findNavController().navigate(R.id.action_logInFragment_to_registerFragment)
+           R.id.buttonLoginFragForgotPassword-> findNavController().navigate(R.id.action_logInFragment_to_forgotPasswordFragment)
         } // when closed
     } // onClick closed
 

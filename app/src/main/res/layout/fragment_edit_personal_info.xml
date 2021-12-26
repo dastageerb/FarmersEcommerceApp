@@ -148,7 +148,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp">
             <AutoCompleteTextView
-                android:id="@+id/autoCompleteCity"
+
+                android:id="@+id/fragmentEditPersonalInfoCityAutoComplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"

@@ -28,5 +28,9 @@ interface AuthApi
     suspend fun logInViaEmail(@Body logInData: LogInData) : Response<LogInResponse>
 
 
+//    @POST("api/login")
+    suspend fun updateFCMToken(@Body logInData: LogInData) : Response<LogInResponse>
+
+
 
 }

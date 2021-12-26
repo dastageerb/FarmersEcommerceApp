@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "439072912749",
+    "project_id": "fambazarecomforfarmers",
+    "storage_bucket": "fambazarecomforfarmers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439072912749:android:6be041d0ba9dc0689b5664",
+        "android_client_info": {
+          "package_name": "com.example.farmersecom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439072912749-4fu8n5ge9u271fbvnu2dehesv9japo2g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBq5PpuQljXKEZhkx7WJVOGhw92h8K_9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439072912749-4fu8n5ge9u271fbvnu2dehesv9japo2g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

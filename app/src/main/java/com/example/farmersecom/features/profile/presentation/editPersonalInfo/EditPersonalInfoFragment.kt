@@ -22,6 +22,8 @@ import com.example.farmersecom.features.profile.presentation.ProfileViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import com.wajahatkarim3.easyvalidation.core.view_ktx.textEqualTo
@@ -60,6 +62,8 @@ class EditPersonalInfoFragment :BaseFragment<FragmentEditPersonalInfoBinding>()
             updatePersonalInfo()
         }
 
+        subscribeEditPersonalInfoResponseFlow()
+
     } // onViewCreated
 
     private fun initViews(userInfoResponse: UserInfoResponse?)
@@ -67,13 +71,13 @@ class EditPersonalInfoFragment :BaseFragment<FragmentEditPersonalInfoBinding>()
 
         Log.d(TAG, "initViews: "+userInfoResponse.toString())
 
-        binding.autoCompleteCity.setUpAdapter(requireContext(),R.array.Sindh)
 
         binding.editTextRegisterFragFirstName.setText(userInfoResponse?.firstName)
         binding.editTextRegisterFragLastName.setText(userInfoResponse?.lastName)
         binding.editTextRegisterFragContact.setText(userInfoResponse?.contactNumber)
         binding.editTextRegisterFragDate.setText(userInfoResponse?.dateOfBirth)
-        binding.autoCompleteCity.setText(userInfoResponse?.city)
+        binding.fragmentEditPersonalInfoCityAutoComplete.setText(userInfoResponse?.city)
+        binding.fragmentEditPersonalInfoCityAutoComplete.setUpAdapter(requireContext(),R.array.Sindh)
         binding.editTextRegisterFragAddress.setText(userInfoResponse?.address)
         binding.editTextRegisterFragPostalCode.setText(userInfoResponse?.postalCode.toString())
 
@@ -104,7 +108,7 @@ class EditPersonalInfoFragment :BaseFragment<FragmentEditPersonalInfoBinding>()
             .findViewById<RadioButton>(radioButtonId).text.toString()
 
         val dateOfBirth = binding.editTextRegisterFragDate.text.toString().trim() // date input
-        val city = binding.autoCompleteCity.text.toString().trim()
+        val city = binding.fragmentEditPersonalInfoCityAutoComplete.text.toString().trim()
         val address = binding.editTextRegisterFragAddress.text.toString().trim()
         val postalCode = binding.editTextRegisterFragPostalCode.text.toString().trim()
 
@@ -118,7 +122,7 @@ class EditPersonalInfoFragment :BaseFragment<FragmentEditPersonalInfoBinding>()
         {
             val editPersonalInfoEntity = EditPersonalInfoEntity(address,city,contact
             ,dateOfBirth,fName,gender,lName,postalCode.toInt())
-
+            viewModel.editPersonalInfoUseCase(editPersonalInfoEntity)
         } // if closed
 
     } // register closed
@@ -183,7 +187,7 @@ class EditPersonalInfoFragment :BaseFragment<FragmentEditPersonalInfoBinding>()
         // province will not be empty because it is validated first so no need to check below
         if(city.isEmpty())
         {
-            binding.autoCompleteCity.error = "Please select a city"
+            requireContext().showToast(getString(R.string.plz_select_city))
             return false
         }
         return true
@@ -210,26 +214,30 @@ class EditPersonalInfoFragment :BaseFragment<FragmentEditPersonalInfoBinding>()
 
     private fun subscribeEditPersonalInfoResponseFlow()
     {
-        //
+
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
-                viewModel.statusMsgResponse.collect()
+                viewModel.editPersonalInfoResponse.collect()
                 {
                     when (it)
                     {
                         is NetworkResource.Loading ->
                         {
+                            binding.progressBarEditPersonalInfoFrag.show()
                             Timber.tag(TAG).d("Loading")
                         }
                         is NetworkResource.Success ->
                         {
+                            binding.progressBarEditPersonalInfoFrag.hide()
                             requireContext().showToast(it.data?.message.toString())
                             // save User here
+                            it.data?.user?.let { it1 -> viewModel.saveUser(it1) }
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.progressBarEditPersonalInfoFrag.hide()
                             requireContext().showToast(it.msg.toString())
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }

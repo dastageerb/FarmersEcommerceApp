@@ -184,29 +184,11 @@ class StoreSettingFragment : BaseFragment<FragmentStoreSettingBinding>() , View.
         binding.fragmentStoreSettingStoreNameEditText.setText( data?.storeName)
         binding.fragmentStoreSettingStoreDescriptionEditText.setText(data?.about)
 
-
         binding.fragmentStoreSettingInfoLayout.show()
 
     } // updateStoreViews
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
-    {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_edit,menu)
-    } // onCreateOptionsMenu closed
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean
-    {
-        when(item.itemId)
-        {
-            R.id.menu_edit ->
-            {
-                binding.fragmentStoreSettingInfoLayout.hide()
-                binding.fragmentStoreSettingUpdateStoreLayout.show()
-            } //
-        } // when closed
-        return super.onOptionsItemSelected(item)
-    } // onOptionsItemsSelected closed
 
 
     /** onClick listener**/

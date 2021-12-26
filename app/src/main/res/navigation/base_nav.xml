@@ -269,7 +269,13 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.farmersecom.features.authentication.presentation.login.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_logInFragment"
+            app:destination="@id/logInFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
     <fragment
         android:id="@+id/fullUserProfileFragment"
         android:name="com.example.farmersecom.features.profile.presentation.fullProfile.FullUserProfileFragment"
@@ -286,7 +292,13 @@
         android:id="@+id/changePasswordFragment"
         android:name="com.example.farmersecom.features.profile.presentation.changePassword.ChangePasswordFragment"
         android:label="fragment_change_password"
-        tools:layout="@layout/fragment_change_password" />
+        tools:layout="@layout/fragment_change_password" >
+        <action
+            android:id="@+id/action_changePasswordFragment_to_logInFragment"
+            app:destination="@id/logInFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
     <fragment
         android:id="@+id/editPersonalInfoFragment"
         android:name="com.example.farmersecom.features.profile.presentation.editPersonalInfo.EditPersonalInfoFragment"

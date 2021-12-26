@@ -8,9 +8,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentForgotPasswordBinding
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,16 +63,20 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>()
                     {
                         is NetworkResource.Loading ->
                         {
-                            // binding.orderDetailsForSellerFragmentProgressBar.show()
+                            binding.fragmentForgotPasswordProgressBar.show()
                         }
                         is NetworkResource.Success ->
                         {
-                            //  binding.orderDetailsForSellerFragmentProgressBar.hide()
+                            it.data?.message?.let { it1 -> requireContext().showToast(it1) }
+                            binding.fragmentForgotPasswordProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data?.message}")
-                            //updateViews(it.data)
+                            loginViewModel.clearToken()
+                            findNavController().navigate(R.id.action_forgotPasswordFragment_to_logInFragment)
+
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.fragmentForgotPasswordProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
                     }// when closed

@@ -25,6 +25,8 @@ import com.example.farmersecom.features.productDetails.presentation.productDetai
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -60,6 +62,14 @@ class HomeFragment :BaseFragment<FragmentHomeBinding>()
 
         subscribeSliderResponse()
         subscribeLatestProductsResponse()
+
+        // token = "dC67tvRMTYSSlEIejD1ES_:APA91bFe8Fij5Bg46KvuV6vhkLQFjX2UBV65Ea-UfBC7jRPGVkhkqDsoE_f-NC37EXtHA6niYbDbzUnu3MyFzFNx0DjtV85nSg9ck_7Mn3AYK-kspqjDgBMEAVofQgmBJhi47CSWT-5t"
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener
+        {
+            Timber.tag(TAG).d("token = "+it.result)
+        })
+
 
     } // onViewCreated closed
 

@@ -123,6 +123,9 @@ class StoreSettingViewModel @Inject constructor
             val responseDeffered = async { updateStoreUseCase.updateStoreUseCase(name,desc)}
 
             val response = responseDeffered.await()
+
+            // reload storeDetails After Updating
+
             getStoreDetails()
           _statusMsgResponse.value = handleStatusResponse(response)
 

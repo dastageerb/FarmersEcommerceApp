@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.SharedPrefsHelper
+import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.cart.domain.usecase.DeleteAllCartItemsUseCase
 import com.example.farmersecom.features.profile.data.framework.entities.ProfileNetworkEntity
 import com.example.farmersecom.features.profile.domain.model.ChangePhotoResponse
@@ -228,6 +229,9 @@ class ProfileViewModel @Inject constructor(
 
 
     fun getAuthToken() : String? = sharedPrefsHelper.getToken()
+
+    fun saveUser(user:User)   = sharedPrefsHelper.saveUser(user)
+
 
     fun clearToken()  = sharedPrefsHelper.clearToken()
 

@@ -64,6 +64,9 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
 
     fun saveAuthToken(token: String) = sharedPrefsHelper.saveToken(token)
     fun getAuthToken() :String? = sharedPrefsHelper.getToken()
+    fun clearToken()  = sharedPrefsHelper.clearToken()
+
+
     fun saveUser(user:User ) = sharedPrefsHelper.saveUser(user)
 
     // forgotPassword UseCase
