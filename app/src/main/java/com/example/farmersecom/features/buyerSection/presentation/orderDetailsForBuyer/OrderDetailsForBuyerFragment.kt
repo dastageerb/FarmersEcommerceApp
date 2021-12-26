@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,11 +26,14 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
-class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBinding>()
+class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBinding>() , View.OnClickListener
 {
 
 
     private val viewModel: BuyerDashboardViewModel by activityViewModels()
+    private lateinit var productId:String
+
+
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentOrderDetailsForBuyerBinding
     {
         return FragmentOrderDetailsForBuyerBinding.inflate(inflater,container,false)
@@ -50,6 +54,18 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
                 } // collect
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
+
+
+        binding.fragmentOrderDetailsForBuyerRatingBar.rating = 0.5f
+        binding.fragmentOrderDetailsForBuyerRatingBar.setOnRatingBarChangeListener()
+        { ratingBar, rating, fromUser ->
+
+        }
+
+        binding.fragmentOrderDetailsForBuyerRateButton.setOnClickListener(this)
+
+        subscribeToStatusMessageResponses()
+
     } // onViewCreated
 
 
@@ -98,8 +114,18 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
 
     private fun updateViews(data: OrderDetailsResponse?)
     {
+        productId = data?.productId!!
+
         binding.apply()
         {
+
+
+
+            if(data?.orderStatus.equals("completed"))
+            {
+                binding.fragmentOrderDetailsForBuyerRatingLayout.show()
+            }
+
             // store info
             binding.fragmentOrderDetailsForBuyerStoreNameTextView.text = data?.storeName
             // product info
@@ -135,11 +161,18 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
                         is NetworkResource.Success ->
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
+                            binding.progressBarFragmentOrderDetailsForBuyer.hide()
                             requireContext().showToast(it.data?.message.toString())
                         }
                         is NetworkResource.Error ->
                         {
+
+                            binding.progressBarFragmentOrderDetailsForBuyer.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                        is NetworkResource.Loading ->
+                        {
+                            binding.progressBarFragmentOrderDetailsForBuyer.show()
                         }
                     }// when closed
                 } // getProfile closed
@@ -147,7 +180,26 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
         } /// lifecycleScope closed
     }
 
+    override fun onClick(v: View?)
+    {
+        when(v?.id)
+        {
+            R.id.fragmentOrderDetailsForBuyerRateButton -> rateProduct()
+        } // when closed
 
+    } // onClick closed
+
+    private fun rateProduct()
+    {
+        if(!this::productId.isInitialized)
+        {
+            requireContext().showToast("Order Details are not loaded yet")
+        }else
+        {
+            val rating = binding.fragmentOrderDetailsForBuyerRatingBar.rating
+            viewModel.rateProduct(productId,rating)
+        }//
+    } // rateProduct
 
 
 } // OrderDetailsForBuyerFragment closed

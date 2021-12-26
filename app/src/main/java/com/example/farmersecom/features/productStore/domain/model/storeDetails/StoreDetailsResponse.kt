@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class StoreDetailsResponse(
-    @Json(name = "about")
+    @Json(name = "aboutStore")
     var about: String?,
     @Json(name = "createdAt")
     var createdAt: String?,

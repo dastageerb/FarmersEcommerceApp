@@ -17,6 +17,7 @@ import com.example.farmersecom.features.storeAdmin.domain.useCases.UpdateStoreIm
 import com.example.farmersecom.features.storeAdmin.domain.useCases.UpdateStoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -40,7 +41,7 @@ class StoreSettingViewModel @Inject constructor
     val productStoreResponse: StateFlow<NetworkResource<StoreDetailsResponse>> = _productStoreResponse
 
 
-    fun getStoreDetails(id:String) = viewModelScope.launch(Dispatchers.IO)
+    fun getStoreDetails() = viewModelScope.launch(Dispatchers.IO)
     {
         _productStoreResponse.value = NetworkResource.Loading()
         try
@@ -119,8 +120,11 @@ class StoreSettingViewModel @Inject constructor
         _statusMsgResponse.value = NetworkResource.Loading()
         try
         {
-            val response = updateStoreUseCase.updateStoreUseCase(name,desc)
-            _statusMsgResponse.value = handleStatusResponse(response)
+            val responseDeffered = async { updateStoreUseCase.updateStoreUseCase(name,desc)}
+
+            val response = responseDeffered.await()
+            getStoreDetails()
+          _statusMsgResponse.value = handleStatusResponse(response)
 
         }catch (e:Exception)
         {

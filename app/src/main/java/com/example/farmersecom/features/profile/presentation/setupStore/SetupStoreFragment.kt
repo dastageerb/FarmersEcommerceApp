@@ -111,7 +111,7 @@ class SetupStoreFragment : BaseFragment<FragmentSetupStoreBinding>()
 
         if(validation(name,description))
         {
-            val storeData = SetupStoreData(name,description,deliversOutOfCity)
+            val storeData = SetupStoreData(description,name,deliversOutOfCity)
             viewModel.setupStore(storeData)
         } // if closed
 

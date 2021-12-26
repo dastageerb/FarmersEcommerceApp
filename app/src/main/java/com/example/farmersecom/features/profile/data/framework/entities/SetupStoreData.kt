@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SetupStoreData(
-    @Json(name = "about")
+    @Json(name = "aboutStore")
     val description: String,
     @Json(name = "storeName")
     val shopName: String,

@@ -17,6 +17,7 @@ import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExt
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -162,7 +163,11 @@ class StoreDashboardViewModel @Inject constructor(
         _statusMsgResponse.value = NetworkResource.Loading()
         try
         {
-            val response = changeOrderStatusUseCase.changeOrderStatus(status,orderId)
+            val responseDeffered = async { changeOrderStatusUseCase.changeOrderStatus(status, orderId) }
+
+            val response = responseDeffered.await()
+            orderDetails(orderId)
+
             _statusMsgResponse.value = handleStatusMessageResponse(response)
 
         }catch (e:Exception)

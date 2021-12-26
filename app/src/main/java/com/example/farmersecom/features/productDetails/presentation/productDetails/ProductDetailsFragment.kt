@@ -151,7 +151,8 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
         if(viewModel.getAuthToken()?.isEmpty() == true)
         {
             findNavController().navigate(R.id.action_productDetailsFragment_to_logInFragment)
-        }else
+        }
+        else
         {
             when(v?.id)
             {

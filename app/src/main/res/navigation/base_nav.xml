@@ -97,6 +97,9 @@
         <action
             android:id="@+id/action_storeFragment_to_discontinuedProductsFragment"
             app:destination="@id/discontinuedProductsFragment" />
+        <action
+            android:id="@+id/action_storeFragment_to_storeSettingFragment"
+            app:destination="@id/storeSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewProductFragment"
@@ -289,6 +292,11 @@
         android:name="com.example.farmersecom.features.profile.presentation.editPersonalInfo.EditPersonalInfoFragment"
         android:label="fragment_edit_personal_info"
         tools:layout="@layout/fragment_edit_personal_info" />
+    <fragment
+        android:id="@+id/storeSettingFragment"
+        android:name="com.example.farmersecom.features.storeAdmin.presentation.storeSettings.StoreSettingFragment"
+        android:label="fragment_store_setting"
+        tools:layout="@layout/fragment_store_setting" />
 
 
 </navigation>

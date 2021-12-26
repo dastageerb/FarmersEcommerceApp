@@ -17,11 +17,8 @@ interface  StoreAdminApi
 {
 
 
-    // com.example.farmersecom.features.productDetails.domain.model.Store Dashboard
 
 
-    //{language_code}/{word}
-    // Add new Product
     @Multipart
     @POST("api/product/add")
     suspend fun addNewProduct(
@@ -73,11 +70,12 @@ interface  StoreAdminApi
     @Query("orderId")orderId:String):Response<StatusMsgResponse>
 
 
-    //@GET // by auth
+
+    @GET("api/store")
     suspend fun getStoreDetails(): Response<StoreDetailsResponse>
 
-    //@POST
-    suspend fun editStoreCashOnDelivery(yesORNo:Boolean): Response<StatusMsgResponse>
+    @POST("api/store/deliveryOutCity")
+    suspend fun editStoreCashOnDelivery(@Query("deliveryOutCity")yesORNo:Boolean): Response<StatusMsgResponse>
 
 
     @POST("api/store/edit")

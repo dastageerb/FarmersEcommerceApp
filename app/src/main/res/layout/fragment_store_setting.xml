@@ -7,23 +7,26 @@
     tools:context=".features.storeAdmin.presentation.storeSettings.StoreSettingFragment">
 
     <RelativeLayout
+        android:id="@+id/fragmentStoreSettingInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragmentStoreSettingInfoLayout"
+        android:visibility="gone"
         >
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/imageCardView"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            app:cardCornerRadius="60dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="60dp">
+
             <ImageView
                 android:id="@+id/fragmentStoreSettingStoreImageImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:background="@color/colorPrimaryDark" />
+                android:background="@color/colorPrimaryDark"
+                android:scaleType="centerCrop" />
         </com.google.android.material.card.MaterialCardView>
 
         <Button
@@ -52,17 +55,29 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+
+        <TextView
+            android:id="@+id/txtAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragmentStoreSettingStoreNameTextView"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/store_desc"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/fragmentStoreSettingStoreDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/txtAbout"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_below="@id/fragmentStoreSettingStoreNameTextView"
             android:text="@string/store_desc"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
 
 
         <TextView
@@ -73,32 +88,42 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:text="Offers Delivery Out Of city"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="@string/offers_delivery_out_of_city"
+            android:textSize="14sp"
+            />
 
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/fragmentStoreSettingsDeliveryInfoSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/fragmentStoreSettingStoreDescriptionTextView"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="No"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_below="@id/fragmentStoreSettingStoreDescriptionTextView"
-            android:layout_alignParentEnd="true"
-            />
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragmentStoreSettingEditStoreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragmentStoreSettingsDeliveryInfoSwitch"
+            android:drawableLeft="@drawable/ic_baseline_edit_24"
+            android:drawablePadding="18dp"
+            android:text="Edit Store Details"
+            android:textAllCaps="false" />
 
     </RelativeLayout>
 
 
     <LinearLayout
         android:id="@+id/fragmentStoreSettingUpdateStoreLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
+
         >
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -114,6 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text"
+
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,7 +156,7 @@
                 android:id="@+id/fragmentStoreSettingStoreDescriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,6 +168,7 @@
             android:layout_marginBottom="40dp"
             android:background="@drawable/button_bg"
             android:text="@string/update"
+            android:layout_gravity="center"
             android:textColor="@color/white"
             android:layout_marginTop="36dp"
             android:textAllCaps="false"
@@ -150,11 +177,13 @@
     </LinearLayout>
 
     <ProgressBar
+        android:id="@+id/bindingStoreSettingProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

@@ -21,9 +21,10 @@ interface BuyerDashboardApi
 
 
 
-    @PUT("api/product/rating")
+    @POST("api/product/rating")
     suspend fun rateProduct(@Query("productId")id:String,@Query("rating")rating:Float)
     :Response<StatusMsgResponse>
+
 
     @POST("api/order/cancel/{id}")
     suspend fun cancelOrder(@Path("id")orderId:String)

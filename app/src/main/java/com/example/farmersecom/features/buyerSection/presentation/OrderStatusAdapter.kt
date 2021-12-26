@@ -43,7 +43,7 @@ class OrderStatusAdapter(private val onOrderClicked:(String)->Unit) : ListAdapte
             when(order?.orderStatus)
             {
                 "completed" -> binding.layoutOrderStatusOrderStatusTextView.setTextColor(Color.GREEN)
-                else -> binding.layoutOrderStatusOrderStatusTextView.setTextColor(Color.YELLOW)
+                else -> binding.layoutOrderStatusOrderStatusTextView.setTextColor(Color.BLACK)
             }
 
         }

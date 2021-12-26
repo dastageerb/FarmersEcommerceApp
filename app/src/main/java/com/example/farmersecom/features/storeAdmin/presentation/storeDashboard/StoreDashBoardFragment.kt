@@ -65,6 +65,7 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
             1 -> findNavController().navigate(R.id.action_storeFragment_to_discontinuedProductsFragment)
             2 -> findNavController().navigate(R.id.action_storeFragment_to_activeOrdersFragment)
             3 -> findNavController().navigate(R.id.action_storeFragment_to_completedOrdersFragment)
+            4 -> findNavController().navigate(R.id.action_storeFragment_to_storeSettingFragment)
         }
     }
 

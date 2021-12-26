@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.farmersecom.base.BaseFragment
@@ -29,6 +30,9 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
 
 
     private val  viewModel: StoreDashboardViewModel by activityViewModels()
+
+
+
     val orderStatusList = arrayOf("pending","inProcess","ship","complete")
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentOrderDetailsForSellerBinding
     {
@@ -45,6 +49,8 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
         {
                 changeStatus()
         }
+
+
 
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
@@ -66,20 +72,31 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
     private fun changeStatus() = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
     {
         val status = binding.fragmentOrderDetailsForSellerButtonChangStatus.text.toString()
-        orderStatusList.forEachIndexed()
+
+
+        viewModel.getOrderId.asLiveData().observe(viewLifecycleOwner)
         {
-            index,sts ->
-            if(status == sts)
+
+            when(status)
             {
-                viewModel.getOrderId.collect()
+                "inProcess"->
                 {
-                    Timber.tag(TAG).d(""+it )
-                    viewModel.changeOrderStatus(status,it)
-                    delay(500)
-                    getOrderDetails(it)
+                    viewModel.changeOrderStatus("inProcess",it)
                 }
-            }
-        }
+                "ship" ->
+                {
+                    viewModel.changeOrderStatus("shipped",it)
+                }
+                "complete"->
+                {
+                    viewModel.changeOrderStatus("completed",it)
+                }
+            } // when closed
+
+
+        } // liveData Observer closed
+
+
 
     } // changeStatus
 
@@ -140,7 +157,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
                     {
                         is NetworkResource.Loading ->
                         {
-                           // binding.orderDetailsForSellerFragmentProgressBar.show()
+                            binding.orderDetailsForSellerFragmentProgressBar.show()
                         }
                         is NetworkResource.Success ->
                         {
@@ -188,18 +205,30 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
             binding.fragmentOrderDetailsForSellerOrderTotalTextView.text = data?.totalPrice.toString()
             binding.fragmentOrderDetailsForSellerOrderStatusTextView.text = data?.orderStatus
 
-
-            orderStatusList.forEachIndexed()
+            when(data?.orderStatus)
             {
-                index: Int, status: String ->
-                if(data?.orderStatus.equals(status) && index < orderStatusList.size-1)
+                "pending" ->
                 {
-                    binding.fragmentOrderDetailsForSellerButtonChangStatus.text = orderStatusList.get(index+1)
-                } // if closed
+                    fragmentOrderDetailsForSellerButtonChangStatus.text = orderStatusList[1]
+                }
+                "inProcess"->
+                {
+                    fragmentOrderDetailsForSellerButtonChangStatus.text = orderStatusList[2]
+                }
+                "shipped" ->
+                {
+                    fragmentOrderDetailsForSellerButtonChangStatus.text = orderStatusList[3]
+                }
+                "completed"->
+                {
+                    fragmentOrderDetailsForSellerButtonChangStatus.hide()
+                    fragmentOrderDetailsForSellerButtonChangStatus.text = orderStatusList[3]
+                }
             }
 
         } // apply closed
     }// updateView closed
+
 
 
 

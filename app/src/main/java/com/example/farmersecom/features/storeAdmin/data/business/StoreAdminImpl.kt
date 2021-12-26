@@ -71,7 +71,7 @@ class StoreAdminImpl(private val storeAdminApi:StoreAdminApi) : StoreAdminReposi
 
     override suspend fun updateStoreInfo(name: String, desc: String): Response<StatusMsgResponse>
 
-      =   storeAdminApi.updateStoreInfo(UpdateStore(name,desc))
+      =   storeAdminApi.updateStoreInfo(UpdateStore(desc,name))
 
     override suspend fun updateStoreImage(file: MultipartBody.Part): Response<ChangeStoreImageResponse>
      = storeAdminApi.updateStoreImage(file)

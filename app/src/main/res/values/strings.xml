@@ -37,7 +37,7 @@
     <string name="active">Active</string>
     <string name="submit">Submit</string>
     <string name="forgot_password">forgot Password</string>
-    <string name="store_desc">Store Description</string>
+    <string name="store_desc">About Store</string>
     <string name="update">Update</string>
     <string name="change_photo">change Photo</string>
     <string name="dateofbith">Date Of Birth</string>
@@ -45,6 +45,8 @@
     <string name="gender">Gender</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="rate">Rate</string>
+    <string name="offers_delivery_out_of_city">Offers Delivery Out Of city</string>
 
 
 </resources>

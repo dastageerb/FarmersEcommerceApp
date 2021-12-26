@@ -96,11 +96,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                         {
                             binding.fragmentProfileProgressBar.show()
                             Timber.tag(TAG).d("Loading")
-
                         }
                         is NetworkResource.Success ->
                         {
-
                             binding.fragmentProfileProgressBar.hide()
                             Timber.tag(TAG).d(""+it.data)
                             updateViews(it.data)

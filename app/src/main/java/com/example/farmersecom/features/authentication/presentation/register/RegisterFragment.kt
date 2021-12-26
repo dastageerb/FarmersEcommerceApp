@@ -1,11 +1,9 @@
 package com.example.farmersecom.features.authentication.presentation.register
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.RadioButton
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,7 +15,6 @@ import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.R
 import com.example.farmersecom.features.authentication.data.frameWork.entity.requests.RegisterData
-import com.example.farmersecom.features.authentication.presentation.register.utils.Utils.getList
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentRegisterBinding
 import com.example.farmersecom.features.authentication.presentation.register.utils.Utils.setUpAdapter
@@ -32,7 +29,6 @@ import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickListener
@@ -100,12 +96,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
         binding.apply {
             //disable  autoCompleteCity until province selected
-            autoCompleteCity.isEnabled = false
-
-            // make autocompletes UnClickable preventing the keyboard from poping up
-
             autoCompleteCity.setUpAdapter(requireContext(), R.array.Sindh)
-
 
 
         }
@@ -154,11 +145,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
 
         if(validPersonalInfo && validDob &&   validCity && validPostalInfo)
         {
-            val registerEntity = RegisterData(fName,lName,contact,email,rePass,
+            val registerEntity = RegisterData(fName,lName,contactNumber = contact,email = email,rePass,
                 gender,dateOfBirth,city,address,postalCode.toInt())
             viewModel.register(registerEntity)
         }
-
     } // register closed
 
 
