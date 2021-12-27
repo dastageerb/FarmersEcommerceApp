@@ -33,8 +33,13 @@ class  StoreProductsAdapter ()
         {
             if(product?.productPictures?.size!! > 0)
             {
+
                 binding.layoutProductStoreItemImageView.load(product?.productPictures!![0].img)
             }
+
+            binding.layoutProductStoreItemProductName.text = product.productName
+            binding.layoutProductStoreItemProductPrice.text = product.price.toString()
+
         }
     }
 

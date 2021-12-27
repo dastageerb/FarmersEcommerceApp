@@ -23,15 +23,16 @@ class FCMessagingService:FirebaseMessagingService()
         Timber.tag(TAG).d(remoteMessage.toString())
         Timber.tag(TAG).d(remoteMessage.data.toString())
 
-        val map = mutableMapOf<String,String>()
-        map.put("body","You got an Order")
-        map.put("title","Order Received")
-        map.put("for","Seller")
-        map.put("notificationChannelId","FAMECOMCHANNEEL")
-        map.put("notificationName","FAMECOM")
-        map.put("notificationID","1")
+//        val map = mutableMapOf<String,String>()
+//        map.put("body","You got an Order")
+//        map.put("title","Order Received")
+//        map.put("for","Seller")
+//        map.put("notificationChannelId","FAMECOMCHANNEEL")
+//        map.put("notificationName","FAMECOM")
+//        map.put("notificationID","1")
 
-        NotificationHelper.buildNotification(applicationContext,map)
+        Timber.tag(TAG).d(remoteMessage.data.toString())
+        NotificationHelper.buildNotification(applicationContext,remoteMessage.data)
 
     } // remoteMessage closed
 

@@ -14,6 +14,8 @@ import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentCartBinding
 import com.example.farmersecom.features.cart.presentation.CartViewModel
 import com.example.farmersecom.utils.constants.Constants.TAG
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -48,6 +50,16 @@ class CartFragment : BaseFragment<FragmentCartBinding>()
 
         viewModel.getAllCartItems.asLiveData().observe(viewLifecycleOwner)
         {
+            if(it.isNotEmpty())
+            {
+                binding.fragmentCartEmptyMessage.hide()
+                binding.fragmentCartCheckOutDetailsLayout.show()
+            }else
+            {
+                binding.fragmentCartEmptyMessage.show()
+                binding.fragmentCartCheckOutDetailsLayout.hide()
+            }
+
             cartItemAdapter.submitList(it)
             Timber.tag(TAG).d("${it.size}")
         } //
@@ -56,6 +68,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>()
         {
             Timber.tag(TAG).d("${it}")
             binding.fragmentCartSubTotalTextView.text = it.toString()
+
         } //
 
         viewModel.getTotal.asLiveData().observe(viewLifecycleOwner)

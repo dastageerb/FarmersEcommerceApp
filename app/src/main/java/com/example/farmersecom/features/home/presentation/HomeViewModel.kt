@@ -1,17 +1,22 @@
 package com.example.farmersecom.features.home.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.farmersecom.R
 import com.example.farmersecom.features.home.data.framework.HomeApi
 import com.example.farmersecom.features.home.domain.model.homeModels.HomeLatestItem
 import com.example.farmersecom.features.home.domain.model.sliderModels.HomeSlider
 import com.example.farmersecom.features.home.domain.usecases.GetHomeLatestItemsUseCase
 import com.example.farmersecom.features.home.domain.usecases.GetSliderItemsUseCase
 import com.example.farmersecom.utils.constants.Constants.TAG
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.hasInternetConnection
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,6 +29,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getSliderItemsUseCase: GetSliderItemsUseCase,
     private val getHomeLatestItemsUseCase: GetHomeLatestItemsUseCase,
+    @ApplicationContext private val context: Context
     ):ViewModel()
 {
 
@@ -36,28 +42,41 @@ class HomeViewModel @Inject constructor(
 
     fun getSliderItems() = viewModelScope.launch(Dispatchers.IO)
     {
-        _getSliderItemsResponse.value = NetworkResource.Loading()
-        try
+
+        if(context.hasInternetConnection())
         {
-            val response = getSliderItemsUseCase.getSliderItems()
-            _getSliderItemsResponse.value = handleSliderResponse(response)
-        }catch (e:Exception)
-        {
-            when (e)
+
+            _getSliderItemsResponse.value = NetworkResource.Loading()
+
+            try
             {
-                is HttpException -> _getSliderItemsResponse.value = NetworkResource.Error("Something went wrong")
-                else -> _getSliderItemsResponse.value = NetworkResource.Error("No Internet Connection")
-            } // when closed
-        } // catch closed
+                val responseDef = async {   getSliderItemsUseCase.getSliderItems() }
+                val response = responseDef.await()
+                getHomeLatestItems()
+                _getSliderItemsResponse.value = handleSliderResponse(response)
+            }catch (e:Exception)
+            {
+                when (e)
+                {
+                    is HttpException -> _getSliderItemsResponse.value = NetworkResource.Error(e.message())
+                    else -> _getSliderItemsResponse.value = NetworkResource.Error(e.message)
+                } // when closed
+            } // catch closed
+        }else
+        {
+            _getSliderItemsResponse.value = NetworkResource.Error(context.getString(R.string.no_internet_connection))
+        } // else closed
     } // getSliderItems closed
+
+
     private fun handleSliderResponse(response: Response<List<HomeSlider>>): NetworkResource<List<HomeSlider>>
     {
 
         return when(response.code())
         {
             200,201 -> NetworkResource.Success(response.body())
-            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
-            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
+            400,404 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            else ->NetworkResource.Error(context.getString(R.string.something_went_wrong)+response.code())
         } // when closed
     } // handleSliderResponse
 

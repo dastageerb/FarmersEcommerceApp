@@ -25,6 +25,8 @@ class HomeSliderAdapter(val onSliderItemSelected: (sliderQuery:String) -> Unit):
 {
 
 
+
+
     inner class  ViewHolder(private val view: LayoutHomeSliderItemBinding) : RecyclerView.ViewHolder(view.root)
     {
         fun bind(item: HomeSlider)

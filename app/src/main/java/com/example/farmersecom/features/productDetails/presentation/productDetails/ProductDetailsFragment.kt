@@ -28,6 +28,8 @@ import com.example.farmersecom.features.productStore.presentation.ProductStoreVi
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -65,7 +67,6 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
             viewModel.getProductId.collect()
             {
                 viewModel.getProductDetails(it)
-
             } //
         } // viewLifeCycleOwner
 
@@ -90,12 +91,19 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
                     {
                         is NetworkResource.Success ->
                         {
+
                             Timber.tag(Constants.TAG).d("${it.data}")
                             updateViews(it.data)
+                            hideShimmer()
                         }
                         is NetworkResource.Error ->
                         {
+                            hideShimmer()
                             Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                        is NetworkResource.Loading ->
+                        {
+                            showShimmer()
                         }
                     }// when closed
                 } // getProfile closed
@@ -104,26 +112,33 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
     } // subscribeProfileResponseFlow closed
 
 
-    @SuppressLint("SetTextI18n")
     private fun updateViews(data: ProductDetailsResponse?)
     {
         data?.let { list.add(it) }
         data?.let { setupRecyclerView(binding.recyclerViewFragmentProductDetails, it.productPictures) }
         binding.textViewFragmentProductDetailsProductName.text = data?.productName
-        binding.textViewFragmentProductDetailsProductPrice.text = "RS."+data?.productPrice.toString()
+        binding.textViewFragmentProductDetailsProductPrice.text = data?.productPrice.toString()
         binding.textViewProductQuantityFragmentProductDetails.text = data?.productQuantity.toString()
         binding.textViewProductQuantityUnitFragmentProductDetails.text = data?.productUnit
         binding.textViewProductDescription.text = data?.productDescription
         binding.ratingBarFragmentProductDetails.rating = data?.productRating!!.toFloat()
-        binding.imageViewProductDetailsFragmentStoreImage.load(data.store?.storeImage)
-        binding.textViewStoreNameFragmentProductDetails.text = data.store?.storeName
-        binding.textViewProductDeliveryCharges.text = "Delivery Charges :"+data.productDeliveryCharges.toString()
 
-        binding.layoutStoreDetails.setOnClickListener()
+
+
+        binding.imageViewProductDetailsFragmentStoreImage.load(data.store?.storeImage)
+
+
+        binding.textViewStoreNameFragmentProductDetails.text = data.store?.storeName
+
+        binding.textViewProductDeliveryCharges.text = getString(R.string.delivery_charges)+data.productDeliveryCharges.toString()
+
+        binding.fragmentProductDetailsLayout.setOnClickListener()
         {
+            Timber.tag(TAG).d("clicked")
             data.store?.let()
             {
-                Timber.tag(TAG).d(""+it)
+
+                Timber.tag(TAG).d("store name = "+it.storeImage)
                 storeViewModel.setStoreId(it.id!!)
                 findNavController().navigate(R.id.action_productDetailsFragment_to_productStoreFragment)
             }
@@ -183,5 +198,25 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
             product.productPictures?.get(0)?.img!!,product.productDeliveryCharges!!)
         cartViewModel.insertCartItem(cartItem)
     } // addToCartClosed
+
+    private fun showShimmer()
+    {
+       binding.fragmentProductDetailsShimmerLayout.show()
+        binding.fragmentProductDetailsShimmerLayout.startShimmer()
+
+        binding.scrollViewProductDetails.hide()
+
+    }
+
+
+    private fun hideShimmer()
+    {
+        binding.fragmentProductDetailsShimmerLayout.hide()
+        binding.fragmentProductDetailsShimmerLayout.stopShimmer()
+
+
+        binding.scrollViewProductDetails.show()
+    }
+
 
 } // ProductDetailsFragment

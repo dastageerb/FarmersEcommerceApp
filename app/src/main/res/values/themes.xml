@@ -18,12 +18,13 @@
     </style>
 
 
-
-
     <style name="textInputLayout" parent="Widget.Design.TextInputLayout">
-
         <item name="boxBackgroundColor">@color/colorTransparent</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorLightGrey</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
 
 </resources>

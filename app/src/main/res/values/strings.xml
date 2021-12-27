@@ -52,6 +52,23 @@
     <string name="enter_old_password">Enter Old Password</string>
     <string name="enter_new_password">Enter New Password</string>
     <string name="confirm">Confirm</string>
+    <string name="retry">Retry</string>
+    <string name="no_internet">No Internet</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="something_went_wrong">"Something went Wrong Error : </string>
+    <string name="cart_is_empty">Cart is Empty</string>
+    <string name="product_details">Product Details</string>
+    <string name="product_ratings">Product Ratings</string>
+    <string name="delivery_charges">Delivery Charges :\t</string>
+    <string name="rupees"> Rupees\t</string>
+    <string name="price">\Price \t</string>
+    <string name="quantity_in_details">Quantity :\t </string>
+    <string name="unit_in_details">unit\t</string>
+    <string name="description_in_detail">Description</string>
+    <string name="home">Home</string>
+    <string name="search_fragment">Search</string>
+    <string name="rs">RS</string>
+    <string name="fragment_product_store">Product Store</string>
 
 
 </resources>

@@ -6,16 +6,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".features.productDetails.presentation.productDetails.ProductDetailsFragment">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentProductDetailsShimmerLayout"
+        android:visibility="gone"
+        >
+        <include layout="@layout/product_details_shimmer_layout"/>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollViewProductDetails"
-        android:layout_above="@id/buttonProductDetailsFragmentAddToCart"
         android:layout_alignParentTop="true"
+
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingBottom="32dp"
             >
 
             <androidx.recyclerview.widget.RecyclerView
@@ -29,23 +40,52 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recyclerViewFragmentProductDetails"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Name"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
+
+
+            <TextView
+                android:id="@+id/textPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewFragmentProductDetailsProductName"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/rs"
+                android:textColor="@color/colorRed"
+                android:textSize="16sp"
+            />
 
             <TextView
                 android:id="@+id/textViewFragmentProductDetailsProductPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewFragmentProductDetailsProductName"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/textPrice"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:text="RS.375"
-                android:textSize="20sp"
-                android:textColor="@color/colorRed"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+
+
+
+            <TextView
+                android:id="@+id/textRatings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewFragmentProductDetailsProductPrice"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/product_ratings"
+                />
 
 
             <RatingBar
@@ -54,22 +94,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewFragmentProductDetailsProductPrice"
-                android:layout_alignParentStart="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_toEndOf="@id/textRatings"
                 android:isIndicator="true"
                 android:numStars="5"
-                 />
+                android:indeterminateTint="@color/colorPrimary"
+                android:theme="@style/RatingBar"
+                />
+
+            <TextView
+                android:id="@+id/textQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ratingBarFragmentProductDetails"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/quantity_in_details"
+                android:textSize="20sp" />
+
 
             <TextView
                 android:id="@+id/textViewProductQuantityFragmentProductDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ratingBarFragmentProductDetails"
-                android:layout_marginTop="16dp"
-                android:text="Quantity"
+                android:layout_toEndOf="@id/textQuantity"
                 android:layout_marginStart="8dp"
-                android:textSize="22sp" />
+                android:layout_marginTop="16dp"
+                android:text="1"
+                android:textSize="20sp" />
+
+
+
+            <TextView
+                android:id="@+id/textViewUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ratingBarFragmentProductDetails"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="2dp"
+                android:text="@string/unit_in_details"
+                android:layout_toStartOf="@id/textViewProductQuantityUnitFragmentProductDetails"
+                android:textSize="18sp" />
 
 
             <TextView
@@ -77,12 +145,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ratingBarFragmentProductDetails"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_toEndOf="@id/textViewProductQuantityFragmentProductDetails"
-                android:text="Unit"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:layout_marginEnd="16dp"
+                android:text="Kilo"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
 
 
@@ -102,26 +171,27 @@
                 />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/fragmentProductDetailsLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewProductDeliveryCharges"
-                android:id="@+id/layoutStoreDetails"
                 android:orientation="horizontal"
                 >
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     app:cardCornerRadius="35dp"
-                    app:cardUseCompatPadding="true"
-                    app:cardBackgroundColor="@color/colorGreen"
-                >
+                    app:cardUseCompatPadding="true">
                     <ImageView
                         android:id="@+id/imageViewProductDetailsFragmentStoreImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
+                        android:src="@drawable/ic_baseline_store_24"
+
                         />
                 </com.google.android.material.card.MaterialCardView>
+
 
                 <TextView
                     android:id="@+id/textViewStoreNameFragmentProductDetails"
@@ -129,50 +199,82 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:padding="8dp"
                     android:text="Store Name"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragmentProductDetailsLayout"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/description_in_detail"
+                android:textStyle="bold"
+                android:layout_marginEnd="4dp"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/textViewProductDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Product Description"
-                android:layout_below="@id/layoutStoreDetails"
-                android:layout_marginTop="16dp"
+                android:layout_below="@id/txtDescription"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="16dp"
-                android:textSize="18sp"
                 android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="Product Description"
+                android:layout_marginEnd="4dp"
+                android:textSize="18sp"
+
                 />
 
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonProductDetailsFragmentBuyNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewProductDescription"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/small_button_bg"
+                android:text="@string/buy_now"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonProductDetailsFragmentAddToCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_cart"
+                android:layout_below="@id/textViewProductDescription"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/small_button_bg"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:layout_marginEnd="16dp"
+                />
         </RelativeLayout>
 
 
 
     </ScrollView>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonProductDetailsFragmentAddToCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_to_cart"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="32dp"
 
-        />
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonProductDetailsFragmentBuyNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="32dp"
-        android:text="@string/buy_now" />
 
 
 </RelativeLayout>

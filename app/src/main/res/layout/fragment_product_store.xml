@@ -4,70 +4,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".features.productStore.presentation.ProductStoreFragment">
+    tools:context=".features.productStore.presentation.ProductStoreFragment"
+    android:background="@color/colorLight"
+    >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragmentProductStoreLayout"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/storeImageCardView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="8dp"
+                >
+                <ImageView
+                    android:id="@+id/fragmentProductStoreStoreImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/vegetable_place_holder"
+                    />
+            </com.google.android.material.card.MaterialCardView>
 
-    <View
-        android:id="@+id/fragmentProductStoreView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorGreen"
-        />
+            <TextView
+                android:id="@+id/fragmentProductStoreNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Store Name"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
 
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/storeImageCardView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="@color/colorRed"
-        android:layout_margin="8dp"
-        >
-        <ImageView
-            android:id="@+id/fragmentProductStoreStoreImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+        <TextView
+            android:id="@+id/fragmentProductStoreDescriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Store Description"
+            android:layout_below="@id/fragmentProductStoreLayout"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:paddingBottom="16dp"
             />
-    </com.google.android.material.card.MaterialCardView>
 
-
-    <TextView
-        android:id="@+id/fragmentProductStoreNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Store Name"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:layout_toEndOf="@id/storeImageCardView"
-        />
-
-    <TextView
-        android:id="@+id/fragmentProductStoreDescriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Store Description"
-        android:layout_below="@id/storeImageCardView"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
-        />
 
     <LinearLayout
         android:id="@+id/fragmentProductStoreSellerInfoLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragmentProductStoreView"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="8dp"
         >
         <com.google.android.material.card.MaterialCardView
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:cardCornerRadius="20dp"
-            app:cardBackgroundColor="@color/colorRed"
             android:id="@+id/fragmentProductStoreSellerImageCardView"
             android:layout_margin="8dp"
             >
@@ -76,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_profile_24"
                 />
         </com.google.android.material.card.MaterialCardView>
 
@@ -84,17 +86,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Seller Name"
-            android:layout_margin="16dp"
+            android:textColor="@color/black"
             />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentProductStoreRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragmentProductStoreSellerInfoLayout"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/fragmentProductStoreDescriptionTextView"
+        />
 
 
 </RelativeLayout>

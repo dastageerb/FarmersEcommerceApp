@@ -35,8 +35,9 @@ class ProductImageAdapter : ListAdapter<ProductPicture, ProductImageAdapter.View
         {
             view.layoutProductImagesImageView.load(item.img)
             view.layoutProductImagesTextCount.bringToFront()
-            
-            view.layoutProductImagesTextCount.text = ""+position+1+"/"+itemCount
+
+
+            view.layoutProductImagesTextCount.text = ""+position.plus(1)+"/"+itemCount
         }
 
     } // viewHolder closed

@@ -7,7 +7,9 @@
     <ImageView
         android:id="@+id/layoutProductImagesImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        />
 
     <TextView
         android:id="@+id/layoutProductImagesTextCount"
@@ -22,6 +24,7 @@
         android:textSize="18sp"
         android:textAlignment="center"
         android:background="@drawable/black_bg"
+        android:padding="8dp"
         />
 
 </RelativeLayout>

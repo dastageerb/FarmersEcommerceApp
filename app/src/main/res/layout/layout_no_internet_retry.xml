@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+        <TextView
+            android:id="@+id/layoutNoInternetTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_internet"
+            android:textSize="20sp"
+            app:drawableTopCompat="@drawable/ic_baseline_no_internet_24" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/layoutNoInternetRetryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/retry"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"
+            android:background="@drawable/small_button_bg"
+            />
+
+</LinearLayout>

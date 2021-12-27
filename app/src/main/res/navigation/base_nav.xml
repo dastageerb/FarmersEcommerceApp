@@ -109,7 +109,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.farmersecom.features.home.presentation.home.HomeFragment"
-        android:label="Home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_moreSliderItemsFragment"
@@ -136,7 +136,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.farmersecom.features.search.presentation.SearchFragment"
-        android:label="Search"
+        android:label="@string/search_fragment"
         tools:layout="@layout/fragment_search"
 
         >
@@ -152,7 +152,7 @@
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsFragment"
-        android:label="fragment_product_details"
+        android:label="@string/product_details"
         tools:layout="@layout/fragment_product_details" >
         <action
             android:id="@+id/action_productDetailsFragment_to_orderDetailsFragment"
@@ -190,7 +190,7 @@
     <fragment
         android:id="@+id/productStoreFragment"
         android:name="com.example.farmersecom.features.productStore.presentation.ProductStoreFragment"
-        android:label="fragment_product_store"
+        android:label="@string/fragment_product_store"
         tools:layout="@layout/fragment_product_store" />
     <fragment
         android:id="@+id/buyerDashboardFragment"
