@@ -7,6 +7,7 @@ import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgRespons
 import com.example.farmersecom.features.storeAdmin.domain.model.productStatusResponse.ProductStatus
 import com.example.farmersecom.features.storeAdmin.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.changeStoreImage.ChangeStoreImageResponse
+import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
 import com.example.farmersecom.features.storeAdmin.domain.model.updateStore.UpdateStore
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -83,11 +84,16 @@ interface  StoreAdminApi
     : Response<StatusMsgResponse>
 
     @Multipart
-    @PUT("api/store/changeStorePhoto")
-    suspend fun updateStoreImage(@Part file:MultipartBody.Part) : Response<ChangeStoreImageResponse>
+    @POST("api/store/changeStorePhoto")
+    suspend fun updateStoreImage(@Part file:MultipartBody.Part) : Response<StatusMsgResponse>
 
 
 
+    //
+
+    @POST("api/product/edit")
+    suspend fun editProduct(@Body editProduct: EditProduct)
+            : Response<StatusMsgResponse>
 
 
 

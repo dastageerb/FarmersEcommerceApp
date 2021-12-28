@@ -4,17 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentDiscontinuedProductsBinding
 import com.example.farmersecom.features.storeAdmin.presentation.ProductStatusAdapter
 import com.example.farmersecom.features.storeAdmin.presentation.StoreDashboardViewModel
 import com.example.farmersecom.features.storeAdmin.presentation.StoreProductViewModel
+import com.example.farmersecom.features.storeAdmin.presentation.editProduct.EditProductViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
@@ -33,6 +37,7 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
 {
 
     private val  viewModel: StoreDashboardViewModel by viewModels()
+    val editProductViewModel: EditProductViewModel by activityViewModels()
 
     private val  productViewModel: StoreProductViewModel by viewModels()
     private lateinit var productStatusAdapter: ProductStatusAdapter
@@ -131,10 +136,18 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
 
             Timber.tag(Constants.TAG).d("id : "+id)
             productViewModel.deleteProductbyId(id)
-          //  productStatusAdapter.notifyItemRemoved(postion)
-           // viewModel.getProductByStatus(false)
 
-        }
+        } // onDeleteProduct closed
+
+
+        productStatusAdapter.onEditProductClicked()
+        {
+            productId ->
+            editProductViewModel.setProductId(productId)
+            findNavController().navigate(R.id.action_discontinuedProductsFragment_to_editProductFragment)
+
+        } // onDeleteProduct closed
+
 
     } // setupHomeSlider closed
 

@@ -45,6 +45,7 @@ class ProductStatusAdapter(private val context:Context,private val onProductClic
                     binding.layoutProductStatusItemChangeProductStatusButton.text = context.getString(R.string.discontinue)
                     binding.layoutProductStatusIndicatorCardView.setCardBackgroundColor(Color.GREEN)
                     binding.layoutProductStatusItemDeleteProductButton.hide()
+                    binding.layoutProductStatusItemEditProductButton.hide()
                 }
                 false ->
                 {
@@ -65,13 +66,19 @@ class ProductStatusAdapter(private val context:Context,private val onProductClic
             binding.layoutProductStatusItemChangeProductStatusButton.setOnClickListener()
             {
                 Timber.tag(TAG).d("name "+product?.productName+" : "+position)
-                onChanStatusListener?.let { it1 -> it1(!product?.isActive!!,position, product.id.toString()) }
+                onChanStatusListener?.let { it1 -> it1(!product?.isActive!!,position, product.id!!) }
             }
 
             binding.layoutProductStatusItemDeleteProductButton.setOnClickListener()
             {
-                onDeleteProductListener?.let { it1 -> it1(position,product?.id.toString()) }
+                onDeleteProductListener?.let { it1 -> it1(position,product?.id!!) }
             }
+
+            binding.layoutProductStatusItemEditProductButton.setOnClickListener()
+            {
+                onEditProductListener?.let { it1 -> it1(product?.id!!) }
+            }
+
 
 
         } // bind closed
@@ -111,6 +118,14 @@ class ProductStatusAdapter(private val context:Context,private val onProductClic
     {
         onDeleteProductListener = listener
     }
+
+
+    private var onEditProductListener:((productId:String)->Unit)? =null
+    fun onEditProductClicked(listener:(productId:String)->Unit)
+    {
+        onEditProductListener= listener
+    }
+
 
 
 } // adapter closed

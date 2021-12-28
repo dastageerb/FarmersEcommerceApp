@@ -37,8 +37,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import android.util.Base64
-import androidx.core.view.PointerIconCompat.TYPE_TEXT
-import com.example.farmersecom.features.storeAdmin.data.framework.entities.NewProduct
+import com.example.farmersecom.features.storeAdmin.data.framework.entities.requests.NewProduct
 import com.example.farmersecom.features.storeAdmin.domain.model.categories.Category
 import com.example.farmersecom.features.storeAdmin.presentation.StoreProductViewModel
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
@@ -46,9 +45,6 @@ import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.imageUtils.ImageCropHelper
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.File
 
 
 @AndroidEntryPoint
@@ -277,9 +273,6 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
                     ,quantityUnit,
                     viewModel.getUserCity(),1)
                 viewModel.addNewProductViewModel(product,productImage)
-
-
-
 
             } // if closed
 

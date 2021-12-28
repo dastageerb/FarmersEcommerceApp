@@ -3,8 +3,7 @@ package com.example.farmersecom.features.storeAdmin.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.farmersecom.SharedPrefsHelper
-import com.example.farmersecom.features.storeAdmin.data.framework.StoreAdminApi
-import com.example.farmersecom.features.storeAdmin.data.framework.entities.NewProduct
+import com.example.farmersecom.features.storeAdmin.data.framework.entities.requests.NewProduct
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
@@ -13,7 +12,6 @@ import com.example.farmersecom.features.storeAdmin.domain.useCases.AddProductUse
 import com.example.farmersecom.features.storeAdmin.domain.useCases.ChangeProductStatusUseCase
 import com.example.farmersecom.features.storeAdmin.domain.useCases.DeleteProductById
 import com.example.farmersecom.features.storeAdmin.domain.useCases.GetAllCategories
-import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,10 +19,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.HttpException
 import retrofit2.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -122,7 +118,7 @@ class StoreProductViewModel @Inject constructor(
             = _addNewProductResponse
 
 
-    fun addNewProductViewModel(newProduct: NewProduct,file: MultipartBody.Part) = viewModelScope.launch(Dispatchers.IO)
+    fun addNewProductViewModel(newProduct: NewProduct, file: MultipartBody.Part) = viewModelScope.launch(Dispatchers.IO)
     {
     //    _addNewProductResponse.value = NetworkResource.Loading()
           try

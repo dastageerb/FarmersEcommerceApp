@@ -65,20 +65,32 @@
             android:layout_marginBottom="4dp"
             />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageView
             android:id="@+id/layoutProductStatusItemDeleteProductButton"
-            android:layout_width="80dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
-            android:text="Delete"
-            android:layout_alignParentEnd="true"
             android:layout_below="@id/layoutActiveProductItemProductPriceTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/ic_baseline_delete_24"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:background="@color/colorPrimary"
-            android:layout_marginTop="8dp"
+            app:tint="@color/colorPrimaryDark" />
+        <ImageView
+            android:id="@+id/layoutProductStatusItemEditProductButton"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/layoutActiveProductItemProductPriceTextView"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            />
+            android:src="@drawable/ic_baseline_edit_24"
+            android:layout_toStartOf="@id/layoutProductStatusItemDeleteProductButton"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:tint="@color/colorPrimaryDark" />
 
 
     </RelativeLayout>

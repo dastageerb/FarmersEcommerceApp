@@ -249,7 +249,11 @@
         android:id="@+id/discontinuedProductsFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.discontinuedProducts.DiscontinuedProductsFragment"
         android:label="fragment_discontinued_products"
-        tools:layout="@layout/fragment_discontinued_products" />
+        tools:layout="@layout/fragment_discontinued_products" >
+        <action
+            android:id="@+id/action_discontinuedProductsFragment_to_editProductFragment"
+            app:destination="@id/editProductFragment" />
+    </fragment>
     <fragment
         android:id="@+id/orderDetailsForBuyerFragment"
         android:name="com.example.farmersecom.features.buyerSection.presentation.orderDetailsForBuyer.OrderDetailsForBuyerFragment"
@@ -309,6 +313,17 @@
         android:name="com.example.farmersecom.features.storeAdmin.presentation.storeSettings.StoreSettingFragment"
         android:label="fragment_store_setting"
         tools:layout="@layout/fragment_store_setting" />
+    <fragment
+        android:id="@+id/editProductFragment"
+        android:name="com.example.farmersecom.features.storeAdmin.presentation.editProduct.EditProductFragment"
+        android:label="fragment_edit_product"
+        tools:layout="@layout/fragment_edit_product" >
+        <action
+            android:id="@+id/action_editProductFragment_to_discontinuedProductsFragment"
+            app:destination="@id/discontinuedProductsFragment"
+            app:popUpTo="@id/base_nav"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 
 </navigation>

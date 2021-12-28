@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.storeAdmin.presentation.editProduct.EditProductFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/fragmentEditProductLayout"
+        android:visibility="gone"
+        >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/product_name"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEditProductName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/product_description"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEditProductDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength ="2000"
+            android:isScrollContainer="true"
+            android:maxLines="4"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/buttonProductQuantityUnitGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@id/buttonProductQuantityUnitKilo"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/buttonProductQuantityUnitKilo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="@string/kilo"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <Button
+            android:id="@+id/buttonProductQuantityUnitLiter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="@string/liter"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            />
+        <Button
+            android:id="@+id/buttonProductQuantityUnitDozen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="@string/dozen"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/select_category"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteEditProductProductCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/price_in_rupees"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEditProductPriceInRupees"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragmentEditProductUpdateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        />
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editProductFragmentProgressBar"
+        />
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.farmersecom.features.storeAdmin.data.framework.entities
+package com.example.farmersecom.features.storeAdmin.data.framework.entities.requests
 
 
 import com.squareup.moshi.Json

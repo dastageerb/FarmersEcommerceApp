@@ -69,6 +69,11 @@
     <string name="search_fragment">Search</string>
     <string name="rs">RS</string>
     <string name="fragment_product_store">Product Store</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_description">Product Description</string>
+    <string name="price_in_rupees">Price in rupees</string>
+    <string name="select_category_toast">Select Category</string>
+    <string name="select_product_unit_toast">Please Select Product Unit</string>
 
 
 </resources>

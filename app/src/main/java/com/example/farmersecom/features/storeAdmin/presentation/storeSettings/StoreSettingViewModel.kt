@@ -72,41 +72,25 @@ class StoreSettingViewModel @Inject constructor
 
 
 
-    private val _storeImageChangedResponse: MutableStateFlow<NetworkResource<ChangeStoreImageResponse>> = MutableStateFlow(
-        NetworkResource.None())
-    val storeImageChangedResponse: StateFlow<NetworkResource<ChangeStoreImageResponse>> = _storeImageChangedResponse
+//    private val _storeImageChangedResponse: MutableStateFlow<NetworkResource<ChangeStoreImageResponse>> = MutableStateFlow(
+//        NetworkResource.None())
+//    val storeImageChangedResponse: StateFlow<NetworkResource<ChangeStoreImageResponse>> = _storeImageChangedResponse
+//
 
 
-    fun updateStoreImage(file:MultipartBody.Part) = viewModelScope.launch(Dispatchers.IO)
-    {
-        _productStoreResponse.value = NetworkResource.Loading()
-        try
-        {
-            val response = updateStoreImageUseCase.updateStoreImageUseCase(file)
-            _storeImageChangedResponse.value = handleImageUpdateResponse(response)
-        }catch (e:Exception)
-        {
-            when (e)
-            {
-                is HttpException -> _storeImageChangedResponse.value = NetworkResource.Error("Http Exception")
-                else -> _storeImageChangedResponse.value =
-                    NetworkResource.Error("No Internet Connection: ${e.message}")
-            }
-        } //
-    } // getProfile closed
 
-    private fun handleImageUpdateResponse(response: Response<ChangeStoreImageResponse>): NetworkResource<ChangeStoreImageResponse>
-    {
-        return when(response.code())
-        {
-            200 -> NetworkResource.Success(response.body())
-            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
-            else -> NetworkResource.Error("Something went wrong ${response.code()}")
-        } // when closed
-    } // handleStoreDetailsResponse
+//    private fun handleImageUpdateResponse(response: Response<ChangeStoreImageResponse>): NetworkResource<ChangeStoreImageResponse>
+//    {
+//        return when(response.code())
+//        {
+//            200 -> NetworkResource.Success(response.body())
+//            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
+//            else -> NetworkResource.Error("Something went wrong ${response.code()}")
+//        } // when closed
+//    } // handleStoreDetailsResponse
 
 
-    /** update Store and store deliveryMethod contain same response ( status , message )
+    /** update Store storeImageChange ,  and store deliveryMethod contain same response ( status , message )
      *there for using same flow for  getting response **/
 
 
@@ -166,15 +150,41 @@ class StoreSettingViewModel @Inject constructor
 
 
 
+
+    fun updateStoreImage(file:MultipartBody.Part) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.value  = NetworkResource.Loading()
+        try
+        {
+            val responseDef =  async {   updateStoreImageUseCase.updateStoreImageUseCase(file) }
+            val response = responseDef.await()
+            getStoreDetails()
+            _statusMsgResponse.value = handleStatusResponse(response)
+
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Http Exception")
+                else ->  _statusMsgResponse.value =
+                    NetworkResource.Error("No Internet Connection: ${e.message}")
+            }
+        } //
+    } // g closed
+
+
+
+
+
     private fun handleStatusResponse(response: Response<StatusMsgResponse>): NetworkResource<StatusMsgResponse>
     {
         return when(response.code())
         {
             200,201 -> NetworkResource.Success(response.body())
-            400,404 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            400,404 ,500 -> NetworkResource.Error(response.errorBody()?.getMessage())
             else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
         } // when closed
-    }
+    } // handleStatusResponse closed
 
 
 
