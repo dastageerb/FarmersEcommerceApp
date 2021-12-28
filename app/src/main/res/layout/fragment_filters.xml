@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.search.presentation.FiltersFragment">
+    tools:context=".features.search.presentation.FiltersFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:hint="@string/select_category"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/fragmentFiltersTextInputCategories"
+        android:layout_centerInParent="true"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/fragmentFiltersCategoryAutoCompleteView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/select_city"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:id="@+id/fragmentFiltersTextInputCities"
+        android:layout_below="@id/fragmentFiltersTextInputCategories"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/fragmentFiltersCityAutoCompleteView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <ProgressBar
+        android:id="@+id/fragmentFiltersProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragmentFiltersTextInputCities"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragmentFiltersApplyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:text="@string/apply"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        />
+
+
+
+
+
+</RelativeLayout>

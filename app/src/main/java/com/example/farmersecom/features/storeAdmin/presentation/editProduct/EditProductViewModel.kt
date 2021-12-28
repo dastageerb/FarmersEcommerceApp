@@ -4,17 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.useCase.GetProductByIdUseCase
-import com.example.farmersecom.features.productStore.domain.usecase.GetStoreByIdUseCase
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.CategoriesResponse
+import com.example.farmersecom.features.search.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
 import com.example.farmersecom.features.storeAdmin.domain.useCases.EditProductUseCase
-import com.example.farmersecom.features.storeAdmin.domain.useCases.GetAllCategories
+import com.example.farmersecom.features.search.domain.useCases.GetAllCategories
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -122,27 +123,29 @@ class EditProductViewModel @Inject constructor(private val getAllCategories: Get
 
 
     // editProduct
-    private var _statusMsgResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
-            = MutableStateFlow(NetworkResource.None())
-    val statusMsgResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+    private var _statusMsgResponse:MutableSharedFlow<NetworkResource<StatusMsgResponse>>
+            = MutableSharedFlow(replay = 0)
+    val statusMsgResponse: SharedFlow<NetworkResource<StatusMsgResponse>>
             = _statusMsgResponse
 
 
-    fun editProduct(editProduct: EditProduct) = viewModelScope.launch(Dispatchers.IO)
+    fun editProduct(editProduct: EditProduct,productId:String) = viewModelScope.launch(Dispatchers.IO)
     {
-        _statusMsgResponse.value = NetworkResource.Loading()
+        _statusMsgResponse.emit(NetworkResource.Loading())
+     //   _statusMsgResponse.value = NetworkResource.Loading()
         try
         {
-            val response = editProductUseCase.editProduct(editProduct)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
+            val response = editProductUseCase.editProduct(editProduct,productId)
+            _statusMsgResponse.emit(handleStatusMessageResponse(response))
+        //     _statusMsgResponse.value = handleStatusMessageResponse(response)
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
                 else ->
                 {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
                 }
             } // when closed
         }

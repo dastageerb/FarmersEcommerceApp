@@ -38,7 +38,7 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import android.util.Base64
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.requests.NewProduct
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.Category
+import com.example.farmersecom.features.search.domain.model.categories.Category
 import com.example.farmersecom.features.storeAdmin.presentation.StoreProductViewModel
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show

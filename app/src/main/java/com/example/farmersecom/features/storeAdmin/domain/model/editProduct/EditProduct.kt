@@ -10,7 +10,7 @@ data class EditProduct(
     var category: String?,
     @Json(name = "description")
     var description: String?,
-    @Json(name = "name")
+    @Json(name = "productName")
     var name: String?,
     @Json(name = "price")
     var price: Int?,

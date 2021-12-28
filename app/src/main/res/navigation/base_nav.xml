@@ -148,7 +148,11 @@
         android:id="@+id/filtersFragment"
         android:name="com.example.farmersecom.features.search.presentation.FiltersFragment"
         android:label="fragment_filters"
-        tools:layout="@layout/fragment_filters" />
+        tools:layout="@layout/fragment_filters" >
+        <action
+            android:id="@+id/action_filtersFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsFragment"
@@ -321,8 +325,7 @@
         <action
             android:id="@+id/action_editProductFragment_to_discontinuedProductsFragment"
             app:destination="@id/discontinuedProductsFragment"
-            app:popUpTo="@id/base_nav"
-            app:popUpToInclusive="true" />
+             />
     </fragment>
 
 

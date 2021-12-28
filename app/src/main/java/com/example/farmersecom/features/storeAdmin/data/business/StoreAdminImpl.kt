@@ -7,7 +7,6 @@ import com.example.farmersecom.features.storeAdmin.data.framework.entities.reque
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
 import com.example.farmersecom.features.storeAdmin.domain.StoreAdminRepository
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
 import com.example.farmersecom.features.storeAdmin.domain.model.updateStore.UpdateStore
 import okhttp3.MultipartBody
@@ -19,8 +18,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 class StoreAdminImpl(private val storeAdminApi:StoreAdminApi) : StoreAdminRepository
 {
-    override suspend fun getAllCategories(): Response<CategoriesResponse>
-    = storeAdminApi.getAllCategories()
+
 
     override suspend fun addNewProduct(newProduct: NewProduct, file: MultipartBody.Part): Response<NewProductResponse>
     {
@@ -68,8 +66,8 @@ class StoreAdminImpl(private val storeAdminApi:StoreAdminApi) : StoreAdminReposi
 
       =   storeAdminApi.updateStoreInfo(UpdateStore(desc,name))
 
-    override suspend fun editProduct(editProduct: EditProduct)
-     = storeAdminApi.editProduct(editProduct)
+    override suspend fun editProduct(editProduct: EditProduct,productId: String)
+     = storeAdminApi.editProduct(editProduct,productId)
 
     override suspend fun updateStoreImage(file: MultipartBody.Part)
      = storeAdminApi.updateStoreImage(file)

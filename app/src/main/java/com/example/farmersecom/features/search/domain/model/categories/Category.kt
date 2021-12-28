@@ -1,4 +1,4 @@
-package com.example.farmersecom.features.search.domain.model.category
+package com.example.farmersecom.features.search.domain.model.categories
 
 
 import com.squareup.moshi.Json

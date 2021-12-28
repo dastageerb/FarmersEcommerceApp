@@ -19,7 +19,9 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentSearchBinding
 import com.example.farmersecom.features.home.presentation.home.adapters.HomeSliderAdapter
+import com.example.farmersecom.features.search.domain.model.categories.Category
 import com.example.farmersecom.features.search.presentation.adapter.SearchItemAdapter
+import com.example.farmersecom.features.storeAdmin.presentation.addNewProduct.CategoriesAdapter
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
@@ -48,11 +50,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
+
+    } // onViewCreated closed
+
+
+    fun initView()
+    {
+
         setupRecycler(binding.recyclerViewSearchFragment)
         binding.fragmentSearchFiltersImageView.setOnClickListener()
         {
             findNavController().navigate(R.id.action_searchFragment_to_filtersFragment)
-        } //
+        } // filtersImageView closed
 
 
         binding.fragmentSearchSearchImageView.setOnClickListener()
@@ -64,30 +74,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
             }else
             {
                 doSearchWithQuery(searchQuery)
-            }
-        }
-
-        //viewModel.searchProduct("mango","","")
-//        binding.editTextSearchFragmentSearch.addTextChangedListener(object : TextWatcher
-//        {
-//            override fun afterTextChanged(s: Editable?)
-//            {}
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
-//            {}
-//            override fun onTextChanged(query: CharSequence?, start: Int, before: Int, count: Int)
-//            {
-//                viewLifecycleOwner.lifecycleScope.launch()
-//                {
-//                    delay(300)
-//
-//                } // onTextChanged
-//            } // onTextChanged
-//        }) // addTextListener closed
-
+            } // else closed
+        } //  searchClick closed
 
         subscribeToSearchResponseFlow()
 
-    } // onViewCreated closed
+    }
+
+
+
 
     private fun subscribeToSearchResponseFlow()
     {
@@ -101,7 +96,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
                     {
                         is NetworkResource.Success ->
                         {
-
                             binding.fragmentSearchProgressbar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             searchItemAdapter.submitList(it.data?.products)
@@ -121,8 +115,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
                 } // getProfile closed
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
-
-
     } // subscribeToSearchResponseFlow
 
 
@@ -142,7 +134,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
                 requireContext().showToast(" Please Enter Some Text ")
                 return@let
             } // if closed
-            viewModel.searchProduct(query.toString(),"","")
+            viewModel.searchProduct(query.toString())
         }
     } // doSearchWithQuery closed
 

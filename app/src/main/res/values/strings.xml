@@ -74,6 +74,7 @@
     <string name="price_in_rupees">Price in rupees</string>
     <string name="select_category_toast">Select Category</string>
     <string name="select_product_unit_toast">Please Select Product Unit</string>
+    <string name="apply">Apply</string>
 
 
 </resources>

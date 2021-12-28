@@ -6,7 +6,6 @@ import com.example.farmersecom.features.storeAdmin.data.framework.entities.reque
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.productStatusResponse.ProductStatus
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -14,7 +13,6 @@ import retrofit2.Response
 interface StoreAdminRepository
 {
 
-    suspend fun getAllCategories():Response<CategoriesResponse>
 
     suspend fun addNewProduct(newProduct: NewProduct, file: MultipartBody.Part) :Response<NewProductResponse>
 
@@ -40,7 +38,7 @@ interface StoreAdminRepository
             : Response<StatusMsgResponse>
 
 
-    suspend fun editProduct(editProduct: EditProduct)
+    suspend fun editProduct(editProduct: EditProduct,productId: String)
             : Response<StatusMsgResponse>
 
     suspend fun updateStoreImage(file:MultipartBody.Part) : Response<StatusMsgResponse>

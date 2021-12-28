@@ -5,8 +5,7 @@ import com.example.farmersecom.features.productStore.domain.model.storeDetails.S
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.productStatusResponse.ProductStatus
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.CategoriesResponse
-import com.example.farmersecom.features.storeAdmin.domain.model.changeStoreImage.ChangeStoreImageResponse
+import com.example.farmersecom.features.search.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
 import com.example.farmersecom.features.storeAdmin.domain.model.updateStore.UpdateStore
 import okhttp3.MultipartBody
@@ -34,9 +33,6 @@ interface  StoreAdminApi
 
     ) : Response<NewProductResponse>
 
-
-    @GET("api/category/getCategory")
-    suspend fun getAllCategories():Response<CategoriesResponse>
 
 
 
@@ -91,8 +87,8 @@ interface  StoreAdminApi
 
     //
 
-    @POST("api/product/edit")
-    suspend fun editProduct(@Body editProduct: EditProduct)
+    @POST("api/product/edit/{id}")
+    suspend fun editProduct(@Body editProduct: EditProduct,@Path("id")productId:String)
             : Response<StatusMsgResponse>
 
 

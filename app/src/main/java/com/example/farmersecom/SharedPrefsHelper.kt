@@ -3,6 +3,8 @@ package com.example.farmersecom
 import android.content.SharedPreferences
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.productDetails.domain.model.NavigationEntity
+import com.example.farmersecom.utils.constants.Constants.CATEGORY
+import com.example.farmersecom.utils.constants.Constants.LOCATION
 import com.example.farmersecom.utils.constants.Constants.NAVIGATION
 import com.example.farmersecom.utils.constants.Constants.TOKEN
 import com.example.farmersecom.utils.constants.Constants.USER
@@ -58,28 +60,40 @@ class SharedPrefsHelper @Inject constructor(private val prefs: SharedPreferences
     }
 
 
-     /** SAVE NEXT FRAGMENT INFO
-      * where to navigate after login
-      * ***/
+    /**Search Filter CRUDS **/
 
 
-     fun saveNavigation(data: NavigationEntity)
-     {
-         val user = Gson().toJson(data)
-         editor.putString(NAVIGATION, user)
-         editor.commit()
-     }
-
-    fun clearNavigation()
+    fun saveLocation(data: String?)
     {
-        editor.putString(NAVIGATION,"")
+        editor.putString(LOCATION, data)
         editor.commit()
     }
 
-    fun getNavigation(): NavigationEntity?
+
+
+    fun getLocation(): String?
     {
-        val data = prefs.getString(NAVIGATION,"")
-        return Gson().fromJson(data,NavigationEntity::class.java)
+        return prefs.getString(LOCATION,null)
+    }
+
+
+    fun saveCategory(data: String?)
+    {
+        editor.putString(CATEGORY, data)
+        editor.commit()
+    }
+
+
+    fun getCategory(): String?
+    {
+        return prefs.getString(CATEGORY,null)
+    }
+
+    fun clearFilters()
+    {
+        editor.putString(LOCATION,null)
+        editor.putString(CATEGORY,null)
+        editor.commit()
     }
 
 

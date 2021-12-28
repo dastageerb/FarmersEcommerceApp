@@ -7,11 +7,11 @@ import com.example.farmersecom.features.storeAdmin.data.framework.entities.reque
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.responses.NewProductResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.CategoriesResponse
+import com.example.farmersecom.features.search.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.storeAdmin.domain.useCases.AddProductUseCase
 import com.example.farmersecom.features.storeAdmin.domain.useCases.ChangeProductStatusUseCase
 import com.example.farmersecom.features.storeAdmin.domain.useCases.DeleteProductById
-import com.example.farmersecom.features.storeAdmin.domain.useCases.GetAllCategories
+import com.example.farmersecom.features.search.domain.useCases.GetAllCategories
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

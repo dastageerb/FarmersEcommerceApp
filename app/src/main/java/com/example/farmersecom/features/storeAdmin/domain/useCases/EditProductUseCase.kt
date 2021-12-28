@@ -9,6 +9,6 @@ import javax.inject.Inject
 class EditProductUseCase @Inject constructor(private val storeAdminRepository: StoreAdminRepository)
 {
 
-    suspend fun editProduct(editProduct: EditProduct) = storeAdminRepository.editProduct(editProduct)
+    suspend fun editProduct(editProduct: EditProduct,productId:String) = storeAdminRepository.editProduct(editProduct,productId)
 
 } // addProductUseCase closed

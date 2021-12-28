@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.example.farmersecom.databinding.LayoutCategoriesItemBinding
-import com.example.farmersecom.features.home.domain.model.sharedModel.CategoryItem
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.Category
+import com.example.farmersecom.features.search.domain.model.categories.Category
 
 class CategoriesAdapter(val onCategoryClicked:(Category)->Unit,context: Context, resource: Int,private var list: MutableList<Category>)
     : ArrayAdapter<Category>(context, resource, list)

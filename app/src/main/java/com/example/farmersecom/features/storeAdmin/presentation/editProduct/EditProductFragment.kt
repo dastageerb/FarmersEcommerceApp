@@ -2,11 +2,9 @@ package com.example.farmersecom.features.storeAdmin.presentation.editProduct
 
 import android.os.Bundle
 import android.text.InputType
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toFile
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.asLiveData
@@ -17,26 +15,19 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentEditProductBinding
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
-import com.example.farmersecom.features.storeAdmin.data.framework.entities.requests.NewProduct
-import com.example.farmersecom.features.storeAdmin.domain.model.categories.Category
+import com.example.farmersecom.features.search.domain.model.categories.Category
 import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
 import com.example.farmersecom.features.storeAdmin.presentation.addNewProduct.CategoriesAdapter
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
-import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.google.android.material.button.MaterialButton
-import com.squareup.moshi.Json
 import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 
 
@@ -45,7 +36,8 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
 {
 
     lateinit var categoryId:String
-
+    lateinit var productId:String
+    lateinit var job: Job
     private val editProductViewModel:EditProductViewModel by activityViewModels()
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentEditProductBinding
     {
@@ -73,12 +65,14 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
 
         editProductViewModel.getProductId.asLiveData().observe(viewLifecycleOwner)
         {
+            productId = it
             editProductViewModel.categoriesResponse
             editProductViewModel.getProductDetails(it)
         } //
 
         subscribeProductDetailsResponseFlow()
         subscribeToGetALLCategoriesFlow()
+        subscribeToProductUpdatedResponse()
 
         binding.fragmentEditProductUpdateButton.setOnClickListener()
         {
@@ -117,7 +111,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
                     ,productName
                     ,productPriceInRupees.toInt()
                     ,quantityUnit)
-                editProductViewModel.editProduct(product)
+                editProductViewModel.editProduct(product,productId)
             } // if closed
         } // apply closed
 
@@ -146,7 +140,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
     {
 
         // when product updated
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        job = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
@@ -156,14 +150,16 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
                     {
                         is NetworkResource.Success ->
                         {
-
                             binding.editProductFragmentProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             requireContext().showToast(it.data?.message.toString())
+                            yield()
+                            findNavController().navigate(R.id.action_editProductFragment_to_discontinuedProductsFragment)
+                            job.cancelAndJoin()
+
                         }
                         is NetworkResource.Error ->
                         {
-
                             binding.editProductFragmentProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
@@ -272,5 +268,17 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
 
     } // updateView closed
 
+//    override fun onDestroyView()
+//    {
+//        super.onDestroyView()
+//        job.cancel()
+//    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        job.cancel()
+
+    }
 
 } // EditProductFragment closed
