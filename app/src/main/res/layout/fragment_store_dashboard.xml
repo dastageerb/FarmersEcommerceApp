@@ -9,22 +9,28 @@
         android:id="@+id/storeDashboardListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="3" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:horizontalSpacing="16dp"
+        android:numColumns="2"
+        android:verticalSpacing="16dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fragmentStoreDashboardAddNewProductButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Product"
+        android:text="@string/add_product"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:drawableLeft="@drawable/ic_baseline_add_24"
+        android:drawableLeft="@drawable/ic_baseline_add_product_24"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         app:backgroundTint="@color/colorPrimary"
+
         />
 
 </RelativeLayout>

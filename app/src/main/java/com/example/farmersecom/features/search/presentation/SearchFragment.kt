@@ -2,8 +2,6 @@ package com.example.farmersecom.features.search.presentation
 
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,24 +11,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentSearchBinding
-import com.example.farmersecom.features.home.presentation.home.adapters.HomeSliderAdapter
-import com.example.farmersecom.features.search.domain.model.categories.Category
 import com.example.farmersecom.features.search.presentation.adapter.SearchItemAdapter
-import com.example.farmersecom.features.storeAdmin.presentation.addNewProduct.CategoriesAdapter
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -55,7 +48,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
     } // onViewCreated closed
 
 
-    fun initView()
+    private fun initView()
     {
 
         setupRecycler(binding.recyclerViewSearchFragment)
@@ -70,7 +63,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
             val searchQuery = binding.editTextSearchFragmentSearch.text.toString().trim()
             if(searchQuery.isEmpty())
             {
-                requireContext().showToast("Enter Product Name")
+                requireContext().showToast(getString(R.string.enter_product_name))
             }else
             {
                 doSearchWithQuery(searchQuery)
@@ -78,7 +71,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
         } //  searchClick closed
 
         subscribeToSearchResponseFlow()
-
     }
 
 
@@ -99,6 +91,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
                             binding.fragmentSearchProgressbar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             searchItemAdapter.submitList(it.data?.products)
+                            viewModel.clearFilters()
                             // updateViews(it.data)
                         }
                         is NetworkResource.Error ->
@@ -134,7 +127,33 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
                 requireContext().showToast(" Please Enter Some Text ")
                 return@let
             } // if closed
-            viewModel.searchProduct(query.toString())
+
+
+            // viewModel.searchProduct(query.toString(),viewModel.getCategory(),viewModel.getLocation())
+
+
+
+            if(viewModel.getCategory().isNullOrEmpty() && viewModel.getLocation().isNullOrEmpty())
+            {
+                Timber.tag(TAG).d("1")
+                   viewModel.searchProduct(query.toString())
+            }else if(!viewModel.getCategory().isNullOrEmpty() && viewModel.getLocation().isNullOrEmpty())
+            {
+
+                Timber.tag(TAG).d("2")
+                viewModel.searchProduct(query.toString(),category = viewModel.getCategory())
+            }else if(viewModel.getCategory().isNullOrEmpty() && !viewModel.getLocation().isNullOrEmpty())
+            {
+
+                Timber.tag(TAG).d("3")
+                viewModel.searchProduct(query.toString(),location = viewModel.getLocation())
+            }
+            else
+            {
+
+                Timber.tag(TAG).d("4")
+                viewModel.searchProduct(query.toString(),viewModel.getCategory(),viewModel.getLocation())
+            }
         }
     } // doSearchWithQuery closed
 

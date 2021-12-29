@@ -1,53 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
+    android:layout_width="160dp"
+    android:layout_height="165dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardUseCompatPadding="true"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="2dp"
     android:elevation="8dp"
-    android:layout_margin="2dp"
+    android:layout_margin="1dp"
     >
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        >
+
         <ImageView
             android:id="@+id/layoutProductStoreItemImageView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:src="@drawable/vegetable_place_holder"
             android:scaleType="fitXY"
             />
+
 
         <TextView
             android:id="@+id/layoutProductStoreItemProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product Name"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginStart="15dp"
-            android:layout_alignParentStart="true"
             android:layout_below="@id/layoutProductStoreItemImageView"
-            android:layout_toStartOf="@id/layoutProductStoreItemProductPrice"
-            android:layout_marginTop="16dp"
+            android:text="@string/product_name"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="2dp"
             />
 
+        <TextView
+            android:id="@+id/txtRS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutProductStoreItemProductName"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/rs"
+            android:textColor="@color/colorRed"
+            android:textSize="12sp" />
 
         <TextView
+
             android:id="@+id/layoutProductStoreItemProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/layoutProductStoreItemProductName"
+            android:layout_toEndOf="@id/txtRS"
             android:text="@string/price"
-            android:textColor="@color/colorRed"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@id/layoutProductStoreItemImageView"
-            android:layout_marginTop="16dp"
-
+            android:textSize="12sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="4dp"
+            />
+        <TextView
+            android:id="@+id/layoutProductStoreItemProductLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutProductStoreItemProductPrice"
+            android:text="@string/location"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="2dp"
             />
 
+
+
+
     </RelativeLayout>
+
+
 
 </com.google.android.material.card.MaterialCardView>

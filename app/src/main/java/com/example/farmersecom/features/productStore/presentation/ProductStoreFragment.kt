@@ -20,6 +20,7 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentProductStoreBinding
 import com.example.farmersecom.features.home.presentation.home.adapters.HomeSliderAdapter
+import com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsViewModel
 import com.example.farmersecom.features.productStore.domain.model.storeDetails.StoreDetailsResponse
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
@@ -39,7 +40,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
 {
 
 
-    private val storeViewModel:ProductStoreViewModel by activityViewModels()
+    private val productDetailsViewModel: ProductDetailsViewModel by activityViewModels()
     private val viewModel:ProductStoreViewModel by activityViewModels()
     private lateinit var storeProductsAdapter: StoreProductsAdapter
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductStoreBinding
@@ -57,7 +58,7 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
 
         viewLifecycleOwner.lifecycleScope.launch()
         {
-            storeViewModel.getStoreId.collect()
+            viewModel.getStoreId.collect()
             {
                 Timber.tag(TAG).d("storeID = "+it)
                 viewModel.getStoreDetails(it)
@@ -154,6 +155,10 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
     private fun setupStoreRecycler(recycler: RecyclerView)
     {
         storeProductsAdapter = StoreProductsAdapter()
+        {
+            productDetailsViewModel.setProductId(it)
+            findNavController().navigate(R.id.action_productStoreFragment_to_productDetailsFragment)
+        }
    
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
         recycler.adapter = storeProductsAdapter

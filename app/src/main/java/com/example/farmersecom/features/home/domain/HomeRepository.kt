@@ -6,8 +6,11 @@ import com.example.farmersecom.features.home.domain.model.homeModels.HomeLatestI
 import com.example.farmersecom.features.home.domain.model.more.MoreProduct
 import com.example.farmersecom.features.home.domain.model.more.MoreResponseItem
 import com.example.farmersecom.features.home.domain.model.sliderModels.HomeSlider
+import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface HomeRepository
 {
@@ -23,5 +26,6 @@ interface HomeRepository
 
     suspend fun moreCategoryItems(categoryId:String): Response<MoreResponseItem>
 
+    suspend fun updateFcMToken(token:String):Response<StatusMsgResponse>
 
 }

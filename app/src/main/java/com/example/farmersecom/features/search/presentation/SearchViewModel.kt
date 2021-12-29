@@ -1,5 +1,6 @@
 package com.example.farmersecom.features.search.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -10,16 +11,22 @@ import com.example.farmersecom.features.search.domain.model.SearchResponse
 import com.example.farmersecom.features.search.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.search.domain.useCases.GetAllCategories
 import com.example.farmersecom.features.search.domain.useCases.SearchProductUseCase
+import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
+import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,29 +36,72 @@ class SearchViewModel @Inject constructor(private val searchProductUseCase: Sear
 {
 
 
-    private var _searchResponse:MutableStateFlow<NetworkResource<SearchResponse>> =
-        MutableStateFlow(NetworkResource.None());
 
-     val searchResponse:StateFlow<NetworkResource<SearchResponse>> = _searchResponse;
 
-    fun searchProduct(query:String, category:String?=null, location:String?=null) = viewModelScope.launch(Dispatchers.IO)
+    private var _searchResponse: MutableSharedFlow<NetworkResource<SearchResponse>>
+            = MutableSharedFlow(replay = 0)
+    val searchResponse: SharedFlow<NetworkResource<SearchResponse>>
+            = _searchResponse
+
+
+    fun searchProduct(query:String,category: String?=null,location: String?=null) = viewModelScope.launch(Dispatchers.IO)
     {
-        _searchResponse.value = NetworkResource.Loading()
-
+        _searchResponse.emit(NetworkResource.Loading())
+        //   _searchResponse.value = NetworkResource.Loading()
         try
         {
             val response = searchProductUseCase.searchItem(query,category,location)
-            _searchResponse.value = handleResponse(response)
+            _searchResponse.emit(handleResponse(response))
+            //     _searchResponse.value = handleStatusMessageResponse(response)
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException -> _searchResponse.value = NetworkResource.Error("Something went wrong")
-                else -> _searchResponse.value = NetworkResource.Error("No Internet Connection")
+                is HttpException ->{  _searchResponse.emit(NetworkResource.Error(e.message)) }
+                else ->
+                {
+                    _searchResponse.emit(NetworkResource.Error(e.message))
+                }
             } // when closed
-        } // catch closed
+        }
+    } //  changeProductStatus closed
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    } // searchItem closed
+//    private var _searchResponse:MutableStateFlow<NetworkResource<SearchResponse>> =
+//        MutableStateFlow(NetworkResource.None());
+//
+//     val searchResponse:StateFlow<NetworkResource<SearchResponse>> = _searchResponse;
+//
+//    fun searchProduct(query:String, category:String?=null, location:String?=null) = viewModelScope.launch(Dispatchers.IO)
+//    {
+//        _searchResponse.value = NetworkResource.Loading()
+//
+//        try
+//        {
+//            val response = searchProductUseCase.searchItem(query,category,location)
+//
+//            Timber.tag(TAG).d(""+response.body())
+//
+//            _searchResponse.value = handleResponse(response)
+//        }catch (e:Exception)
+//        {
+//            when (e)
+//            {
+//                is HttpException -> _searchResponse.value = NetworkResource.Error(e.message)
+//                else -> _searchResponse.value = NetworkResource.Error(e.message)
+//            } // when closed
+//        } // catch closed
+//
+//    } // searchItem closed
 
     private fun handleResponse(response: Response<SearchResponse>): NetworkResource<SearchResponse>
     {

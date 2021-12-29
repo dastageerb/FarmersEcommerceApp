@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="100dp"
         >
 
         <com.google.android.material.textfield.TextInputLayout
@@ -42,7 +43,6 @@
                 android:id="@+id/editTextRegisterFragLastName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:inputType="text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -129,7 +129,7 @@
             android:id="@+id/headerGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gender"
+            android:text="@string/gender"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginStart="32dp"
@@ -154,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_male"
-                android:buttonTint="@color/design_default_color_primary"
+                android:buttonTint="@color/colorPrimary"
                 />
             <RadioButton
                 android:id="@+id/radiobButtomFemale"
@@ -162,14 +162,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_female"
                 android:layout_marginStart="24dp"
-                android:buttonTint="@color/design_default_color_primary"
+                android:buttonTint="@color/colorPrimary"
                 />
         </RadioGroup>
         <TextView
             android:id="@+id/headerDOB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date of Birth"
+            android:text="@string/dob"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginStart="32dp"
@@ -282,17 +282,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:background="@android:color/transparent"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="@string/login_here"
             android:textAllCaps="false"
-            android:textColor="@color/design_default_color_primary" />
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="right"
+            android:layout_marginBottom="16dp"
+            />
 
         <ProgressBar
             android:id="@+id/progressBarRegisterFrag"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:paddingBottom="24dp"
+            android:indeterminateTint="@color/colorPrimary"
             />
 
 

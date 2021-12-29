@@ -27,6 +27,7 @@ import com.example.farmersecom.features.productDetails.domain.model.ProductPictu
 import com.example.farmersecom.features.productStore.presentation.ProductStoreViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
@@ -47,6 +48,9 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
     private val cartViewModel: CartViewModel by viewModels()
     val list = mutableListOf<ProductDetailsResponse>()
 
+    var addedToCart = false
+    lateinit var productId:String
+
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentProductDetailsBinding
     {
         return FragmentProductDetailsBinding.inflate(inflater,container,false);
@@ -59,6 +63,14 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
     {
         super.onViewCreated(view, savedInstanceState)
 
+
+        initViews()
+
+
+    } // onViewCreated
+
+    private fun initViews()
+    {
 
 
 
@@ -75,8 +87,30 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
         subscribeProductDetailsResponseFlow()
         binding.buttonProductDetailsFragmentBuyNow.setOnClickListener(this)
 
-    } // onViewCreated
 
+
+    } // initView closed
+
+    private fun checkItemAlreadyInCart()
+    {
+        viewModel.getAllCartItems.asLiveData().observe(viewLifecycleOwner )
+        {
+            if(this::productId.isInitialized)
+            {
+                it.forEach()
+                {
+                    cartItem ->
+                    if(cartItem.productId == productId)
+                    {
+                        addedToCart = true
+                        binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.added_to_cart)
+                    }
+                }
+
+            }
+        }
+
+    } // checkItemAlreadyInCart
 
 
     private fun subscribeProductDetailsResponseFlow()
@@ -114,6 +148,10 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
 
     private fun updateViews(data: ProductDetailsResponse?)
     {
+
+         productId= data?.productId!!
+        checkItemAlreadyInCart()
+
         data?.let { list.add(it) }
         data?.let { setupRecyclerView(binding.recyclerViewFragmentProductDetails, it.productPictures) }
         binding.textViewFragmentProductDetailsProductName.text = data?.productName
@@ -142,8 +180,14 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
                 storeViewModel.setStoreId(it.id!!)
                 findNavController().navigate(R.id.action_productDetailsFragment_to_productStoreFragment)
             }
+        } //
 
+
+        if(addedToCart)
+        {
+            binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.added_to_cart)
         }
+
 
     } // updateView closed
 
@@ -188,15 +232,23 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
 
     private fun addToCart()
     {
-        val product = list[0]
-        val cartItem = CartItem(
-            product.productId!!,
-            product.productName!!,
-            product.productQuantity!!,
-            product.productPrice!!,
-            product.productUnit!!,
-            product.productPictures?.get(0)?.img!!,product.productDeliveryCharges!!)
-        cartViewModel.insertCartItem(cartItem)
+        if(!addedToCart)
+        {
+            val product = list[0]
+            val cartItem = CartItem(
+                product.productId!!,
+                product.productName!!,
+                product.productQuantity!!,
+                product.productPrice!!,
+                product.productUnit!!,
+                product.productPictures?.get(0)?.img!!,product.productDeliveryCharges!!)
+            cartViewModel.insertCartItem(cartItem)
+            binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.added_to_cart)
+        }else
+        {
+            requireContext().showToast(getString(R.string.already_added_to_cart))
+        }
+
     } // addToCartClosed
 
     private fun showShimmer()

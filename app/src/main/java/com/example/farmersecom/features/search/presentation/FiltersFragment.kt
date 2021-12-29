@@ -22,12 +22,13 @@ import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-
+@AndroidEntryPoint
 class FiltersFragment : BaseFragment<FragmentFiltersBinding>()
 {
 
@@ -74,8 +75,9 @@ class FiltersFragment : BaseFragment<FragmentFiltersBinding>()
     {
        // val category = binding.fragmentFiltersCategoryAutoCompleteView.text.toString().trim()
         location = binding.fragmentFiltersCityAutoCompleteView.text.toString().trim()
-        viewModel.saveCategory(categoryId!!)
-        viewModel.saveLocation(location!!)
+        categoryId?.let { viewModel.saveCategory(it) }
+        location?.let{ viewModel.saveLocation(it) }
+
         findNavController().navigate(R.id.action_filtersFragment_to_searchFragment)
 
     } //

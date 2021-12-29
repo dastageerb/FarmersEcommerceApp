@@ -75,6 +75,12 @@
     <string name="select_category_toast">Select Category</string>
     <string name="select_product_unit_toast">Please Select Product Unit</string>
     <string name="apply">Apply</string>
+    <string name="enter_product_name">Enter Product Name</string>
+    <string name="error_code">"Error\t "</string>
+    <string name="location">Location</string>
+    <string name="add_product">Add Product</string>
+    <string name="added_to_cart">Added to Cart</string>
+    <string name="already_added_to_cart">Item is Already added in Cart</string>
 
 
 </resources>

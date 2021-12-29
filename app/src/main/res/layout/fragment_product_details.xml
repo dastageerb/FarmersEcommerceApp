@@ -239,8 +239,8 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonProductDetailsFragmentBuyNow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/textViewProductDescription"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
@@ -255,19 +255,18 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonProductDetailsFragmentAddToCart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_to_cart"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/textViewProductDescription"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/small_button_bg"
-                android:textColor="@color/white"
+                android:text="@string/added_to_cart"
                 android:textAllCaps="false"
-                android:layout_marginEnd="16dp"
-                />
+                android:textColor="@color/white" />
         </RelativeLayout>
 
 

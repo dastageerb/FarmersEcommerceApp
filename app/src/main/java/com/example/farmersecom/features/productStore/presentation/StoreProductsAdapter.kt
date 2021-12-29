@@ -9,7 +9,7 @@ import com.example.farmersecom.databinding.LayoutProductStoreItemBinding
 import com.example.farmersecom.features.productStore.domain.model.storeProducts.Product
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
-class  StoreProductsAdapter ()
+class  StoreProductsAdapter(val onStoreItemClicked:(productId:String)->Unit)
     : ListAdapter<Product, StoreProductsAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<Product>()
 {
@@ -25,7 +25,6 @@ class  StoreProductsAdapter ()
 })
 {
 
-
     inner class ViewHolder(private val binding: LayoutProductStoreItemBinding) : RecyclerView.ViewHolder(binding.root)
     {
 
@@ -33,12 +32,12 @@ class  StoreProductsAdapter ()
         {
             if(product?.productPictures?.size!! > 0)
             {
-
                 binding.layoutProductStoreItemImageView.load(product?.productPictures!![0].img)
             }
 
             binding.layoutProductStoreItemProductName.text = product.productName
             binding.layoutProductStoreItemProductPrice.text = product.price.toString()
+            binding.layoutProductStoreItemProductLocation.text = product.location
 
         }
     }
@@ -55,5 +54,12 @@ class  StoreProductsAdapter ()
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         holder.bind(getItem(position))
+
+        holder.itemView.setOnClickListener()
+        {
+            getItem(position).id?.let { it1 -> onStoreItemClicked(it1) }
+        }
+
+
     } // onBindViewHolder closed
 }

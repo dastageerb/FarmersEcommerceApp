@@ -57,7 +57,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>()
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
-                loginViewModel.forgotPasswordResponse.collect()
+                loginViewModel.statusMsgResponse.collect()
                 {
                     when(it)
                     {

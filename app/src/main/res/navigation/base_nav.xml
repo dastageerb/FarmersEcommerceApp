@@ -195,7 +195,11 @@
         android:id="@+id/productStoreFragment"
         android:name="com.example.farmersecom.features.productStore.presentation.ProductStoreFragment"
         android:label="@string/fragment_product_store"
-        tools:layout="@layout/fragment_product_store" />
+        tools:layout="@layout/fragment_product_store" >
+        <action
+            android:id="@+id/action_productStoreFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/buyerDashboardFragment"
         android:name="com.example.farmersecom.features.buyerSection.presentation.buyerdashboard.BuyerDashboardFragment"

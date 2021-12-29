@@ -9,13 +9,19 @@ import com.example.farmersecom.features.authentication.data.frameWork.entity.res
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.authentication.domain.useCases.ForgotPasswordUseCase
 import com.example.farmersecom.features.authentication.domain.useCases.LogInViaEmail
+import com.example.farmersecom.features.home.domain.usecases.UpdateFCMToken
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
@@ -24,31 +30,32 @@ import javax.inject.Inject
 @HiltViewModel
 class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
                                         private val forgotPasswordUseCase: ForgotPasswordUseCase,
-                                         private val sharedPrefsHelper: SharedPrefsHelper) : ViewModel()
+                                         private val sharedPrefsHelper: SharedPrefsHelper
+                                         ,private val updateFCMToken: UpdateFCMToken) : ViewModel()
 {
 
 
-    private val _loginResponse: MutableStateFlow<NetworkResource<LogInResponse>>
-            = MutableStateFlow(NetworkResource.None())
+    private val _loginResponse: MutableSharedFlow<NetworkResource<LogInResponse>>
+            = MutableSharedFlow(0)
 
-    val loginResponse:StateFlow<NetworkResource<LogInResponse>> = _loginResponse
+    val loginResponse:SharedFlow<NetworkResource<LogInResponse>> = _loginResponse
 
     fun loginUser(logInData: LogInData) = viewModelScope.launch(Dispatchers.IO)
     {
-        _loginResponse.value = NetworkResource.Loading()
+        _loginResponse.emit(NetworkResource.Loading())
         try
         {
             val response = login.logInViaEmail(logInData)
-            _loginResponse.value = handleResponse(response)
+            _loginResponse.emit(handleResponse(response))
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException -> _loginResponse.value = NetworkResource.Error("Http Exception")
-                else -> _loginResponse.value = NetworkResource.Error("No Internet Connection: ${e.message}")
+                is HttpException -> _loginResponse.emit(NetworkResource.Error(e.message))
+                else ->  _loginResponse.emit(NetworkResource.Error(e.message))
             } // when closed
-        }
-    }
+        } // catch closed
+    } // loginUser closed
 
     private fun handleResponse(response: Response<LogInResponse>): NetworkResource<LogInResponse>
     {
@@ -72,36 +79,62 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
     // forgotPassword UseCase
 
 
-    private var _forgotPasswordResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
-            = MutableStateFlow(NetworkResource.None())
-    val forgotPasswordResponse: StateFlow<NetworkResource<StatusMsgResponse>>
-            = _forgotPasswordResponse
+    private var _statusMsgResponse: MutableSharedFlow<NetworkResource<StatusMsgResponse>>
+            = MutableSharedFlow(replay = 0)
+    val statusMsgResponse: SharedFlow<NetworkResource<StatusMsgResponse>>
+            = _statusMsgResponse
+
 
 
     fun forgotPassword(email:String) = viewModelScope.launch(Dispatchers.IO)
     {
-        _forgotPasswordResponse.value = NetworkResource.Loading()
+
+        _statusMsgResponse.emit(NetworkResource.Loading())
         try
         {
-            val response =  forgotPasswordUseCase.forgotPasswordUseCase(email)
-            _forgotPasswordResponse.value = handleForgotPasswordResponse(response)
+            val response = forgotPasswordUseCase.forgotPasswordUseCase(email)
+            _statusMsgResponse.emit(handleStatusMsgResponse(response))
+            //     _statusMsgResponse.value = handleStatusMessageResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
+                else ->
+                {
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
+                }
+            } // when closed
+        }
+
+    } //  changeProductStatus closed
+
+
+    fun updateFCMToken() = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.emit(NetworkResource.Loading())
+        try
+        {
+            val token = FirebaseMessaging.getInstance().token.await()
+            val response = updateFCMToken.updateFCMToken(token)
+            _statusMsgResponse.emit(handleStatusMsgResponse(response))
 
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->  _forgotPasswordResponse.value = NetworkResource.Error("Something went wrong")
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
                 else ->
                 {
-                    _forgotPasswordResponse.value = NetworkResource.Error(""+e.message)
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
                 }
             } // when closed
         }
-    } //  changeProductStatus closed
+
+    } // updateFCM
 
 
-
-    private fun handleForgotPasswordResponse(response: Response<StatusMsgResponse>): NetworkResource<StatusMsgResponse>
+    private fun handleStatusMsgResponse(response: Response<StatusMsgResponse>): NetworkResource<StatusMsgResponse>
     {
         return when(response.code())
         {

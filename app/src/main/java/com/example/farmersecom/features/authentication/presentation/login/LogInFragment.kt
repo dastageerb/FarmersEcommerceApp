@@ -47,12 +47,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
         binding.buttonLoginFragForgotPassword.setOnClickListener(this)
 
 
-     //   Timber.tag(TAG).d("token from prefs"+loginViewModel.sharedPrefGetToken())
-      //  requireContext().showToast(""+loginViewModel.sharedPrefGetToken())
-
-
         subscribeLoginResponseFlow()
-
+        subscribeTokenUpdatedResponse()
 
 
     } // onViewCreated
@@ -60,11 +56,6 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
     override fun onStart()
     {
         super.onStart()
-        Timber.tag(TAG).d(""+loginViewModel.getAuthToken())
-      //  if(loginViewModel.getAuthToken()!=null)
-        //{
-          //  findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
-        //}
     }
 
 
@@ -86,22 +77,21 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                         is NetworkResource.Error ->
                         {
                             binding.progressBarLogIn.hide()
-
-                            Timber.tag(TAG).d("error  "+it.msg)
-                            requireContext().showToast("error: ${it.msg}")
                         }
                         is NetworkResource.Success ->
                         {
-                            requireContext().showToast(it.data?.message.toString())
-                            binding.progressBarLogIn.hide()
+                         ///   requireContext().showToast(it.data?.message.toString())
+                          ///  binding.progressBarLogIn.hide()
+
                             Timber.tag(TAG).d(it.data.toString())
                             it.data?.let()
                             {
                                 data ->
                                 data.token?.let { it1 -> loginViewModel.saveAuthToken(it1) }
-                                data.user?.let { it1 -> loginViewModel.saveUser(it1) }
-
-                                findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
+                                data.user?.let { it1 -> loginViewModel.saveUser(it1)
+                                loginViewModel.updateFCMToken()
+                                }
+                             //   findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
 
                             }
                         }
@@ -110,14 +100,49 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                 } // collect closed
             } // repeatOnLifeCycle closed
         } // lifeCycleScope closed
-
-
-
     } // subscribeLoginResponseFlow closed
 
 
 
-    override fun onClick(v: View?)
+
+    private fun subscribeTokenUpdatedResponse()
+    {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                loginViewModel.statusMsgResponse.collect()
+                {
+                    when (it)
+                    {
+                        is NetworkResource.Loading ->
+                        {
+                            binding.progressBarLogIn.show()
+                            Timber.tag(TAG).d("Loading")
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            binding.progressBarLogIn.hide()
+                            Timber.tag(TAG).d("error  " + it.msg)
+                            requireContext().showToast("error: ${it.msg}")
+                        }
+                        is NetworkResource.Success ->
+                        {
+                            binding.progressBarLogIn.hide()
+                            Timber.tag(TAG).d(it.data.toString())
+                            findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
+                        } ///
+                        else ->
+                        {
+                        }
+                    } // when closed
+                } // collect closed
+            } // repeatOnLifeCycle closed
+        } // lifeCycleScope closed
+    } // subscribeToTokenUpdateResponse
+
+
+        override fun onClick(v: View?)
     {
         when(v?.id)
         {

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="120dp"
+    android:layout_width="150dp"
+    android:layout_height="160dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
     android:elevation="20dp"
     android:id="@+id/storeDashboardCard"
+    app:strokeColor="@color/colorPrimaryDark"
+    app:strokeWidth="1dp"
+    android:layout_margin="8dp"
     >
 
     <LinearLayout
@@ -13,6 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:layout_margin="16dp"
         >
         <ImageView
             android:id="@+id/imageViewStoreDashBoard"
@@ -20,6 +24,7 @@
             android:layout_height="80dp"
             android:src="@drawable/ic_baseline_live_orders_24"
             android:layout_margin="8dp"
+            app:tint="@color/colorGreen3"
             />
         <TextView
             android:id="@+id/textViewStoreDashboard"
@@ -31,6 +36,8 @@
             android:textAlignment="center"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:textColor="@color/colorGreen3"
+            android:layout_marginBottom="4dp"
             />
 
     </LinearLayout>

@@ -3,6 +3,9 @@ package com.example.farmersecom.features.productDetails.presentation.productDeta
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.farmersecom.SharedPrefsHelper
+import com.example.farmersecom.features.cart.domain.CartItem
+import com.example.farmersecom.features.cart.domain.usecase.DeleteAllCartItemsUseCase
+import com.example.farmersecom.features.cart.domain.usecase.GetCartItemsUseCase
 import com.example.farmersecom.features.productDetails.domain.model.NavigationEntity
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
 import com.example.farmersecom.features.productDetails.domain.useCase.GetProductByIdUseCase
@@ -14,10 +17,7 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -26,12 +26,19 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
     private val getProductByIdUseCase: GetProductByIdUseCase,
-    private val sharedPrefsHelper:SharedPrefsHelper)
+    private val sharedPrefsHelper:SharedPrefsHelper,
+    private val getAllCartItemsUseCase: GetCartItemsUseCase
+    )
     :ViewModel()
 {
 
-     // for shared Use
-    val setProductId :MutableStateFlow<String> = MutableStateFlow("")
+
+    val getAllCartItems: Flow<List<CartItem>> = getAllCartItemsUseCase.getCartItems()
+
+
+
+    // for shared Use
+     private val setProductId :MutableStateFlow<String> = MutableStateFlow("")
     val getProductId :StateFlow<String> = setProductId
     fun setProductId(query:String)
     {

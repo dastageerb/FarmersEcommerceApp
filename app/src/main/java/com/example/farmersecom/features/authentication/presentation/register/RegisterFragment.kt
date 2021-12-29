@@ -82,6 +82,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
                             binding.progressBarRegisterFrag.hide()
                             requireContext().showToast(it.data?.message.toString())
                             Timber.tag(Constants.TAG).d(it.data.toString())
+                            findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
                         }
                         else -> {}
                     } /// when closed

@@ -4,8 +4,10 @@ import com.example.farmersecom.features.home.domain.model.MoreProductsResponseIt
 import com.example.farmersecom.features.home.domain.model.homeModels.HomeLatestItem
 import com.example.farmersecom.features.home.domain.model.more.MoreResponseItem
 import com.example.farmersecom.features.home.domain.model.sliderModels.HomeSlider
+import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface HomeApi
@@ -32,9 +34,10 @@ interface HomeApi
         @Query("page")page:Int,
         @Query("size")size:Int):Response<MoreResponseItem>
 
-    // api/product?query=pata&page=1&size=10&
 
-
+    @POST("api/update/fcm")
+    suspend fun updateFcMToken(
+        @Query("token")token:String):Response<StatusMsgResponse>
 
 
 }

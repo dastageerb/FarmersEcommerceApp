@@ -9,6 +9,16 @@
     <color name="white">#FFFFFFFF</color>
 
 
+
+
+    <color name="colorGreen1">#4DD637</color>
+    <color name="colorGreen2">#3DBE29</color>
+    <color name="colorGreen3">#38CC77</color>
+    <color name="colorGreen4">#1FAA59</color>
+    <color name="colorGreen5">#00D84A</color>
+    <color name="colorGreen6">#22CB5C</color>
+
+
     <color name="colorLight">#FFFFFF</color>
 
     <color name="colorFirstGreen">#00D84A</color>
