@@ -204,6 +204,7 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
             binding.fragmentOrderDetailsForSellerOrderSubtotalTextView.text = data?.subTotal.toString()
             binding.fragmentOrderDetailsForSellerOrderTotalTextView.text = data?.totalPrice.toString()
             binding.fragmentOrderDetailsForSellerOrderStatusTextView.text = data?.orderStatus
+            fragmentOrderDetailsForSellerButtonChangStatus.show()
 
             when(data?.orderStatus)
             {

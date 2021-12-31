@@ -77,10 +77,13 @@
             android:id="@+id/action_setupStoreFragment_to_storeFragment"
             app:destination="@id/storeFragment" />
     </fragment>
+
+
+
     <fragment
         android:id="@+id/storeFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.storeDashboard.StoreDashBoardFragment"
-        android:label="fragment_store"
+        android:label="@string/seller_dashboard"
         tools:layout="@layout/fragment_store_dashboard" >
         <action
             android:id="@+id/action_storeFragment_to_addNewProductFragment"
@@ -101,11 +104,19 @@
             android:id="@+id/action_storeFragment_to_storeSettingFragment"
             app:destination="@id/storeSettingFragment" />
     </fragment>
+
+
+
+
     <fragment
         android:id="@+id/addNewProductFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.addNewProduct.AddNewProductFragment"
-        android:label="fragment_add_new_product"
-        tools:layout="@layout/fragment_add_new_product" />
+        android:label="@string/add_new_product_frag"
+        tools:layout="@layout/fragment_add_new_product" >
+        <action
+            android:id="@+id/action_addNewProductFragment_to_storeFragment"
+            app:destination="@id/storeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.farmersecom.features.home.presentation.home.HomeFragment"
@@ -171,12 +182,20 @@
     <fragment
         android:id="@+id/orderDetailsFragment"
         android:name="com.example.farmersecom.features.buyNow.presentation.orderDetails.BuyNowOrderDetailsFragment"
-        android:label="fragment_order_details"
-        tools:layout="@layout/fragment_buy_now_details" />
+        android:label="@string/order_details"
+        tools:layout="@layout/fragment_buy_now_details" >
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_currentOrdersFragment"
+            app:destination="@id/currentOrdersFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/base_nav"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
     <fragment
         android:id="@+id/moreSliderItemsFragment"
         android:name="com.example.farmersecom.features.home.presentation.moreSliderItems.MoreSliderItemsFragment"
-        android:label="fragment_more_slider_items"
+        android:label="Promotional"
         tools:layout="@layout/fragment_more_slider_items" >
         <action
             android:id="@+id/action_moreSliderItemsFragment_to_productDetailsFragment"
@@ -185,7 +204,7 @@
     <fragment
         android:id="@+id/seeAllLatestItemsFragment"
         android:name="com.example.farmersecom.features.home.presentation.seeAllLatestItems.SeeAllLatestItemsFragment"
-        android:label="fragment_see_all_latest_items"
+        android:label="@string/see_All"
         tools:layout="@layout/fragment_see_all_latest_items" >
         <action
             android:id="@+id/action_seeAllLatestItemsFragment_to_productDetailsFragment"
@@ -203,7 +222,7 @@
     <fragment
         android:id="@+id/buyerDashboardFragment"
         android:name="com.example.farmersecom.features.buyerSection.presentation.buyerdashboard.BuyerDashboardFragment"
-        android:label="fragment_buyer_dashboard"
+        android:label="@string/buyer_dashboard"
         tools:layout="@layout/fragment_buyer_dashboard" >
         <action
             android:id="@+id/action_buyerDashboardFragment_to_buyerOrderHistoryFragment"
@@ -211,11 +230,14 @@
         <action
             android:id="@+id/action_buyerDashboardFragment_to_currentOrdersFragment"
             app:destination="@id/currentOrdersFragment" />
+        <action
+            android:id="@+id/action_buyerDashboardFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/buyerOrderHistoryFragment"
         android:name="com.example.farmersecom.features.buyerSection.presentation.orderHistory.BuyerOrderHistoryFragment"
-        android:label="fragment_buyer_order_history"
+        android:label="@string/buyers_order_history"
         tools:layout="@layout/fragment_buyer_order_history" >
         <action
             android:id="@+id/action_buyerOrderHistoryFragment_to_orderDetailsForBuyerFragment"
@@ -224,7 +246,7 @@
     <fragment
         android:id="@+id/currentOrdersFragment"
         android:name="com.example.farmersecom.features.buyerSection.presentation.currentOrders.CurrentOrdersFragment"
-        android:label="fragment_current_orders"
+        android:label="@string/buyer_current_orders"
         tools:layout="@layout/fragment_current_orders" >
         <action
             android:id="@+id/action_currentOrdersFragment_to_orderDetailsForBuyerFragment"
@@ -233,7 +255,7 @@
     <fragment
         android:id="@+id/activeOrdersFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.activeOrders.ActiveOrdersFragment"
-        android:label="fragment_active_orders"
+        android:label="@string/active_orders"
         tools:layout="@layout/fragment_active_orders" >
         <action
             android:id="@+id/action_activeOrdersFragment_to_orderDetailsForSellerFragment"
@@ -242,35 +264,40 @@
     <fragment
         android:id="@+id/completedOrdersFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.completedOrders.CompletedOrdersFragment"
-        android:label="fragment_completed_orders"
+        android:label="@string/completed_orders"
         tools:layout="@layout/fragment_completed_orders" >
         <action
             android:id="@+id/action_completedOrdersFragment_to_orderDetailsForSellerFragment"
             app:destination="@id/orderDetailsForSellerFragment" />
     </fragment>
+
+
+
+
     <fragment
         android:id="@+id/activeProductsFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.activeProducts.ActiveProductsFragment"
-        android:label="fragment_active_products"
+        android:label="@string/active_products_frag"
         tools:layout="@layout/fragment_active_products" />
     <fragment
         android:id="@+id/discontinuedProductsFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.discontinuedProducts.DiscontinuedProductsFragment"
-        android:label="fragment_discontinued_products"
+        android:label="@string/distcontinued_products"
         tools:layout="@layout/fragment_discontinued_products" >
         <action
             android:id="@+id/action_discontinuedProductsFragment_to_editProductFragment"
             app:destination="@id/editProductFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/orderDetailsForBuyerFragment"
         android:name="com.example.farmersecom.features.buyerSection.presentation.orderDetailsForBuyer.OrderDetailsForBuyerFragment"
-        android:label="fragment_order_details_for_buyer"
+        android:label="@string/order_details_as_buyer_frag"
         tools:layout="@layout/fragment_order_details_for_buyer" />
     <fragment
         android:id="@+id/orderDetailsForSellerFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.orderDetailsForSeller.OrderDetailsForSellerFragment"
-        android:label="fragment_order_details_for_seller"
+        android:label="@string/order_details_as_seller"
         tools:layout="@layout/fragment_order_details_for_seller" />
     <fragment
         android:id="@+id/cartCheckOutFragment"
@@ -288,10 +315,13 @@
             app:popUpToInclusive="true"
             />
     </fragment>
+
+
+
     <fragment
         android:id="@+id/fullUserProfileFragment"
         android:name="com.example.farmersecom.features.profile.presentation.fullProfile.FullUserProfileFragment"
-        android:label="fragment_full_user_profile"
+        android:label="@string/full_user_details"
         tools:layout="@layout/fragment_full_user_profile" >
         <action
             android:id="@+id/action_fullUserProfileFragment_to_editPersonalInfoFragment"
@@ -303,7 +333,7 @@
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.example.farmersecom.features.profile.presentation.changePassword.ChangePasswordFragment"
-        android:label="fragment_change_password"
+        android:label="@string/change_password"
         tools:layout="@layout/fragment_change_password" >
         <action
             android:id="@+id/action_changePasswordFragment_to_logInFragment"
@@ -314,17 +344,17 @@
     <fragment
         android:id="@+id/editPersonalInfoFragment"
         android:name="com.example.farmersecom.features.profile.presentation.editPersonalInfo.EditPersonalInfoFragment"
-        android:label="fragment_edit_personal_info"
+        android:label="@string/edit_personal_info_frag"
         tools:layout="@layout/fragment_edit_personal_info" />
     <fragment
         android:id="@+id/storeSettingFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.storeSettings.StoreSettingFragment"
-        android:label="fragment_store_setting"
+        android:label="@string/store_setting"
         tools:layout="@layout/fragment_store_setting" />
     <fragment
         android:id="@+id/editProductFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.editProduct.EditProductFragment"
-        android:label="fragment_edit_product"
+        android:label="@string/edit_product"
         tools:layout="@layout/fragment_edit_product" >
         <action
             android:id="@+id/action_editProductFragment_to_discontinuedProductsFragment"

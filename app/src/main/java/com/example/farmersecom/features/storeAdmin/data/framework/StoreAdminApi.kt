@@ -22,16 +22,18 @@ interface  StoreAdminApi
     @Multipart
     @POST("api/product/add")
     suspend fun addNewProduct(
-        @Part("productName")productName:String,
+        @Part("productName")productName:RequestBody,
         @Part("price")price:Int,
         @Part("quantity")quantity:Int,
-        @Part("description")description:String,
-        @Part("unit")unit:String,
+        @Part("description")description:RequestBody,
+        @Part("unit")unit:RequestBody,
         @Part("category")category:RequestBody,
-        @Part("location")location:String,
-        @Part file:MultipartBody.Part
+        @Part("location")location:RequestBody,
+        @Part firstFile:MultipartBody.Part,
+        @Part secondFile:MultipartBody.Part,
+        @Part thirdFile:MultipartBody.Part
 
-    ) : Response<NewProductResponse>
+    ) : Response<StatusMsgResponse>
 
 
 

@@ -15,10 +15,7 @@ import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExt
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -35,25 +32,25 @@ class PlaceOrderViewModel @Inject constructor(
 
 
 
-   private val _placeOrderResponse:MutableStateFlow<NetworkResource<OrderResponse>>
-           = MutableStateFlow(NetworkResource.None())
-   val placeOrderResponse: StateFlow<NetworkResource<OrderResponse>>
+   private val _placeOrderResponse:MutableSharedFlow<NetworkResource<OrderResponse>>
+           = MutableSharedFlow(0)
+   val placeOrderResponse: MutableSharedFlow<NetworkResource<OrderResponse>>
            = _placeOrderResponse
 
 
    fun placeOrder(productId:String,orderRequest: OrderRequest) = viewModelScope.launch(Dispatchers.IO)
    {
-      _placeOrderResponse.value = NetworkResource.Loading()
+      _placeOrderResponse.emit( NetworkResource.Loading())
       try
       {
          val response = placeOrderUseCase.placeOrderUseCase(productId,orderRequest)
-         _placeOrderResponse.value = handleResponse(response)
+         _placeOrderResponse.emit( handleResponse(response))
       }catch (e:Exception)
       {
          when (e)
          {
-            is HttpException -> _placeOrderResponse.value = NetworkResource.Error("Something went wrong")
-            else -> _placeOrderResponse.value = NetworkResource.Error("No Internet Connection")
+            is HttpException -> _placeOrderResponse.emit(NetworkResource.Error(e.message))
+            else -> _placeOrderResponse.emit(NetworkResource.Error(e.message))
          } // when closed
       }
    }

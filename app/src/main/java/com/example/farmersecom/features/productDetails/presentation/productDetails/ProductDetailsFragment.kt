@@ -79,6 +79,24 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
             viewModel.getProductId.collect()
             {
                 viewModel.getProductDetails(it)
+                viewModel.exists(it)
+            } //
+        } // viewLifeCycleOwner
+
+
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewModel.exists.collect()
+            {
+                Timber.tag(TAG).d("exists:"+it)
+
+                if(it)
+                {
+                    addedToCart = true
+                    binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.added_to_cart)
+                }
+
             } //
         } // viewLifeCycleOwner
 
@@ -91,26 +109,35 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
 
     } // initView closed
 
-    private fun checkItemAlreadyInCart()
-    {
-        viewModel.getAllCartItems.asLiveData().observe(viewLifecycleOwner )
-        {
-            if(this::productId.isInitialized)
-            {
-                it.forEach()
-                {
-                    cartItem ->
-                    if(cartItem.productId == productId)
-                    {
-                        addedToCart = true
-                        binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.added_to_cart)
-                    }
-                }
-
-            }
-        }
-
-    } // checkItemAlreadyInCart
+//    private fun checkItemAlreadyInCart()
+//    {
+//
+//        var count = 0
+//        viewModel.getAllCartItems.asLiveData().observe(viewLifecycleOwner )
+//        {
+//            if(this::productId.isInitialized)
+//            {
+//                it.forEach()
+//                {
+//                    cartItem ->
+//                    if(cartItem.productId == productId)
+//                    {
+//                        count++
+//                        Timber.tag(TAG).d("added to cart"+cartItem.productId+" : "+productId+" : "+count)
+//                        //Timber.tag(TAG).d("added to cart")
+//                        addedToCart = true
+//                        binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.added_to_cart)
+//                    }else
+//                    {
+//                        count++
+//                        Timber.tag(TAG).d("add to cart"+cartItem.productId+" : "+productId+" : "+count)
+//                        binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.add_to_cart)
+//                    }
+//                }
+//            }
+//        }
+//
+//    } // checkItemAlreadyInCart
 
 
     private fun subscribeProductDetailsResponseFlow()
@@ -150,7 +177,7 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
     {
 
          productId= data?.productId!!
-        checkItemAlreadyInCart()
+        //checkItemAlreadyInCart()
 
         data?.let { list.add(it) }
         data?.let { setupRecyclerView(binding.recyclerViewFragmentProductDetails, it.productPictures) }
@@ -161,7 +188,7 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
         binding.textViewProductDescription.text = data?.productDescription
         binding.ratingBarFragmentProductDetails.rating = data?.productRating!!.toFloat()
 
-
+        binding.textViewProductLocationFragmentProductDetails.text = data?.productLocation
 
         binding.imageViewProductDetailsFragmentStoreImage.load(data.store?.storeImage)
 
@@ -243,7 +270,9 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
                 product.productUnit!!,
                 product.productPictures?.get(0)?.img!!,product.productDeliveryCharges!!)
             cartViewModel.insertCartItem(cartItem)
+            addedToCart = true
             binding.buttonProductDetailsFragmentAddToCart.text = getString(R.string.added_to_cart)
+
         }else
         {
             requireContext().showToast(getString(R.string.already_added_to_cart))

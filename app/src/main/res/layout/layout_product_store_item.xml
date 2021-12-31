@@ -19,7 +19,7 @@
             android:id="@+id/layoutProductStoreItemImageView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@drawable/vegetable_place_holder"
+            android:src="@drawable/image_place_holder"
             android:scaleType="fitXY"
             />
 

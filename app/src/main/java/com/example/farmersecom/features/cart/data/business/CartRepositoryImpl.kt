@@ -34,6 +34,8 @@ class CartRepositoryImpl(private val cartDao: CartDao):CartRepository
 
     override fun getTotalDeliveryCharges(): Flow<Int> = cartDao.getTotalDeliveryCharges()
 
+    override fun exists(id: String)
+     = cartDao.exists(id)
 
 
 }

@@ -31,11 +31,11 @@ class StoreDashBoardFragment : BaseFragment<FragmentStoreDashboardBinding>(),Vie
     private fun initViews()
     {
         val list = ArrayList<DashBoardItem>()
-        list.add(DashBoardItem("Active Products",R.drawable.ic_baseline_live_orders_24))
-        list.add(DashBoardItem("Discontinued Products", R.drawable.ic_baseline_discountinued_24))
-        list.add(DashBoardItem("Active Order", R.drawable.ic_baseline_live_orders_24))
-        list.add(DashBoardItem("Completed Order", R.drawable.ic_baseline_live_orders_24))
-        list.add(DashBoardItem("Settings", R.drawable.ic_baseline_live_orders_24))
+        list.add(DashBoardItem(getString(R.string.active_products),R.drawable.ic_baseline_live_orders_24))
+        list.add(DashBoardItem(getString(R.string.distcontinued_products), R.drawable.ic_baseline_discountinued_24))
+        list.add(DashBoardItem(getString(R.string.active_orders), R.drawable.ic_baseline_active_actions_24))
+        list.add(DashBoardItem(getString(R.string.completed_orders), R.drawable.ic_baseline_check_completed_24))
+        list.add(DashBoardItem(getString(R.string.seller_settings), R.drawable.ic_baseline_settings_24))
 
         val adapter  = StoreDashBoardAdapter()
         {

@@ -14,7 +14,7 @@
             android:layout_height="130dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:background="@color/colorPrimary"
+            android:src="@drawable/image_place_holder"
             android:scaleType="fitXY" />
 
         <TextView

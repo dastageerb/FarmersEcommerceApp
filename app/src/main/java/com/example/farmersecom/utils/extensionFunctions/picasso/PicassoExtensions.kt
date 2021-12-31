@@ -1,6 +1,7 @@
 package com.example.farmersecom.utils.extensionFunctions.picasso
 
 import android.widget.ImageView
+import com.example.farmersecom.R
 import com.squareup.picasso.Picasso
 
 object PicassoExtensions
@@ -11,7 +12,7 @@ object PicassoExtensions
     {
         if(url!!.isNotEmpty())
         {
-            Picasso.get().load(url).into(this)
+            Picasso.get().load(url).placeholder(R.drawable.image_place_holder).into(this)
         }
 
     }

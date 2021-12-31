@@ -6,10 +6,12 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentBuyNowDetailsBinding
@@ -19,6 +21,8 @@ import com.example.farmersecom.features.productDetails.domain.model.ProductDetai
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
@@ -222,16 +226,26 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
                     {
                         is NetworkResource.Loading ->
                         {
+
+                            binding.fragmentBuyNowPlaceOrderButton.isEnabled = false
+                           // binding.fragmentBuyNowDetailsScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                            binding.fragmentBuyNowDetailsProgressBar.show()
                             Timber.tag(Constants.TAG).d("Loading")
+                            binding.fragmentBuyNowDetailsScrollView.scrollY = View.FOCUS_DOWN;
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.fragmentBuyNowPlaceOrderButton.isEnabled = true
+                            binding.fragmentBuyNowDetailsProgressBar.hide()
                             requireContext().showToast(it.msg.toString())
                             Timber.tag(Constants.TAG).d(it.msg)
                         }
                         is NetworkResource.Success ->
                         {
+                            binding.fragmentBuyNowPlaceOrderButton.isEnabled = true
+                            binding.fragmentBuyNowDetailsProgressBar.show()
                             requireContext().showToast(it.data?.message.toString())
+                            findNavController().navigate(R.id.action_orderDetailsFragment_to_currentOrdersFragment)
                             Timber.tag(Constants.TAG).d(it.data.toString())
                         }
                         else -> {}

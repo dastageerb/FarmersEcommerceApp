@@ -1,6 +1,7 @@
 package com.example.farmersecom.features.storeAdmin.data.business
 
 
+import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.OrderStatusResponse
 import com.example.farmersecom.features.productStore.domain.model.storeDetails.StoreDetailsResponse
 import com.example.farmersecom.features.storeAdmin.data.framework.StoreAdminApi
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.requests.NewProduct
@@ -12,28 +13,41 @@ import com.example.farmersecom.features.storeAdmin.domain.model.updateStore.Upda
 import okhttp3.MultipartBody
 import retrofit2.Response
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
 
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 
 class StoreAdminImpl(private val storeAdminApi:StoreAdminApi) : StoreAdminRepository
 {
 
 
-    override suspend fun addNewProduct(newProduct: NewProduct, file: MultipartBody.Part): Response<NewProductResponse>
+    override suspend fun addNewProduct(newProduct: NewProduct
+                                       ,firstFile:MultipartBody.Part
+                                       ,secondFile:MultipartBody.Part
+                                       ,thirdFile:MultipartBody.Part):Response<StatusMsgResponse>
     {
 
-        val reqBody = newProduct.productCategory.toRequestBody("text/plain".toMediaTypeOrNull())
+        val categoryReqBody = newProduct.productCategory.toRequestBody("text/plain".toMediaTypeOrNull())
+        val nameReqBody = newProduct.productName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val unitReqBody = newProduct.productUnit.toRequestBody("text/plain".toMediaTypeOrNull())
+        val descReqBody = newProduct.productDescription.toRequestBody("text/plain".toMediaTypeOrNull())
+        val locationReqBody = newProduct.productLocation.toRequestBody("text/plain".toMediaTypeOrNull())
+
+
         return  storeAdminApi
             .addNewProduct(
-                newProduct.productName
+                nameReqBody
                 ,newProduct.productPrice
                 ,newProduct.productQuantity
-                ,newProduct.productDescription
-               ,newProduct.productUnit
-                ,reqBody
-                ,newProduct.productLocation,file)
-    }
+                ,descReqBody
+               ,unitReqBody
+                ,categoryReqBody
+                ,locationReqBody,firstFile,secondFile,thirdFile)
+    } // add new product closed
+
+
 
 
     override suspend fun getProductsByStatus(isActive:Boolean)

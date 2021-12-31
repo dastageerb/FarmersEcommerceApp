@@ -10,7 +10,6 @@
         android:id="@+id/fragmentStoreSettingInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         >
 
         <com.google.android.material.card.MaterialCardView
@@ -101,7 +100,10 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="No"
+            android:text="@string/no"
+            app:trackTint="@color/colorPrimary"
+            app:thumbTint="@color/colorPrimaryDark"
+            android:checked="true"
             app:layout_constraintEnd_toEndOf="parent" />
 
 
@@ -111,8 +113,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/fragmentStoreSettingsDeliveryInfoSwitch"
             android:drawableLeft="@drawable/ic_baseline_edit_24"
-            android:drawablePadding="18dp"
-            android:text="Edit Store Details"
+            android:textColor="@color/white"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:background="@drawable/wide_button"
+            android:layout_marginStart="16dp"
+            android:text="@string/edit_store_details"
             android:textAllCaps="false" />
 
     </RelativeLayout>
@@ -123,16 +129,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:visibility="gone"
         >
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/store_name"
             android:layout_marginStart="32dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="32dp"
-            >
+            android:hint="@string/store_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fragmentStoreSettingStoreNameEditText"
@@ -150,14 +156,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
-            android:hint="@string/description"
-            >
+            android:hint="@string/description">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fragmentStoreSettingStoreDescriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine"
-                />
+                android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -165,14 +170,13 @@
             android:id="@+id/fragmentStoreSettingsStoreUpdateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/button_bg"
             android:text="@string/update"
-            android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:layout_marginTop="36dp"
             android:textAllCaps="false"
-            />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

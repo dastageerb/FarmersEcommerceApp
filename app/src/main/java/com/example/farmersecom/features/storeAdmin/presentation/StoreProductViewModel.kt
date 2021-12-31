@@ -15,7 +15,10 @@ import com.example.farmersecom.features.search.domain.useCases.GetAllCategories
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -26,8 +29,6 @@ import javax.inject.Inject
 @HiltViewModel
 class StoreProductViewModel @Inject constructor(
     private  val addProductUseCaseCase: AddProductUseCase,
-    private val deleteProductById: DeleteProductById,
-    private val changeProductStatusUseCase: ChangeProductStatusUseCase,
     private val getAllCategories: GetAllCategories,
     private val sharedPrefsHelper: SharedPrefsHelper
     ) : ViewModel()
@@ -38,53 +39,48 @@ class StoreProductViewModel @Inject constructor(
      * same used for changing product status and deleting responses
      * **/
 
-    private var _statusMsgResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
-            = MutableStateFlow(NetworkResource.None())
-    val statusMsgResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+
+    private var _statusMsgResponse: MutableSharedFlow<NetworkResource<StatusMsgResponse>>
+            = MutableSharedFlow(replay = 0)
+    val statusMsgResponse: SharedFlow<NetworkResource<StatusMsgResponse>>
             = _statusMsgResponse
 
 
-    fun changeProductStatus(status:Boolean,productId:String) = viewModelScope.launch(Dispatchers.IO)
+
+
+
+
+
+
+
+
+
+
+    fun addNewProductViewModel(newProduct: NewProduct
+                               ,firstFile: MultipartBody.Part
+                               ,secondFile: MultipartBody.Part
+                               ,thirdFile: MultipartBody.Part) = viewModelScope.launch(Dispatchers.IO)
     {
-        _statusMsgResponse.value = NetworkResource.Loading()
+
+        _statusMsgResponse.emit(NetworkResource.Loading())
         try
         {
-            val response = changeProductStatusUseCase.changeProductStatus(status,productId)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
+            val response = addProductUseCaseCase.addNewProduct(newProduct,firstFile,secondFile,thirdFile)
+            _statusMsgResponse.emit(handleStatusMessageResponse(response))
 
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
                 else ->
                 {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
                 }
             } // when closed
-        }
-    } //  changeProductStatus closed
+        } // catch closed
+    } // addNewProductClosed
 
-    fun deleteProductbyId(productId:String) = viewModelScope.launch(Dispatchers.IO)
-    {
-        _statusMsgResponse.value = NetworkResource.Loading()
-        try
-        {
-            val response = deleteProductById.deleteProductById(productId)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
-
-        }catch (e:Exception)
-        {
-            when (e)
-            {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
-                else ->
-                {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
-                }
-            } // when closed
-        }
-    } //  changeProductStatus closed
 
 
 
@@ -96,64 +92,7 @@ class StoreProductViewModel @Inject constructor(
             400,404 -> NetworkResource.Error(response.errorBody()?.getMessage())
             else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
         } // when closed
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-//// This will be used for adding and updating a product
-
-
-    private var _addNewProductResponse:MutableStateFlow<NetworkResource<NewProductResponse>>
-        = MutableStateFlow(NetworkResource.None())
-    val addNewProductResponse: StateFlow<NetworkResource<NewProductResponse>>
-            = _addNewProductResponse
-
-
-    fun addNewProductViewModel(newProduct: NewProduct, file: MultipartBody.Part) = viewModelScope.launch(Dispatchers.IO)
-    {
-    //    _addNewProductResponse.value = NetworkResource.Loading()
-          try
-            {
-                val response = addProductUseCaseCase.addNewProduct(newProduct,file);
-
-                 _addNewProductResponse.value = handleResponse(response)
-
-            }catch (e:Exception)
-            {
-                when (e)
-                {
-                    is HttpException -> _addNewProductResponse.value = NetworkResource.Error("Something went wrong")
-                    else ->
-                    {
-                        _addNewProductResponse.value = NetworkResource.Error("No Internet Connection : "+e.message)
-                        _addNewProductResponse.value = NetworkResource.Error("exception : $e")
-                        _addNewProductResponse.value = NetworkResource.Error("exception : ${e.stackTrace}")
-                        _addNewProductResponse.value = NetworkResource.Error("exception : ${e.cause}")
-                    }
-                } // when closed
-            }
-    }
-
-    private fun handleResponse(response: Response<NewProductResponse>): NetworkResource<NewProductResponse>
-    {
-                return when(response.code())
-        {
-            200,201 -> NetworkResource.Success(response.body())
-            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
-            else -> NetworkResource.Error("Something went Wrong  + ${response.code()}")
-        } // when closed
-    }
-
-
+    } // handleStatusMessageResponse
 
 
 

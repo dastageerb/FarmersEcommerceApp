@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="48dp"
         >
 
     <com.google.android.material.textfield.TextInputLayout
@@ -85,6 +86,15 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:text="@string/dozen"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                />
+            <Button
+                android:id="@+id/buttonProductQuantityUnitCattle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="@string/cattle"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 />
@@ -170,14 +180,6 @@
         </LinearLayout>
 
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fragmentAddNewProductProgressBar"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="32dp"
-
-            />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonAddProductFragSubmit"
             android:layout_width="wrap_content"
@@ -190,6 +192,15 @@
             android:background="@drawable/button_bg"
         />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragmentAddNewProductProgressBar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:indeterminateTint="@color/colorPrimary"
+            android:layout_marginTop="24dp"
+            />
 
 
     </LinearLayout>

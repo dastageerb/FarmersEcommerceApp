@@ -14,7 +14,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentEditProductBinding
+import com.example.farmersecom.features.authentication.presentation.register.utils.Utils.setUpAdapter
 import com.example.farmersecom.features.productDetails.domain.model.ProductDetailsResponse
+import com.example.farmersecom.features.search.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.search.domain.model.categories.Category
 import com.example.farmersecom.features.storeAdmin.domain.model.editProduct.EditProduct
 import com.example.farmersecom.features.storeAdmin.presentation.addNewProduct.CategoriesAdapter
@@ -60,6 +62,10 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
     {
 
 
+
+        binding.autoCompleteEditProductProductCity.inputType = InputType.TYPE_NULL
+        binding.autoCompleteEditProductProductCity.setUpAdapter(requireContext(),R.array.Sindh)
+
         binding.autoCompleteEditProductProductCategory.inputType = InputType.TYPE_NULL
         editProductViewModel.getAllCategories()
 
@@ -88,21 +94,21 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
 
             val productName = editTextEditProductName.text.toString().trim();
             val productDescription = editTextEditProductDescription.text.toString().trim();
-
             /// Get Selected Quantity Button Id first
             val quantityButtonId   = buttonProductQuantityUnitGroup.checkedButtonId
             // then get Quantity based on selected button
             val quantityUnit = buttonProductQuantityUnitGroup
                 .findViewById<MaterialButton>(quantityButtonId).text.toString()
 
-            //   val productQuantity = autoCompleteEditProductProductQuantity.text.toString().trim()
+            val productCity = autoCompleteEditProductProductCity.text.toString().trim()
+
             val productCategory = autoCompleteEditProductProductCategory.text.toString().trim()
 
 
             val productPriceInRupees = editTextEditProductPriceInRupees.text.toString().trim()
 
             if( validateData(productName,productDescription, quantityUnit,
-                    productCategory,productPriceInRupees)
+                    productCategory,productPriceInRupees,productCity)
                 )
             {
 
@@ -110,7 +116,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
                     ,productDescription
                     ,productName
                     ,productPriceInRupees.toInt()
-                    ,quantityUnit)
+                    ,quantityUnit,productCity)
                 editProductViewModel.editProduct(product,productId)
             } // if closed
         } // apply closed
@@ -118,7 +124,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
     } // updateProduct closed
 
     private fun validateData(name: String,description: String,unit: String,category: String,
-                             productPrice: String) :Boolean
+                             productPrice: String,city:String) :Boolean
     {
 
 
@@ -129,6 +135,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
         return name.nonEmpty { binding.editTextEditProductName.error = it }
                 && description.nonEmpty { binding.editTextEditProductDescription.error = it}
                 && unit.nonEmpty { requireContext().showToast(getString(R.string.select_product_unit_toast)) }
+                && city.nonEmpty() {requireContext().showToast(getString(R.string.please_select_city))}
                 && category.nonEmpty() { requireContext().showToast(getString(R.string.select_category_toast)) }
                 && productPrice.nonEmpty() { binding.editTextEditProductPriceInRupees.error = it }
 
@@ -153,9 +160,8 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
                             binding.editProductFragmentProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             requireContext().showToast(it.data?.message.toString())
-                            yield()
                             findNavController().navigate(R.id.action_editProductFragment_to_discontinuedProductsFragment)
-                            job.cancelAndJoin()
+
 
                         }
                         is NetworkResource.Error ->
@@ -184,20 +190,13 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
                     {
                         is NetworkResource.Loading ->
                         {
+                            binding.editProductFragmentProgressBar.show()
                             requireContext().showToast("Loading Categories")
                             Timber.tag(Constants.TAG).d("Loading")
                         }
                         is NetworkResource.Success ->
                         {
-                            val categoriesAdapter =
-                                CategoriesAdapter(
-                                    {
-                                       binding.autoCompleteEditProductProductCategory.setText(it.name)
-                                        categoryId = it.id.toString()
-                                    },requireContext(),
-                                    R.layout.layout_categories_item,
-                                    it.data?.categoryList as MutableList<Category>)
-                            binding.autoCompleteEditProductProductCategory.setAdapter(categoriesAdapter)
+                           setupCategoriesAdapter(it.data)
                             Timber.tag(Constants.TAG).d("Fragment  ${it.data}")
                         }
                         is NetworkResource.Error ->
@@ -209,7 +208,31 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
 
-    } // subscribeProfileResponseFlow closed
+    } // subscribeResponseFlow closed
+
+
+    private fun setupCategoriesAdapter(it: CategoriesResponse?)
+    {
+
+        binding.editProductFragmentProgressBar.hide()
+        val categoriesAdapter =
+            CategoriesAdapter(
+                {
+                    // onClick
+                    binding.autoCompleteEditProductProductCategory.setText(it.name)
+
+                    if(it.name.equals("cattle",true))
+                    {
+                        binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitCattle)
+                    }
+
+                    categoryId = it.id.toString()
+                },requireContext(),
+                R.layout.layout_categories_item,
+                it?.categoryList as MutableList<Category>)
+        binding.autoCompleteEditProductProductCategory.setAdapter(categoriesAdapter)
+
+    } // setupCategoriesAdapter closed
 
 
     private fun subscribeProductDetailsResponseFlow()
@@ -241,7 +264,8 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
                 } // getProfile closed
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
-    } // subscribeProfileResponseFlow closed
+    } // subscribeResponseFlow closed
+
 
 
     private fun updateViews(data: ProductDetailsResponse?)
@@ -251,15 +275,26 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>()
         binding.editTextEditProductDescription.setText( data?.productDescription)
         binding.autoCompleteEditProductProductCategory.setText(data?.productCategory?.name)
 
-        if(data?.productUnit.equals("Kilo",true))
+        binding.autoCompleteEditProductProductCity.setText(data?.productLocation)
+
+        when
         {
-            binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitKilo)
-        }else if(data?.productUnit.equals("Dozen",true))
-        {
-            binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitDozen)
-        }else
-        {
-            binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitLiter)
+            data?.productUnit.equals("Cattle",true) ->
+            {
+                binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitCattle)
+            }
+            data?.productUnit.equals("Liter") ->
+            {
+                binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitLiter)
+            }
+            data?.productUnit.equals("Dozen",true) ->
+            {
+                binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitDozen)
+            }
+            else ->
+            {
+                binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitKilo)
+            }
         }
         
         categoryId = data?.productCategory?.id!!

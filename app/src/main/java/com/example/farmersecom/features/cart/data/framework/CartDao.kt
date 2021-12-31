@@ -40,6 +40,9 @@ interface CartDao
     @Query("SELECT SUM(deliveryCharges) from cart_table ")
     fun getTotalDeliveryCharges():Flow<Int>
 
+    @Query("SELECT EXISTS (SELECT 1 FROM CART_TABLE WHERE productId = :id)")
+    fun exists(id: String): Boolean
+
 
 
 }

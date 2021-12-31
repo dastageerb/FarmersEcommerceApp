@@ -12,4 +12,14 @@
         tools:listitem="@layout/layout_product_status_item"
         />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentActiveProductsProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:indeterminateTint="@color/colorPrimary"
+        android:layout_marginBottom="36dp"
+        />
+
 </RelativeLayout>

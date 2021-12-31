@@ -107,7 +107,7 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
             } // when closed
         }
 
-    } //  changeProductStatus closed
+    } //  forgotPassword closed
 
 
     fun updateFCMToken() = viewModelScope.launch(Dispatchers.IO)
@@ -130,7 +130,6 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
                 }
             } // when closed
         }
-
     } // updateFCM
 
 

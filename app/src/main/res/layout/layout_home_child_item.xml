@@ -11,7 +11,7 @@
            android:id="@+id/layoutHomeChildProductThumbnailImageView"
            android:layout_width="100dp"
            android:layout_height="100dp"
-           android:background="@color/colorPrimary"
+           android:src="@drawable/image_place_holder"
            android:scaleType="fitXY"
            android:layout_centerHorizontal="true"
            />

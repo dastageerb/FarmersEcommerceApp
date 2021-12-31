@@ -321,14 +321,15 @@
         android:id="@+id/fragmentOrderDetailsForSellerButtonChangStatus"
         android:layout_width="100dp"
         android:layout_height="60dp"
-        android:text="@string/status"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="24dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/status"
         android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

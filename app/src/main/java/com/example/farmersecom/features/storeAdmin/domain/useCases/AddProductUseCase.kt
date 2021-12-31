@@ -8,6 +8,10 @@ import javax.inject.Inject
 class AddProductUseCase @Inject constructor(private val storeAdminRepository: StoreAdminRepository)
 {
 
-    suspend fun addNewProduct(newProduct: NewProduct, file: MultipartBody.Part) = storeAdminRepository.addNewProduct(newProduct,file)
+    suspend fun addNewProduct(newProduct: NewProduct
+                              ,firstFile: MultipartBody.Part
+                              ,secondFile: MultipartBody.Part
+                              ,thirdFile: MultipartBody.Part) = storeAdminRepository
+        .addNewProduct(newProduct,firstFile,secondFile,thirdFile)
 
 } // addProductUseCase closed

@@ -34,11 +34,9 @@ class BuyerDashboardFragment : BaseFragment<FragmentBuyerDashboardBinding>()
     private fun initViews()
     {
         val list = ArrayList<DashBoardItem>()
-        list.add(DashBoardItem("Order History",R.drawable.ic_baseline_live_orders_24))
-        list.add(DashBoardItem("Current Orders", R.drawable.ic_baseline_discountinued_24))
-        list.add(DashBoardItem("Favourites", R.drawable.ic_baseline_live_orders_24))
-        list.add(DashBoardItem("Notification", R.drawable.ic_baseline_live_orders_24))
-
+        list.add(DashBoardItem(getString(R.string.order_history),R.drawable.ic_baseline_history_24))
+        list.add(DashBoardItem(getString(R.string.current_orders), R.drawable.ic_baseline_active_actions_24))
+        list.add(DashBoardItem(getString(R.string.cart), R.drawable.ic_baseline_cart_bag_24))
 
         val adapter  = StoreDashBoardAdapter()
         {
@@ -56,8 +54,7 @@ class BuyerDashboardFragment : BaseFragment<FragmentBuyerDashboardBinding>()
         {
             0 -> findNavController().navigate(R.id.action_buyerDashboardFragment_to_buyerOrderHistoryFragment)
             1-> findNavController().navigate(R.id.action_buyerDashboardFragment_to_currentOrdersFragment)
-            2 -> {}
-            3 -> {}
+            2 -> findNavController().navigate(R.id.action_buyerDashboardFragment_to_cartFragment)
 
         }
     }

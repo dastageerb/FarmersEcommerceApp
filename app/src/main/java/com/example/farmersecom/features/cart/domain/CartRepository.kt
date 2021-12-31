@@ -27,5 +27,7 @@ interface CartRepository
 
     fun getTotalDeliveryCharges():Flow<Int>
 
+    fun exists(id: String): Boolean
+
 
 }

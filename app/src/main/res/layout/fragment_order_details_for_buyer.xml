@@ -6,12 +6,13 @@
     tools:context=".features.buyerSection.presentation.orderDetailsForBuyer.OrderDetailsForBuyerFragment">
 
     <ProgressBar
+        android:id="@+id/progressBarFragmentOrderDetailsForBuyer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="36dp"
-        android:id="@+id/progressBarFragmentOrderDetailsForBuyer"
+        android:indeterminateTint="@color/colorPrimary"
         />
 <ScrollView
     android:layout_width="match_parent"
@@ -264,6 +265,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/fragmentOrderDetailsForBuyerRatingLayout"
+            android:paddingBottom="16dp"
             android:visibility="gone"
             >
             <TextView
@@ -271,6 +273,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rate this product"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
                 />
             <RatingBar
                 android:id="@+id/fragmentOrderDetailsForBuyerRatingBar"
@@ -288,6 +291,11 @@
                 android:text="@string/rate"
                 android:layout_gravity="center"
                 android:id="@+id/fragmentOrderDetailsForBuyerRateButton"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/white"
+                android:background="@drawable/small_button_bg"
+
                 />
         </LinearLayout>
 

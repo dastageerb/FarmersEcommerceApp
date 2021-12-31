@@ -42,8 +42,8 @@ class OrderStatusAdapter(private val onOrderClicked:(String)->Unit) : ListAdapte
 
             when(order?.orderStatus)
             {
-                "completed" -> binding.layoutOrderStatusOrderStatusTextView.setTextColor(Color.GREEN)
-                else -> binding.layoutOrderStatusOrderStatusTextView.setTextColor(Color.BLACK)
+                "completed" -> binding.layoutOrderStatusItemsStatusCard.strokeColor = Color.GREEN
+                else -> binding.layoutOrderStatusItemsStatusCard.strokeColor = Color.RED
             }
 
         }
@@ -70,3 +70,4 @@ class OrderStatusAdapter(private val onOrderClicked:(String)->Unit) : ListAdapte
 
     } // onBindViewHolder closed
 }
+

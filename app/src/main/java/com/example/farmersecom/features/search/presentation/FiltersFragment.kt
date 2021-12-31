@@ -123,7 +123,6 @@ class FiltersFragment : BaseFragment<FragmentFiltersBinding>()
         val categoriesAdapter =
             CategoriesAdapter(
                 {
-                    //binding.autoCompleteAddNewProductProductCategory.inputType =
                     binding.fragmentFiltersCategoryAutoCompleteView.setText(it.name)
                     categoryId = it.id.toString()
                 },requireContext(),

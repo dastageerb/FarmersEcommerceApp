@@ -114,6 +114,7 @@
                 android:textSize="20sp" />
 
 
+
             <TextView
                 android:id="@+id/textViewProductQuantityFragmentProductDetails"
                 android:layout_width="wrap_content"
@@ -125,6 +126,29 @@
                 android:text="1"
                 android:textSize="20sp" />
 
+
+            <TextView
+                android:id="@+id/textLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textQuantity"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/location"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/textViewProductLocationFragmentProductDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textQuantity"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_toEndOf="@id/textLocation"
+                android:text="location"
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
 
             <TextView
@@ -154,19 +178,18 @@
                 android:textSize="18sp" />
 
 
-
             <TextView
                 android:id="@+id/textViewProductDeliveryCharges"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delivery charges:30"
-                android:layout_below="@id/textViewProductQuantityFragmentProductDetails"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:textSize="18sp"
+                android:layout_below="@id/textViewProductLocationFragmentProductDetails"
                 android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:text="Delivery charges:30"
                 android:textColor="@color/colorGreen"
+                android:textSize="18sp"
 
                 />
 
@@ -264,7 +287,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/small_button_bg"
-                android:text="@string/added_to_cart"
+                android:text="@string/add_to_cart"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
         </RelativeLayout>

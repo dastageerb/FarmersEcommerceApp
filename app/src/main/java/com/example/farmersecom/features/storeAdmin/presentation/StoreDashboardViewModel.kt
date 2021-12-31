@@ -8,17 +8,17 @@ import com.example.farmersecom.features.buyerSection.domain.model.orderStatus.Or
 import com.example.farmersecom.features.buyerSection.domain.useCase.GetOrderDetailsById
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
 import com.example.farmersecom.features.storeAdmin.domain.model.productStatusResponse.ProductStatus
-import com.example.farmersecom.features.storeAdmin.domain.useCases.ChangeOrderStatusUseCase
+import com.example.farmersecom.features.storeAdmin.domain.useCases.*
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
-import com.example.farmersecom.features.storeAdmin.domain.useCases.GetOrdersByStatusUseCase
-import com.example.farmersecom.features.storeAdmin.domain.useCases.GetProductsByStatusUseCase
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -31,7 +31,9 @@ class StoreDashboardViewModel @Inject constructor(
     private  val getProductsByStatusUseCase: GetProductsByStatusUseCase,
     private val getOrdersByStatusUseCase: GetOrdersByStatusUseCase,
     private val getOrderDetailsById: GetOrderDetailsById,
-    private val changeOrderStatusUseCase: ChangeOrderStatusUseCase
+    private val changeOrderStatusUseCase: ChangeOrderStatusUseCase,
+    private val changeProductStatusUseCase: ChangeProductStatusUseCase,
+    private val deleteProductById: DeleteProductById
 ) : ViewModel()
 {
 
@@ -152,36 +154,107 @@ class StoreDashboardViewModel @Inject constructor(
 
      /** Change Order Status  */
 
-     private var _statusMsgResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
-             = MutableStateFlow(NetworkResource.None())
-    val statusMsgResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+
+
+
+
+     private var _statusMsgResponse: MutableSharedFlow<NetworkResource<StatusMsgResponse>>
+             = MutableSharedFlow(replay = 0)
+    val statusMsgResponse: SharedFlow<NetworkResource<StatusMsgResponse>>
             = _statusMsgResponse
 
 
-    fun changeOrderStatus(status:String,orderId:String) = viewModelScope.launch(Dispatchers.IO)
+
+    fun changeProductStatus(status:Boolean,productId:String) = viewModelScope.launch(Dispatchers.IO)
     {
-        _statusMsgResponse.value = NetworkResource.Loading()
+
+        _statusMsgResponse.emit(NetworkResource.Loading())
+
         try
         {
-            val responseDeffered = async { changeOrderStatusUseCase.changeOrderStatus(status, orderId) }
+            val responseAwait = async {  changeProductStatusUseCase.changeProductStatus(status,productId) }
 
-            val response = responseDeffered.await()
-            orderDetails(orderId)
+            val response = responseAwait.await()
 
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
+            getProductByStatus(!status)
+
+            _statusMsgResponse.emit(handleStatusMessageResponse(response))
+
 
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
                 else ->
                 {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
+                }
+            } // when closed
+        } // catch closed
+    } //  changeProductStatus closed
+
+
+
+
+
+
+
+
+    fun changeOrderStatus(status:String,orderId:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.emit(NetworkResource.Loading())
+        try
+        {
+            val responseDeffered = async { changeOrderStatusUseCase.changeOrderStatus(status, orderId) }
+            val response = responseDeffered.await()
+            orderDetails(orderId)
+            _statusMsgResponse.emit(handleStatusMessageResponse(response))
+
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
+                else ->
+                {
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
                 }
             } // when closed
         }
     } //  changeProductStatus closed
+
+
+
+
+
+    fun deleteProductById(productId:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _statusMsgResponse.emit(NetworkResource.Loading())
+
+        try
+        {
+            val responseAwait = async {  deleteProductById.deleteProductById(productId) }
+
+            val  response = responseAwait.await()
+
+            getProductByStatus(false)
+
+            _statusMsgResponse.emit(handleStatusMessageResponse(response))
+            //     _statusMsgResponse.value = handleStatusMessageResponse(response)
+        }catch (e:Exception)
+        {
+            when (e)
+            {
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
+                else ->
+                {
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
+                }
+            } // when closed
+        } // catch closed
+    } //  changeProductStatus closed
+
 
 
 

@@ -13,12 +13,18 @@ object ViewExtension
 
     fun View.show()
     {
-        this.visibility = View.VISIBLE
+        if(this.visibility == View.GONE)
+        {
+            this.visibility = View.VISIBLE
+        }
     }
 
     fun View.hide()
     {
-        this.visibility = View.GONE
+        if(this.visibility == View.VISIBLE)
+        {
+            this.visibility = View.GONE
+        }
     }
 
 

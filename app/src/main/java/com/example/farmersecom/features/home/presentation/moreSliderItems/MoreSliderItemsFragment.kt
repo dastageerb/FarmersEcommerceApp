@@ -48,6 +48,7 @@ class MoreSliderItemsFragment : BaseFragment<FragmentMoreSliderItemsBinding>()
         {
             sharedViewModel.getSliderQuery.collect()
             {
+
                 sharedViewModel.getMoreSliderItems(it)
                 Timber.tag(TAG).d("$it")
             } //

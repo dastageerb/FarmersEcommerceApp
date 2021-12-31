@@ -10,26 +10,26 @@ import com.example.farmersecom.R
 object NotificationHelper
 {
 
-//    val NOTIFICATION_CHANNEL_ID = "DRIVER_NOTIFICATION"
-//    val NOTIFICATION_NAME = "NOTIFY_DRIVER"
+    val NOTIFICATION_CHANNEL_ID = "FARMERS_NOTIFICATION"
+    val NOTIFICATION_NAME = "NOTIFYUser"
 
 
     fun buildNotification(context: Context, data: MutableMap<String, String>)
     {
         val body = data.get("body")
         val title = data.get("title")
-        val notificationFor = data.get("for") // CustomerORBuyer
-        val channelId = data.get("notificationChannelId")
-        val notificationName = data.get("notificationName")
-        val notificationId= data.get("notificationID")
+        val notificationFor = data.get("for")?.toInt() // CustomerORBuyer
+       // val channelId = data.get("notificationChannelId")
+       // val notificationName = data.get("notificationName")
+       // val notificationId= data.get("notificationID")
 
 
         var notificationChannel: NotificationChannel? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
             notificationChannel = NotificationChannel(
-                channelId,
-                notificationName,
+                NOTIFICATION_CHANNEL_ID,
+                NOTIFICATION_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             )
         }
@@ -46,9 +46,9 @@ object NotificationHelper
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
-            notification = Notification.Builder(context,channelId)
+            notification = Notification.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentText(title)
-                .setContentTitle(body)
+                .setContentTitle(title)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                // .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
@@ -61,7 +61,9 @@ object NotificationHelper
             notificationManager.createNotificationChannel(notificationChannel!!)
         }
 
-        notificationManager.notify(notificationId?.toInt()!!, notification)
+
+        notificationManager.notify(1, notification)
+
     } // buildNotification closed
 
 

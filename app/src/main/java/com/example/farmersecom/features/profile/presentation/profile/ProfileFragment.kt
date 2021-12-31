@@ -5,9 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
@@ -60,7 +58,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
 
         Timber.tag(TAG).d("token = ${viewModel.getAuthToken()}")
         if(viewModel.getAuthToken()?.isEmpty() == true)
@@ -119,7 +117,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
     private fun initViews()
     {
-        binding.buttonProfileFragLogout.setOnClickListener(this)
         binding.fragmentProfileFullProfileButton.setOnClickListener(this)
         binding.buttonSetupStore.setOnClickListener(this)
         binding.buttonGoToStore.setOnClickListener(this)
@@ -157,13 +154,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             {
                 findNavController().navigate(R.id.action_profileFragment_to_fullUserProfileFragment)
             }
-            R.id.buttonProfileFragLogout ->
-            {
-                //changePhoto()
-                viewModel.clearToken()
-                findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
-                this.onDestroy()
-            }
+
             R.id.buttonSetupStore ->
             {
                 findNavController().navigate(R.id.action_profileFragment_to_setupStoreFragment)
@@ -395,7 +386,28 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
 
-    } // subscribeProfileResponseFlow closed
+    } // subscribedResponseFlow closed
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_logout,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        when(item.itemId)
+        {
+            R.id.menu_logout ->
+            {
+                viewModel.clearToken()
+                findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+                this.onDestroy()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
 

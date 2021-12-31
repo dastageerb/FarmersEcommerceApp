@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.farmersecom.SharedPrefsHelper
 import com.example.farmersecom.features.cart.domain.CartItem
+import com.example.farmersecom.features.cart.domain.usecase.CheckIfProductExistsInCartUseCase
 import com.example.farmersecom.features.cart.domain.usecase.DeleteAllCartItemsUseCase
 import com.example.farmersecom.features.cart.domain.usecase.GetCartItemsUseCase
 import com.example.farmersecom.features.productDetails.domain.model.NavigationEntity
@@ -17,8 +18,10 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
@@ -27,64 +30,76 @@ import javax.inject.Inject
 class ProductDetailsViewModel @Inject constructor(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val sharedPrefsHelper:SharedPrefsHelper,
-    private val getAllCartItemsUseCase: GetCartItemsUseCase
+    private val getAllCartItemsUseCase: GetCartItemsUseCase,
+    private val checkIfProductExistsInCartUseCase: CheckIfProductExistsInCartUseCase
     )
     :ViewModel()
 {
 
 
+
     val getAllCartItems: Flow<List<CartItem>> = getAllCartItemsUseCase.getCartItems()
 
+    val exists = MutableSharedFlow<Boolean>(0)
 
-
-    // for shared Use
-     private val setProductId :MutableStateFlow<String> = MutableStateFlow("")
-    val getProductId :StateFlow<String> = setProductId
-    fun setProductId(query:String)
+//
+    fun exists(productId:String)  = viewModelScope.launch(Dispatchers.IO)
     {
-        setProductId.value = query
-    } //
+        exists.emit(checkIfProductExistsInCartUseCase.exists(productId))
+    }
 
 
 
-    private val _productDetailsResponse: MutableStateFlow<NetworkResource<ProductDetailsResponse>> = MutableStateFlow(
-        NetworkResource.None())
-    val productDetailsResponse: StateFlow<NetworkResource<ProductDetailsResponse>> = _productDetailsResponse
 
-
-    fun getProductDetails(id:String) = viewModelScope.launch(Dispatchers.IO)
-    {
-        _productDetailsResponse.value = NetworkResource.Loading()
-        try
-        {
-            val response = getProductByIdUseCase.getProductById(id)
-            _productDetailsResponse.value = handleProfileResponse(response)
-        }catch (e:Exception)
-        {
-            when (e)
+            // for shared Use
+            private val setProductId :MutableStateFlow<String> = MutableStateFlow("")
+            val getProductId :StateFlow<String> = setProductId
+            fun setProductId(query:String)
             {
-                is HttpException -> _productDetailsResponse.value = NetworkResource.Error("Http Exception")
-                else -> _productDetailsResponse.value =
-                    NetworkResource.Error("No Internet Connection: ${e.message}")
-            }
-        }
-
-
-    } // getProfile closed
-
-    private fun handleProfileResponse(response: Response<ProductDetailsResponse>): NetworkResource<ProductDetailsResponse>
-    {
-        return when(response.code())
-        {
-            200 -> NetworkResource.Success(response.body())
-            400 -> NetworkResource.Error(response.errorBody()?.getMessage())
-            else -> NetworkResource.Error("Something went wrong ${response.code()}")
-        } // when closed
-    } //
+                setProductId.value = query
+            } //
 
 
 
-    fun getAuthToken() : String? = sharedPrefsHelper.getToken()
+            private val _productDetailsResponse: MutableStateFlow<NetworkResource<ProductDetailsResponse>> = MutableStateFlow(
+                NetworkResource.None())
+            val productDetailsResponse: StateFlow<NetworkResource<ProductDetailsResponse>> = _productDetailsResponse
+
+
+            fun getProductDetails(id:String) = viewModelScope.launch(Dispatchers.IO)
+            {
+                _productDetailsResponse.value = NetworkResource.Loading()
+                try
+                {
+                    val response = getProductByIdUseCase.getProductById(id)
+                    _productDetailsResponse.value = handleProfileResponse(response)
+                }catch (e:Exception)
+                {
+                    when (e)
+                    {
+                        is HttpException -> _productDetailsResponse.value = NetworkResource.Error("Http Exception")
+                        else -> _productDetailsResponse.value =
+                            NetworkResource.Error("No Internet Connection: ${e.message}")
+                    }
+                }
+
+
+            } // getProfile closed
+
+            private fun handleProfileResponse(response: Response<ProductDetailsResponse>): NetworkResource<ProductDetailsResponse>
+            {
+                return when(response.code())
+                {
+                    200 -> NetworkResource.Success(response.body())
+                    400 -> NetworkResource.Error(response.errorBody()?.getMessage())
+                    else -> NetworkResource.Error("Something went wrong ${response.code()}")
+                } // when closed
+            } //
+
+
+
+            fun getAuthToken() : String? = sharedPrefsHelper.getToken()
+
 
 
 

@@ -65,7 +65,7 @@ class ProductStatusAdapter(private val context:Context,private val onProductClic
 
             binding.layoutProductStatusItemChangeProductStatusButton.setOnClickListener()
             {
-                Timber.tag(TAG).d("name "+product?.productName+" : "+position)
+
                 onChanStatusListener?.let { it1 -> it1(!product?.isActive!!,position, product.id!!) }
             }
 

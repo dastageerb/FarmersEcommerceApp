@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +17,10 @@ import com.example.farmersecom.features.storeAdmin.presentation.ProductStatusAda
 import com.example.farmersecom.features.storeAdmin.presentation.StoreDashboardViewModel
 import com.example.farmersecom.features.storeAdmin.presentation.StoreProductViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -28,8 +32,7 @@ import timber.log.Timber
 class ActiveProductsFragment : BaseFragment<FragmentActiveProductsBinding>()
 {
 
-    private val  viewModel:StoreDashboardViewModel by viewModels()
-    private val  productViewModel:StoreProductViewModel by viewModels()
+    private val  viewModel:StoreDashboardViewModel by activityViewModels()
     private lateinit var productStatusAdapter:ProductStatusAdapter
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentActiveProductsBinding
     {
@@ -54,23 +57,31 @@ class ActiveProductsFragment : BaseFragment<FragmentActiveProductsBinding>()
 
     private fun subscribeToProductStatusChangedResponse()
     {
-
+        Timber.tag(TAG).d("subscribe method")
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
-                productViewModel.statusMsgResponse.collect()
+                viewModel.statusMsgResponse.collect()
                 {
+                    Timber.tag(TAG).d("subscribe method inside")
                     when(it)
                     {
                         is NetworkResource.Success ->
                         {
-                            Timber.tag(Constants.TAG).d("${it.data}")
-                            requireContext().showToast(it.data?.message.toString())
+                            it.data?.message?.let { it1 -> requireContext().showToast(it1) }
+                            Timber.tag(Constants.TAG).d("product status changed ${it.data?.message}")
+                            binding.fragmentActiveProductsProgressBar.hide()
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.fragmentActiveProductsProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                        is NetworkResource.Loading ->{
+
+                            Timber.tag(Constants.TAG).d("Loading status change ")
+                            binding.fragmentActiveProductsProgressBar.show()
                         }
                     }// when closed
                 } // getProfile closed
@@ -98,12 +109,20 @@ class ActiveProductsFragment : BaseFragment<FragmentActiveProductsBinding>()
                     {
                         is NetworkResource.Success ->
                         {
-                            Timber.tag(Constants.TAG).d("${it.data}")
+
+                            binding.fragmentActiveProductsProgressBar.hide()
+                         //   Timber.tag(Constants.TAG).d("${it.data}")
                             productStatusAdapter.submitList(it.data)
                         }
                         is NetworkResource.Error ->
                         {
+
+                            binding.fragmentActiveProductsProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                        is NetworkResource.Loading ->
+                        {
+                            binding.fragmentActiveProductsProgressBar.show()
                         }
                     }// when closed
                 } // getProfile closed
@@ -122,10 +141,8 @@ class ActiveProductsFragment : BaseFragment<FragmentActiveProductsBinding>()
         {
             status,postion,id->
 
-            Timber.tag(Constants.TAG).d("id"+id)
-            productViewModel.changeProductStatus(status,id)
-            viewModel.getProductByStatus(true)
-            productStatusAdapter.notifyItemRemoved(postion)
+
+            viewModel.changeProductStatus(status,id)
 
         }
 

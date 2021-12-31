@@ -3,6 +3,7 @@ package com.example.farmersecom.base
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -37,9 +38,19 @@ class MainActivity : AppCompatActivity()
             ))
 
         binding.bottomNavigationViewMainActivity.setupWithNavController(navController)
+
         binding.bottomNavigationViewMainActivity.setOnItemReselectedListener ()
         {
-
+            when(it.itemId)
+            {
+                R.id.profileFragment ->
+                {
+                    if(navController.currentDestination?.id != R.id.profileFragment)
+                    {
+                        navController.navigate(R.id.profileFragment)
+                    }
+                }
+            }
         }
         setupActionBarWithNavController(navController,appBarConfiguration)
 

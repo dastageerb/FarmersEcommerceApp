@@ -14,7 +14,10 @@ interface StoreAdminRepository
 {
 
 
-    suspend fun addNewProduct(newProduct: NewProduct, file: MultipartBody.Part) :Response<NewProductResponse>
+     suspend fun addNewProduct(newProduct: NewProduct
+                                       ,firstFile:MultipartBody.Part
+                                       ,secondFile:MultipartBody.Part
+                                       ,thirdFile:MultipartBody.Part):Response<StatusMsgResponse>
 
     suspend fun getProductsByStatus(isActive:Boolean): Response<List<ProductStatus>>
 

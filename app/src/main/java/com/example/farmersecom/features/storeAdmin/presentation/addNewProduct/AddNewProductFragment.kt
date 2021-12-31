@@ -37,9 +37,12 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import android.util.Base64
+import androidx.navigation.fragment.findNavController
+import com.example.farmersecom.features.search.domain.model.categories.CategoriesResponse
 import com.example.farmersecom.features.storeAdmin.data.framework.entities.requests.NewProduct
 import com.example.farmersecom.features.search.domain.model.categories.Category
 import com.example.farmersecom.features.storeAdmin.presentation.StoreProductViewModel
+import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.imageUtils.ImageCropHelper
@@ -61,14 +64,6 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
 
 
-    private fun setImageUri(uri:Uri)
-    {
-        firstImageUri = uri
-    }
-    private fun getImageURi():Uri
-    {
-        return firstImageUri;
-    }
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentAddNewProductBinding
     {
@@ -97,9 +92,6 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
         binding.imageViewAddNewProductThirdImage.setOnClickListener(this)
         binding.buttonAddProductFragSubmit.setOnClickListener(this)
 
-        // these list will come from server
-       // binding.autoCompleteAddNewProductProductQuantity.inputType = InputType.TYPE_NULL
-       // binding.autoCompleteAddNewProductProductQuantity.setUpAdapter(requireContext(), R.array.Product_Quantity)
 
          binding.autoCompleteAddNewProductProductCategory.inputType = InputType.TYPE_NULL
         binding.autoCompleteAddNewProductProductCategory.inputType = InputType.TYPE_NULL
@@ -114,20 +106,24 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
-                viewModel.addNewProductResponse.collect()
+                viewModel.statusMsgResponse.collect()
                 {
                     when(it)
                     {
                         is NetworkResource.Loading ->
                         {
+                            binding.fragmentAddNewProductProgressBar.show()
                             Timber.tag(Constants.TAG).d("Loading")
                         }
                         is NetworkResource.Success ->
                         {
-                            Timber.tag(Constants.TAG).d("Fragment  ${it.data}")
+                            binding.fragmentAddNewProductProgressBar.hide()
+                            it.data?.message?.let { it1 -> requireContext().showToast(it1) }
+                            findNavController().navigate(R.id.action_addNewProductFragment_to_storeFragment)
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.fragmentAddNewProductProgressBar.hide()
                             Timber.tag(Constants.TAG).d(" Fragment  ${it.msg}")
                         }
                     }// when closed
@@ -200,16 +196,7 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
                         is NetworkResource.Success ->
                         {
                             binding.fragmentAddNewProductProgressBar.hide()
-                            val categoriesAdapter =
-                                CategoriesAdapter(
-                                    {
-                                        //binding.autoCompleteAddNewProductProductCategory.inputType =
-                                        binding.autoCompleteAddNewProductProductCategory.setText(it.name)
-                                        categoryId = it.id.toString()
-                                    },requireContext(),
-                                    R.layout.layout_categories_item,
-                                    it.data?.categoryList as MutableList<Category>)
-                            binding.autoCompleteAddNewProductProductCategory.setAdapter(categoriesAdapter)
+                            setupCategoriesAdapter(it.data)
                             Timber.tag(Constants.TAG).d("Fragment  ${it.data}")
                         }
                         is NetworkResource.Error ->
@@ -226,11 +213,33 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
 
 
+    private fun setupCategoriesAdapter(it: CategoriesResponse?)
+    {
+
+        val categoriesAdapter =
+            CategoriesAdapter(
+                {
+                    // onClick
+                    binding.autoCompleteAddNewProductProductCategory.setText(it.name)
+
+                    if(it.name.equals("cattle",true))
+                    {
+                        binding.buttonProductQuantityUnitGroup.check(R.id.buttonProductQuantityUnitCattle)
+                    }
+
+                    categoryId = it.id.toString()
+                },requireContext(),
+                R.layout.layout_categories_item,
+                it?.categoryList as MutableList<Category>)
+        binding.autoCompleteAddNewProductProductCategory.setAdapter(categoriesAdapter)
+
+    }
+
+
+
 
     private fun addNewProduct()
     {
-
-
 
         binding.apply()
         {
@@ -244,35 +253,25 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
             val quantityUnit = buttonProductQuantityUnitGroup
                 .findViewById<MaterialButton>(quantityButtonId).text.toString()
 
-         //   val productQuantity = autoCompleteAddNewProductProductQuantity.text.toString().trim()
-            val productCategory = autoCompleteAddNewProductProductCategory.text.toString().trim()
+           val productCategory = autoCompleteAddNewProductProductCategory.text.toString().trim()
 
 
             val productPriceInRupees = editTextAddNewProductPriceInRupees.text.toString().trim()
 
             if( validateData(productName,productDescription, quantityUnit,
                                         productCategory,productPriceInRupees) &&
-                validateImageViews() )
+                validateImageViews())
             {
-                var file = firstImageUri.toFile()
-
-                if(file.exists())
-                {
-                    requireContext().showToast("Exists"+file.parent)
-                }else
-                {
-                    requireContext().showToast("Do not exists")
-                }
-                val requestFile = file.asRequestBody(requireContext().contentResolver.getType(getImageURi())?.toMediaTypeOrNull())
-                val productImage = MultipartBody.Part.createFormData("productPicture", file.path, requestFile)
-
                 val product = NewProduct(productName
                     ,productPriceInRupees.toInt()
                     ,productDescription
                     ,categoryId
                     ,quantityUnit,
                     viewModel.getUserCity(),1)
-                viewModel.addNewProductViewModel(product,productImage)
+                viewModel.addNewProductViewModel(product
+                    ,convertImageToMultiPart(firstImageUri)
+                ,convertImageToMultiPart(secondImageUri)
+                ,convertImageToMultiPart(thirdImageUri))
 
             } // if closed
 
@@ -282,16 +281,12 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
     } // AddNewProduct closed
 
 
-    fun createPartFromString(string: String?): RequestBody
+    private fun convertImageToMultiPart(imageUri:Uri):MultipartBody.Part
     {
-
-        return string!!.toRequestBody(MultipartBody.FORM)
-
-
-
-
+        val file = imageUri.toFile()
+        val requestFile = file.asRequestBody(requireContext().contentResolver.getType(imageUri)?.toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("productPicture", file.path, requestFile)
     }
-
 
     private fun convertUriToBase64(uri: Uri): String
     {
@@ -301,7 +296,7 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos)
         val byteArray = baos.toByteArray()
         return Base64.encodeToString(byteArray,Base64.DEFAULT)
-    }
+    } // convertUriToBase64
 
 
 
@@ -309,14 +304,9 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
                              productPrice: String) :Boolean
     {
 
-
-        if (!this::categoryId.isInitialized)
-        {
-            requireContext().showToast("Select Category")
-        }
         return name.nonEmpty { binding.editTextAddNewProductName.error = it }
                 && description.nonEmpty { binding.editTextAddNewProductDescription.error = it}
-                && unit.nonEmpty { requireContext().showToast("Please Select Product Unit") }
+                && unit.nonEmpty { requireContext().showToast(getString(R.string.plz_select_product_unit)) }
                 && category.nonEmpty() { binding.autoCompleteAddNewProductProductCategory.error = it }
                 && productPrice.nonEmpty() { binding.editTextAddNewProductPriceInRupees.error = it }
 
@@ -325,17 +315,25 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
 
     private fun validateImageViews(): Boolean
     {
-        if(!this::firstImageUri.isInitialized)
+        return if(!this::firstImageUri.isInitialized)
         {
-            requireContext().showToast("Select First Image")
-            return false
+            requireContext().showToast(getString(R.string.select_first_image))
+            false
+        } else if(!this::secondImageUri.isInitialized)
+        {
+            requireContext().showToast(getString(R.string.select_second_image))
+            false
+        } else if(!this::thirdImageUri.isInitialized)
+        {
+            requireContext().showToast(getString(R.string.select_third_image))
+            false
+        } // else closed
+        else
+        {
+            true
         }
-        return true
-//                &&
-//        return secondImageUri.toString().nonEmpty() { requireContext().showToast("Select Second Image")}
-//                &&
-//        return thirdImageUri.toString().nonEmpty() { requireContext().showToast("Select Third Image")}
-    }
+
+    } // validateImageViews
 
 
 
@@ -397,22 +395,22 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
     { uri: Uri? ->
         uri?.let()
         {
-            setImageUri(uri)
-            //firstImageUri = uri;
-            binding.imageViewAddNewProductFirstImage.setImageURI(getImageURi())
-            cropGalleryImage.launch(uri)
+
+            firstImageUri = uri;
+            binding.imageViewAddNewProductFirstImage.load(firstImageUri.toString())
+                firstImageCropper.launch(uri)
         }
     } // selectFirImage closed
 
 
-    private val cropGalleryImage = registerForActivityResult(ImageCropHelper.cropImage)
+    private val firstImageCropper = registerForActivityResult(ImageCropHelper.cropImage)
     {
         it?.let()
         { uri ->
-            binding.imageViewAddNewProductFirstImage.setImageURI(uri)
             firstImageUri = uri
+            binding.imageViewAddNewProductFirstImage.load(firstImageUri.toString())
         }
-    } // pickGalleryImage result closed
+    } // firstImageCropper  closed
 
 
 
@@ -420,20 +418,50 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
     { uri: Uri? ->
         uri?.let()
         {
-            secondImageUri = uri
-            binding.imageViewAddNewProductSecondImage.setImageURI(secondImageUri)
+            secondImageUri = uri;
+            binding.imageViewAddNewProductSecondImage.load(secondImageUri.toString())
+            secondImageCropper.launch(uri)
 
         }
     } // selectSecondImage closed
+
+
+
+    private val secondImageCropper = registerForActivityResult(ImageCropHelper.cropImage)
+    {
+        it?.let()
+        { uri ->
+            secondImageUri = uri
+            binding.imageViewAddNewProductSecondImage.load(secondImageUri.toString())
+        }
+    } // secondImageCropper closed closed
+
+
+
+
 
     private val selectThirdImage = registerForActivityResult(ActivityResultContracts.GetContent())
     { uri: Uri? ->
         uri?.let()
         {
-            thirdImageUri = uri
-            binding.imageViewAddNewProductThirdImage.setImageURI(thirdImageUri)
+
+            thirdImageUri = uri;
+            binding.imageViewAddNewProductThirdImage.load(thirdImageUri.toString())
+            thirdImageCropper.launch(uri)
         }
-    } // selectFirImage closed
+    } // selectThirdImage closed
+
+
+
+    private val thirdImageCropper = registerForActivityResult(ImageCropHelper.cropImage)
+    {
+        it?.let()
+        { uri ->
+            thirdImageUri = uri
+            binding.imageViewAddNewProductThirdImage.load(thirdImageUri.toString())
+        }
+    } // secondImageCropper closed closed
+
 
 
 

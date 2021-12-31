@@ -15,5 +15,7 @@ data class EditProduct(
     @Json(name = "price")
     var price: Int?,
     @Json(name = "unit")
-    var unit: String?
+    var unit: String?,
+    @Json(name = "location")
+    var location: String?
 )

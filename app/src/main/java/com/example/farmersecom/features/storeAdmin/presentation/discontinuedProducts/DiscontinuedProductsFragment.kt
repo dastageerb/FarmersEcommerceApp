@@ -22,6 +22,8 @@ import com.example.farmersecom.features.storeAdmin.presentation.editProduct.Edit
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +41,8 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
     private val  viewModel: StoreDashboardViewModel by viewModels()
     val editProductViewModel: EditProductViewModel by activityViewModels()
 
-    private val  productViewModel: StoreProductViewModel by viewModels()
+  
+
     private lateinit var productStatusAdapter: ProductStatusAdapter
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentDiscontinuedProductsBinding
     {
@@ -66,7 +69,7 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
         {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
-                productViewModel.statusMsgResponse.collect()
+                viewModel.statusMsgResponse.collect()
                 {
                     when(it)
                     {
@@ -74,10 +77,16 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
                         {
                             Timber.tag(Constants.TAG).d("${it.data}")
                             requireContext().showToast(it.data?.message.toString())
+                        binding.fragmentDiscontinuedProductsProgressBar.hide()
                         }
                         is NetworkResource.Error ->
                         {
                             Timber.tag(Constants.TAG).d("${it.msg}")
+                            binding.fragmentDiscontinuedProductsProgressBar.hide()
+                        }
+                        is NetworkResource.Loading ->
+                        {
+                            binding.fragmentDiscontinuedProductsProgressBar.show()
                         }
                     }// when closed
                 } // getProfile closed
@@ -100,12 +109,19 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
                     {
                         is NetworkResource.Success ->
                         {
+                            binding.fragmentDiscontinuedProductsProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             productStatusAdapter.submitList(it.data)
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.fragmentDiscontinuedProductsProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                        is NetworkResource.Loading ->
+                        {
+                            binding.fragmentDiscontinuedProductsProgressBar.show()
+
                         }
                     }// when closed
                 } // getProfile closed
@@ -124,18 +140,13 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
         productStatusAdapter.onChangeStatusClick()
         {
                 status,postion,id->
-            Timber.tag(TAG).d("position"+postion)
-            productViewModel.changeProductStatus(status,id)
-            productStatusAdapter.notifyItemRemoved(postion)
-            viewModel.getProductByStatus(false)
+            viewModel.changeProductStatus(status,id)
         }
 
         productStatusAdapter.onDeleteProductClicked()
         {
                 postion,id->
-
-            Timber.tag(Constants.TAG).d("id : "+id)
-            productViewModel.deleteProductbyId(id)
+            viewModel.deleteProductById(id)
 
         } // onDeleteProduct closed
 
