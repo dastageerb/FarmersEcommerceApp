@@ -8,7 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentCartCheckOutBinding
@@ -19,9 +23,14 @@ import com.example.farmersecom.features.cart.domain.CheckOutItem
 import com.example.farmersecom.features.cart.presentation.CartViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -44,12 +53,48 @@ class CartCheckOutFragment : BaseFragment<FragmentCartCheckOutBinding>()
 
         initViews()
 
-        binding.fragmentCartCheckOutPlaceOrderButton.setOnClickListener()
+        binding.fragmentCartCheckOutConfirmButton.setOnClickListener()
         {
             checkOutCart()
         }
+        subscribeSliderResponse()
 
     } // onViewCreated closed
+
+
+    private fun subscribeSliderResponse()
+    {
+        viewLifecycleOwner.lifecycleScope.launch()
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                cartViewModel.placeOrderResponse.collect()
+                {
+                    when(it)
+                    {
+                        is NetworkResource.Loading ->
+                        {
+                            binding.fragmentCartCheckOutProgressBar.show()
+                            Timber.tag(Constants.TAG).d("Loading")
+                        }
+                        is NetworkResource.Error ->
+                        {
+
+                            Timber.tag(Constants.TAG).d(it.msg)
+                            binding.fragmentCartCheckOutProgressBar.hide()
+                        }
+                        is NetworkResource.Success ->
+                        {
+                            binding.fragmentCartCheckOutProgressBar.hide()
+                            Timber.tag(Constants.TAG).d("${it.data}")
+                            findNavController().navigate(R.id.action_cartCheckOutFragment_to_currentOrdersFragment)
+                        }
+                        else -> {}
+                    } /// when closed
+                } // collect closed
+            } // repeatOnLifeCycle closed
+        } // lifeCycleScope closed
+    } // subscribeRegisterResponse  closed
 
     private fun initViews()
     {
@@ -58,7 +103,7 @@ class CartCheckOutFragment : BaseFragment<FragmentCartCheckOutBinding>()
 
 
         val paymentOptionList = mutableListOf<String>()
-        paymentOptionList.add("Cash On Delivery")
+        paymentOptionList.add(getString(R.string.cod))
         binding.fragmentCartCheckOutCustomerPaymentOptionAutoComplete.inputType = InputType.TYPE_NULL
         binding.fragmentCartCheckOutCustomerPaymentOptionAutoComplete.setUpAdapter(requireContext(),paymentOptionList)
 
@@ -104,7 +149,7 @@ class CartCheckOutFragment : BaseFragment<FragmentCartCheckOutBinding>()
     } // initViewClosed
 
 
-    fun checkOutCart()
+    private fun checkOutCart()
     {
         
         val customerName = binding.fragmentCartCheckOutCustomerNameEditText.text.toString()
@@ -142,9 +187,9 @@ class CartCheckOutFragment : BaseFragment<FragmentCartCheckOutBinding>()
         .maxLength(5)
         .addErrorCallback { binding.fragmentCartCheckOutCustomerPostalCodeEditText.error = it }
         .check()
-            && paymentOption.nonEmpty {   requireContext().showToast("Choose payment Option") }
+            && paymentOption.nonEmpty {   requireContext().showToast(getString(R.string.choose_payment_option)) }
 
-    }
+    } // validateFieldsNotEmpty closed
 
 
 } //

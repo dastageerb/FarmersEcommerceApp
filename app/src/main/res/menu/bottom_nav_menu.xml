@@ -3,25 +3,29 @@
 
 
     <item android:id="@+id/homeFragment"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/ic_baseline_home_24"
         />
 
 
     <item android:id="@+id/searchFragment"
-        android:title="Search"
+        android:title="@string/search"
         android:icon="@drawable/ic_baseline_search_24"
         />
 
+    <item android:id="@+id/communityFragment"
+        android:title="@string/community"
+        android:icon="@drawable/ic_baseline_feed_cummunity_24"
+        />
 
     <item android:id="@+id/cartFragment"
-        android:title="Cart"
+        android:title="@string/cart"
         android:icon="@drawable/ic_baseline_cart_bag_24"
         />
 
 
     <item android:id="@+id/profileFragment"
-        android:title="Profile"
+        android:title="@string/profile"
         android:icon="@drawable/ic_baseline_profile_24"
         />
 

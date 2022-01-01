@@ -26,6 +26,6 @@ interface HomeRepository
 
     suspend fun moreCategoryItems(categoryId:String): Response<MoreResponseItem>
 
-    suspend fun updateFcMToken(token:String):Response<StatusMsgResponse>
+
 
 }

@@ -18,6 +18,12 @@ object SharedPrefsModule
 
     @Singleton
     @Provides
+    fun provideContext(@ApplicationContext context: Context):Context
+     = context
+
+
+    @Singleton
+    @Provides
     fun provideSharedPrefs(@ApplicationContext context: Context): SharedPreferences
     {
         return  context.getSharedPreferences(SAVED_PREFS, Context.MODE_PRIVATE);

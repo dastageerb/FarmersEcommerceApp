@@ -26,8 +26,6 @@ class HomeRepositoryImpl(private val homeApi: HomeApi):HomeRepository
     override suspend fun moreCategoryItems(categoryId: String): Response<MoreResponseItem>
      =   homeApi.getMoreCategoryItems(categoryId,1,200)
 
-    override suspend fun updateFcMToken(token: String): Response<StatusMsgResponse>
-    = homeApi.updateFcMToken(token)
 
 
 }

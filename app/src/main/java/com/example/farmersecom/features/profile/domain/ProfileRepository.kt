@@ -36,5 +36,6 @@ interface ProfileRepository
 
     suspend fun changePassword(oldPassword:String,newPassword:String):Response<StatusMsgResponse>
 
+    suspend fun updateFcMToken(token:String):Response<StatusMsgResponse>
 
 }

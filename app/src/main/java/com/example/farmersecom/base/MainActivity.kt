@@ -1,5 +1,6 @@
 package com.example.farmersecom.base
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
@@ -10,7 +11,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.databinding.ActivityMainBinding
+import com.example.farmersecom.utils.constants.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity()
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity()
                 (
                 R.id.homeFragment
                 ,R.id.searchFragment
+                ,R.id.communityFragment
                 ,R.id.cartFragment
                 ,R.id.profileFragment
             ))
@@ -60,6 +64,36 @@ class MainActivity : AppCompatActivity()
 
     } // onCreate
 
+
+    override fun onNewIntent(intent: Intent?)
+    {
+        super.onNewIntent(intent)
+
+        Timber.tag(TAG).d("Called")
+        Timber.tag(TAG).d(""+intent?.extras?.get("for"))
+
+        when(intent?.extras?.get("for"))
+        {
+            1 ->
+            {
+
+                Timber.tag(TAG).d(""+intent?.extras?.get("for"))
+                navController.navigate(R.id.activeOrdersFragment)
+            }
+            2->
+            {
+
+                Timber.tag(TAG).d(""+intent?.extras?.get("for"))
+                navController.navigate(R.id.currentOrdersFragment)
+            }
+            3 ->
+            {
+                Timber.tag(TAG).d(""+intent?.extras?.get("for"))
+                navController.navigate(R.id.homeFragment)
+            }
+        } // when closed
+
+    } // intent closed
 
     override fun onSupportNavigateUp(): Boolean
     {

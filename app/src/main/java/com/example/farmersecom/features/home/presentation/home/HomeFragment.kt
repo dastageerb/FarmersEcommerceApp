@@ -116,7 +116,7 @@ class HomeFragment :BaseFragment<FragmentHomeBinding>(),View.OnClickListener
                 } // collect closed
             } // repeatOnLifeCycle closed
         } // lifeCycleScope closed
-    } // subscribeRegisterResponse  closed
+    } // subscriberResponse  closed
 
     private fun subscribeLatestProductsResponse()
     {

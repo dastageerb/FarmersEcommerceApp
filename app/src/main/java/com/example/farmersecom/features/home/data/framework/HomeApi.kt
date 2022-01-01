@@ -1,5 +1,7 @@
 package com.example.farmersecom.features.home.data.framework
 
+import com.example.farmersecom.features.communitySection.domain.models.GetPostsResponse
+import com.example.farmersecom.features.communitySection.domain.models.Post
 import com.example.farmersecom.features.home.domain.model.MoreProductsResponseItem
 import com.example.farmersecom.features.home.domain.model.homeModels.HomeLatestItem
 import com.example.farmersecom.features.home.domain.model.more.MoreResponseItem
@@ -35,9 +37,21 @@ interface HomeApi
         @Query("size")size:Int):Response<MoreResponseItem>
 
 
-    @POST("api/update/fcm")
-    suspend fun updateFcMToken(
-        @Query("token")token:String):Response<StatusMsgResponse>
+
+
+
+
+    // Community Sections unAuthorizedApis
+
+    @GET("api/post/getAllPosts")
+     suspend fun getAllPosts(): Response<GetPostsResponse>
+
+    //@GET()
+     suspend fun getSearchedPosts(query: String): Response<GetPostsResponse>
+
+
+    @GET("api/post/get/{id}")
+     suspend fun getPostById(id: String): Response<Post>
 
 
 }

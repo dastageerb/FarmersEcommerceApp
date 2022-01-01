@@ -1,5 +1,6 @@
 package com.example.farmersecom.features.home.presentation
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,7 +30,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getSliderItemsUseCase: GetSliderItemsUseCase,
     private val getHomeLatestItemsUseCase: GetHomeLatestItemsUseCase,
-    @ApplicationContext private val context: Context
+    private val application: Application
     ):ViewModel()
 {
 
@@ -43,7 +44,7 @@ class HomeViewModel @Inject constructor(
     fun getSliderItems() = viewModelScope.launch(Dispatchers.IO)
     {
 
-        if(context.hasInternetConnection())
+        if(application.applicationContext.hasInternetConnection())
         {
 
             _getSliderItemsResponse.value = NetworkResource.Loading()
@@ -64,7 +65,7 @@ class HomeViewModel @Inject constructor(
             } // catch closed
         }else
         {
-            _getSliderItemsResponse.value = NetworkResource.Error(context.getString(R.string.no_internet_connection))
+            _getSliderItemsResponse.value = NetworkResource.Error(application.applicationContext.getString(R.string.no_internet_connection))
         } // else closed
     } // getSliderItems closed
 
@@ -76,7 +77,7 @@ class HomeViewModel @Inject constructor(
         {
             200,201 -> NetworkResource.Success(response.body())
             400,404 -> NetworkResource.Error(response.errorBody()?.getMessage())
-            else ->NetworkResource.Error(context.getString(R.string.something_went_wrong)+response.code())
+            else ->NetworkResource.Error(application.applicationContext.getString(R.string.something_went_wrong)+response.code())
         } // when closed
     } // handleSliderResponse
 

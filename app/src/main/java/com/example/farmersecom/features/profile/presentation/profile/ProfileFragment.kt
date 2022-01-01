@@ -121,7 +121,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         binding.buttonSetupStore.setOnClickListener(this)
         binding.buttonGoToStore.setOnClickListener(this)
         binding.buttonBuyersSection.setOnClickListener(this)
-
+        binding.buttonCommunitySection.setOnClickListener(this)
 
         viewModel.getProfile()
 
@@ -164,6 +164,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             {
                 findNavController().navigate(R.id.action_profileFragment_to_buyerDashboardFragment)
             }
+            R.id.buttonCommunitySection -> findNavController().navigate(R.id.action_profileFragment_to_communityContributionsFragment)
         } // when closed
     } // onClick closed
 

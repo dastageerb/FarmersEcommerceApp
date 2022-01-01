@@ -70,5 +70,10 @@ class ProfileRepoImpl(
         return  profileApi.changePassword(ChangPasswordRequest(newPassword,oldPassword))
     }
 
+    override suspend fun updateFcMToken(token: String): Response<StatusMsgResponse>
+    {
+        return profileApi.updateFcMToken(token)
+    }
+
 
 } // ProfileRepoImpl

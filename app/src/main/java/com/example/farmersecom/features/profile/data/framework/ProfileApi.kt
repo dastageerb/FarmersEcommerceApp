@@ -44,5 +44,9 @@ interface ProfileApi
     suspend fun changePassword(@Body changePassword: ChangPasswordRequest):Response<StatusMsgResponse>
 
 
+    @POST("api/update/fcm")
+    suspend fun updateFcMToken(
+        @Query("token")token:String):Response<StatusMsgResponse>
+
 
 } // profileApi closed

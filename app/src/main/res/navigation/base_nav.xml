@@ -64,11 +64,14 @@
         <action
             android:id="@+id/action_profileFragment_to_fullUserProfileFragment"
             app:destination="@id/fullUserProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_communityContributionsFragment"
+            app:destination="@id/communityContributionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/setupStoreFragment"
         android:name="com.example.farmersecom.features.profile.presentation.setupStore.SetupStoreFragment"
-        android:label="fragment_setup_store"
+        android:label="@string/setup_store"
         tools:layout="@layout/fragment_setup_store" >
         <action
             android:id="@+id/action_setupStoreFragment_to_profileFragment"
@@ -302,8 +305,23 @@
     <fragment
         android:id="@+id/cartCheckOutFragment"
         android:name="com.example.farmersecom.features.cart.presentation.cartCheckOut.CartCheckOutFragment"
-        android:label="fragment_cart_check_out"
-        tools:layout="@layout/fragment_cart_check_out" />
+        android:label="@string/check_out"
+        tools:layout="@layout/fragment_cart_check_out" >
+        <action
+            android:id="@+id/action_cartCheckOutFragment_to_currentOrdersFragment"
+            app:destination="@id/currentOrdersFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/base_nav"
+            app:popUpToInclusive="true"
+            />
+        <action
+            android:id="@+id/action_cartCheckOutFragment_to_cartFragment"
+            app:destination="@id/cartFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/base_nav"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.farmersecom.features.authentication.presentation.login.ForgotPasswordFragment"
@@ -361,6 +379,17 @@
             app:destination="@id/discontinuedProductsFragment"
              />
     </fragment>
+    <fragment
+        android:id="@+id/communityContributionsFragment"
+        android:name="com.example.farmersecom.features.communitySection.presentation.communitySection.CommunityContributionsFragment"
+        android:label="@string/my_contributions"
+        tools:layout="@layout/fragment_community_contributions" />
+
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.example.farmersecom.features.communitySection.presentation.community.CommunityFragment"
+        android:label="@string/community_section"
+        tools:layout="@layout/fragment_community" />
 
 
 </navigation>
