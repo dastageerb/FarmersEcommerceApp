@@ -263,7 +263,7 @@
             android:layout_height="wrap_content"
             android:text="@string/register"
             android:textColor="@color/white"
-            android:background="@drawable/button_bg"
+            android:background="@drawable/wide_button"
             android:layout_marginTop="18dp"
             android:layout_gravity="center"
             />
@@ -287,7 +287,8 @@
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
             android:layout_gravity="right"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
+
             />
 
         <ProgressBar
@@ -296,6 +297,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="24dp"
+            android:visibility="gone"
             android:indeterminateTint="@color/colorPrimary"
             />
 

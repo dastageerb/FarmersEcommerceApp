@@ -191,27 +191,27 @@ class ProfileViewModel @Inject constructor(
     /** Change Password **/
 
 
-    private var _statusMsgResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
-            = MutableStateFlow(NetworkResource.None())
-    val statusMsgResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+    private var _statusMsgResponse:MutableSharedFlow<NetworkResource<StatusMsgResponse>>
+            = MutableSharedFlow(0)
+    val statusMsgResponse: SharedFlow<NetworkResource<StatusMsgResponse>>
             = _statusMsgResponse
 
 
     fun changePassword(oldPassword:String,newPassword:String) = viewModelScope.launch(Dispatchers.IO)
     {
-        _statusMsgResponse.value = NetworkResource.Loading()
+        _statusMsgResponse.emit(NetworkResource.Loading())
         try
         {
             val response = changePasswordUseCase.changePasswordUseCase(oldPassword,newPassword)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
+            _statusMsgResponse.emit(handleStatusMessageResponse(response))
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                is HttpException ->  _statusMsgResponse.emit(NetworkResource.Error(e.message))
                 else ->
                 {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
                 }
             } // when closed
         }
@@ -242,6 +242,7 @@ class ProfileViewModel @Inject constructor(
         deleteAllCartItemsUseCase.deleteAllCartItem()
     }
 
+    fun clearFiltersOnLogOut() = sharedPrefsHelper.clearFilters()
 
 
 } // ProfileViewModel closed

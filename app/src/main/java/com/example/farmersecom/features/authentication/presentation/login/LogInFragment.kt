@@ -76,6 +76,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() , View.OnClickListene
                         }
                         is NetworkResource.Error ->
                         {
+                            requireContext().showToast(it.msg!!)
+                            Timber.tag(TAG).d(""+it.msg)
                             binding.progressBarLogIn.hide()
                         }
                         is NetworkResource.Success ->

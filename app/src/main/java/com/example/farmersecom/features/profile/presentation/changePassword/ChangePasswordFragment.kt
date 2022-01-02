@@ -100,8 +100,9 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>()
                         {
                             binding.FragmentChangePasswordProgressBar.hide()
                             viewModel.clearToken()
+                            viewModel.clearFiltersOnLogOut()
+                            viewModel.clearCartOnLogout()
                             findNavController().navigate(R.id.action_changePasswordFragment_to_logInFragment)
-
                             requireContext().showToast(it.data?.message.toString())
                         }
                         is NetworkResource.Error ->

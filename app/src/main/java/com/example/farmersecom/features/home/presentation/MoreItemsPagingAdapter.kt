@@ -10,66 +10,64 @@ import com.example.farmersecom.features.home.domain.model.MoreProductsResponseIt
 import com.example.farmersecom.features.home.domain.model.more.MoreProduct
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
-class MoreItemsPagingAdapter(val onProductSelected:(productId:String)->Unit) : PagingDataAdapter<MoreProduct,MoreItemsPagingAdapter.ViewHolder>
-    (object : DiffUtil.ItemCallback<MoreProduct>()
-{
-    override fun areItemsTheSame(oldItem: MoreProduct, newItem: MoreProduct): Boolean
-    {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: MoreProduct, newItem: MoreProduct): Boolean
-    {
-        return oldItem.toString() == newItem.toString()
-    }
-})
-{
-
-
-    inner class ViewHolder(private val binding: LayoutMoreItemBinding) : RecyclerView.ViewHolder(binding.root)
-    {
-
-        fun bind(product: MoreProduct?)
-        {
-
-            binding.apply()
-            {
-               // if (product?.productPicture?.isNotEmpty() == true)
-              //  {
-                    layoutMoreItemsImageView.load(product?.productPicture)
-              //  }
-                layoutMoreItemsProductNameTextView.text = product?.productName
-                layoutMoreItemsProductCategoryTextView.text = product?.productCategory
-                layoutMoreItemsProductQuantityTextView.text = product?.productQuantity.toString()
-                layoutMoreItemsProductQuantityUnitTextView.text = product?.productUnit
-                layoutMoreItemsProductPriceTextView.text = product?.productPrice.toString()
-                layoutMoreItemsProductLocationTextView.text = product?.productLocation
+//class MoreItemsPagingAdapter(val onProductSelected:(productId:String)->Unit) : PagingDataAdapter<MoreProduct,MoreItemsPagingAdapter.ViewHolder>
+//    (object : DiffUtil.ItemCallback<MoreProduct>()
+//{
+//    override fun areItemsTheSame(oldItem: MoreProduct, newItem: MoreProduct): Boolean
+//    {
+//        return oldItem == newItem
+//    }
 //
-            }
-
-        }
-    }
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-    {
-        val view =
-            LayoutMoreItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(view)
-    }
-
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int)
-    {
-        holder.bind(getItem(position))
-
-        holder.itemView.setOnClickListener()
-        {
-            getItem(position)?.productId?.let { it1 -> onProductSelected(it1) }
-        }
-
-    } // onBindViewHolder closed
-
-
-}
+//    override fun areContentsTheSame(oldItem: MoreProduct, newItem: MoreProduct): Boolean
+//    {
+//        return oldItem.toString() == newItem.toString()
+//    }
+//})
+//{
+//
+//
+//    inner class ViewHolder(private val binding: LayoutMoreItemBinding) : RecyclerView.ViewHolder(binding.root)
+//    {
+//
+//        fun bind(product: MoreProduct?)
+//        {
+//
+//            binding.apply()
+//            {
+//               // if (product?.productPicture?.isNotEmpty() == true)
+//              //  {
+//                    layoutMoreItemsImageView.load(product?.productPicture)
+//              //  }
+//                layoutMoreItemsProductNameTextView.text = product?.productName
+//                layoutMoreItemsProductCategoryTextView.text = product?.productCategory
+//                layoutMoreItemsProductPriceTextView.text = product?.productPrice.toString()
+//                layoutMoreItemsProductLocationTextView.text = product?.productLocation
+////
+//            }
+//
+//        }
+//    }
+//
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
+//    {
+//        val view =
+//            LayoutMoreItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//        return ViewHolder(view)
+//    }
+//
+//
+//    override fun onBindViewHolder(holder: ViewHolder, position: Int)
+//    {
+//        holder.bind(getItem(position))
+//
+//        holder.itemView.setOnClickListener()
+//        {
+//            getItem(position)?.productId?.let { it1 -> onProductSelected(it1) }
+//        }
+//
+//    } // onBindViewHolder closed
+//
+//
+//}
 

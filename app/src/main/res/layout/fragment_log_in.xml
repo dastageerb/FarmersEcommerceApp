@@ -48,14 +48,29 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLoginFragForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInputLayoutP"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/textNoAccount"
+        android:background="@android:color/transparent"
+        android:text="@string/forgot_password"
+        android:textAllCaps="false"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorPrimaryDark" />
+
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLoginFragLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textInputLayoutP"
+        android:layout_below="@id/buttonLoginFragForgotPassword"
         android:layout_centerInParent="true"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/button_bg"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/wide_button"
         android:text="@string/login"
         android:textColor="@color/white" />
 
@@ -66,34 +81,24 @@
         android:layout_below="@id/buttonLoginFragLogin"
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
-        android:text="Dont have Account ?"
+        android:text="@string/don_t_have_account"
 
         />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLoginFragRegister"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLoginFragLogin"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/textNoAccount"
-        android:background="@android:color/transparent"
         android:text="@string/register_here"
         android:textAllCaps="false"
-        android:textColor="@color/design_default_color_primary" />
+        android:textColor="@color/colorPrimaryDark"
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonLoginFragForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonLoginFragRegister"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/textNoAccount"
-        android:background="@android:color/transparent"
-        android:text="@string/forgot_password"
-        android:textAllCaps="false"
-        android:textColor="@color/design_default_color_primary"
         />
+
 
     <ProgressBar
         android:id="@+id/progressBarLogIn"
@@ -104,6 +109,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:visibility="gone"
+        android:indeterminateTint="@color/colorPrimary"
         />
 
 

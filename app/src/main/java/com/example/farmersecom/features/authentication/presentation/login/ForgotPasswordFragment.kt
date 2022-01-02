@@ -76,6 +76,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>()
                         }
                         is NetworkResource.Error ->
                         {
+                            requireContext().showToast(it.msg.toString())
                             binding.fragmentForgotPasswordProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }

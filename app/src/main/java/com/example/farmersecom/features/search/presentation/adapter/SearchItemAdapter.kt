@@ -41,8 +41,6 @@ class SearchItemAdapter ()
                 }
                 layoutSearchItemsProductNameTextView.text = product?.productName
                 layoutSearchItemsProductCategoryTextView.text = product?.productCategory
-                layoutSearchItemsProductQuantityTextView.text = product?.productQuantity.toString()
-                layoutSearchItemsProductQuantityUnitTextView.text = product?.productUnit
                 layoutSearchItemsProductPriceTextView.text = product?.productPrice.toString()
                 layoutSearchItemsProductLocationTextView.text = product?.productLocation
 //

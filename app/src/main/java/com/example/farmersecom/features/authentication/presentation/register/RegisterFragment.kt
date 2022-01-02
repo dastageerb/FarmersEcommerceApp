@@ -165,6 +165,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() , View.OnClickL
                    .nonEmpty()
                    .minLength(11)
                    .maxLength(11)
+                    .validNumber()
                    .addErrorCallback { binding.editTextRegisterFragContact.error = it }
                    .check()
                && email.validEmail{ binding.editTextRegisterFragEmail.error = it }

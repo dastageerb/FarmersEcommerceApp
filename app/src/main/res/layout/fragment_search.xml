@@ -5,29 +5,43 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".features.search.presentation.SearchFragment">
-
-
-    <ImageView
+    
+    <TextView
         android:id="@+id/fragmentSearchFiltersImageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_baseline_filter_24"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
+        android:drawablePadding="-4dp"
+        android:text="Filters"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+
+        app:drawableTopCompat="@drawable/ic_baseline_filter_24" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fragmentSearchFilterNotifierCarView"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="26dp"
         />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
         android:elevation="10dp"
-        android:layout_below="@id/fragmentSearchFiltersImageView"
-        android:layout_alignParentStart="true"
+        android:layout_toEndOf="@id/fragmentSearchFiltersImageView"
         android:layout_toStartOf="@id/fragmentSearchSearchImageView"
         >
         <androidx.appcompat.widget.AppCompatEditText
@@ -35,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:hint="Search Product Here"
+            android:hint="@string/search_product_here"
             android:paddingStart="32dp"
             android:paddingEnd="22dp"
             android:inputType="text"
@@ -44,14 +58,13 @@
 
     <ImageView
         android:id="@+id/fragmentSearchSearchImageView"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_below="@id/fragmentSearchFiltersImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_baseline_search_24"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        />
+        android:background="@drawable/button_bg"
+        android:src="@drawable/ic_baseline_search_24" />
 
     <ProgressBar
         android:id="@+id/fragmentSearchProgressbar"
@@ -61,6 +74,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearchFragment"
         android:layout_width="match_parent"

@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.farmersecom.features.authentication.presentation.register.RegisterFragment"
-        android:label="fragment_register"
+        android:label="@string/create_account"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_logInFragment"
@@ -325,7 +325,7 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.farmersecom.features.authentication.presentation.login.ForgotPasswordFragment"
-        android:label="fragment_forgot_password"
+        android:label="@string/forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
             android:id="@+id/action_forgotPasswordFragment_to_logInFragment"
@@ -356,6 +356,8 @@
         <action
             android:id="@+id/action_changePasswordFragment_to_logInFragment"
             app:destination="@id/logInFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/base_nav"
             app:popUpToInclusive="true"
             />
     </fragment>
@@ -363,7 +365,11 @@
         android:id="@+id/editPersonalInfoFragment"
         android:name="com.example.farmersecom.features.profile.presentation.editPersonalInfo.EditPersonalInfoFragment"
         android:label="@string/edit_personal_info_frag"
-        tools:layout="@layout/fragment_edit_personal_info" />
+        tools:layout="@layout/fragment_edit_personal_info" >
+        <action
+            android:id="@+id/action_editPersonalInfoFragment_to_fullUserProfileFragment"
+            app:destination="@id/fullUserProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/storeSettingFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.storeSettings.StoreSettingFragment"

@@ -3,8 +3,6 @@
 
     <item android:state_pressed="true" android:state_enabled="true">
         <shape >
-            <corners android:radius="10dp" />
-            <size android:height="60dp" android:width="250dp" />
             <solid android:color="@color/colorPrimaryDark"/>
         </shape>
     </item>
@@ -12,16 +10,12 @@
 
     <item android:state_enabled="true">
         <shape >
-            <corners android:radius="10dp" />
-            <size android:height="60dp" android:width="250dp" />
             <solid android:color="@color/colorPrimary"/>
         </shape>
     </item>
 
     <item android:state_enabled="false">
         <shape >
-            <corners android:radius="10dp" />
-            <size android:height="60dp" android:width="250dp" />
             <solid android:color="@color/colorGrey"/>
         </shape>
     </item>

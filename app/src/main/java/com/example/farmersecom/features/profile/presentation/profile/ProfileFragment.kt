@@ -64,12 +64,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
         if(viewModel.getAuthToken()?.isEmpty() == true)
         {
             findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
-        }
+        }else
+        {
 
             initViews()
             subscribeProfileResponseFlow()
-
             subscribeChangeImageResponseFlow()
+
+        }
 
     } // onViewCreate closed
 
@@ -403,6 +405,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             R.id.menu_logout ->
             {
                 viewModel.clearToken()
+                viewModel.clearCartOnLogout()
+                viewModel.clearFiltersOnLogOut()
                 findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
                 this.onDestroy()
             }

@@ -59,7 +59,11 @@ class FiltersFragment : BaseFragment<FragmentFiltersBinding>()
 
         binding.fragmentFiltersCityAutoCompleteView.setUpAdapter(requireContext(),R.array.Sindh)
 
-
+        binding.fragmentFilterFragmentClearFilterTextView.setOnClickListener()
+        {
+            viewModel.clearFilters()
+            requireContext().showToast(getString(R.string.filters_cleared))
+        }
 
         binding.fragmentFiltersApplyButton.setOnClickListener()
         {
@@ -77,7 +81,7 @@ class FiltersFragment : BaseFragment<FragmentFiltersBinding>()
         location = binding.fragmentFiltersCityAutoCompleteView.text.toString().trim()
         categoryId?.let { viewModel.saveCategory(it) }
         location?.let{ viewModel.saveLocation(it) }
-
+        requireContext().showToast(getString(R.string.filter_applied))
         findNavController().navigate(R.id.action_filtersFragment_to_searchFragment)
 
     } //

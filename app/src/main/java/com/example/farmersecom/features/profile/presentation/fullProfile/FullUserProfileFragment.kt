@@ -211,15 +211,19 @@ class FullUserProfileFragment : BaseFragment<FragmentFullUserProfileBinding>() ,
                     {
                         is NetworkResource.Loading ->
                         {
+                            binding.fragmentFullUserProfileProgressBar.show()
                             Timber.tag(Constants.TAG).d("Loading")
                         }
                         is NetworkResource.Success ->
                         {
-                            binding.fragmentFullUserProfileImageViewProfile.load(it.data?.userImgUrl)
+                            binding.fragmentFullUserProfileProgressBar.hide()
+                            binding.fragmentFullUserProfileImageViewProfile.load(it.data?.userImgUrl,R.drawable.ic_baseline_profile_24)
                             Timber.tag(Constants.TAG).d("${it.data}")
                         }
                         is NetworkResource.Error ->
                         {
+                            requireContext().showToast(it.msg.toString())
+                            binding.fragmentFullUserProfileProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
                     }// when closed

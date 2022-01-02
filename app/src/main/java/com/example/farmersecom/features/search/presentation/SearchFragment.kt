@@ -70,10 +70,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
             } // else closed
         } //  searchClick closed
 
+
+        checkFilterNotifier()
+
         subscribeToSearchResponseFlow()
     }
 
-
+    private fun checkFilterNotifier()
+    {
+        if(!viewModel.getLocation().isNullOrEmpty() || !viewModel.getCategory().isNullOrEmpty() )
+        {
+            binding.fragmentSearchFilterNotifierCarView.show()
+        }else
+        {
+            binding.fragmentSearchFilterNotifierCarView.hide()
+        }
+    }
 
 
     private fun subscribeToSearchResponseFlow()
@@ -91,7 +103,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
                             binding.fragmentSearchProgressbar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             searchItemAdapter.submitList(it.data?.products)
-                            viewModel.clearFilters()
+
                             // updateViews(it.data)
                         }
                         is NetworkResource.Error ->

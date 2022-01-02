@@ -41,8 +41,6 @@ class MoreItemsAdapter(val onProductSelected:(productId:String)->Unit) : ListAda
                 }
                 layoutMoreItemsProductNameTextView.text = product?.productName
                 layoutMoreItemsProductCategoryTextView.text = product?.productCategory
-                layoutMoreItemsProductQuantityTextView.text = product?.productQuantity.toString()
-                layoutMoreItemsProductQuantityUnitTextView.text = product?.productUnit
                 layoutMoreItemsProductPriceTextView.text = product?.productPrice.toString()
                 layoutMoreItemsProductLocationTextView.text = product?.productLocation
 //

@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentEditPersonalInfoBinding
@@ -234,6 +235,7 @@ class EditPersonalInfoFragment :BaseFragment<FragmentEditPersonalInfoBinding>()
                             requireContext().showToast(it.data?.message.toString())
                             // save User here
                             it.data?.user?.let { it1 -> viewModel.saveUser(it1) }
+                            findNavController().navigate(R.id.action_editPersonalInfoFragment_to_fullUserProfileFragment)
                         }
                         is NetworkResource.Error ->
                         {

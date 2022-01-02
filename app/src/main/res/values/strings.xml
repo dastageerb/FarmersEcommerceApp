@@ -36,7 +36,7 @@
     <string name="discontinue">Discontinue</string>
     <string name="active">Active</string>
     <string name="submit">Submit</string>
-    <string name="forgot_password">forgot Password</string>
+    <string name="forgot_password">Forgot Password</string>
     <string name="store_desc">About Store</string>
     <string name="update">Update</string>
     <string name="change_photo">change Photo</string>
@@ -98,7 +98,7 @@
     <string name="plz_select_product_unit">Please Select Product Unit</string>
     <string name="cattle">Cattle</string>
     <string name="please_select_city">Please Select City</string>
-    <string name="log_out_button_text">log out</string>
+    <string name="log_out_button_text">Log out</string>
     <string name="default_quantity">1</string>
     <string name="total_rs">Total Rs</string>
     <string name="check_out">Check Out</string>
@@ -153,6 +153,13 @@
     <string name="app_needs_permissions_to_pick_image">App Needs Permission to Pick Image</string>
     <string name="update_post">Update Post</string>
     <string name="edit_community_post">Edit Community Post</string>
+    <string name="see_all">See All</string>
+    <string name="search_product_here">Search Product Here</string>
+    <string name="clear_filters">Clear Filters</string>
+    <string name="filter_applied">Filters Applied</string>
+    <string name="filters_cleared">Filters Cleared</string>
+    <string name="don_t_have_account">Don\'t have Account ?</string>
+    <string name="create_account">Create Account</string>
 
 
 </resources>
