@@ -16,7 +16,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Product Name"
+        android:hint="@string/product_name"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
@@ -33,21 +33,19 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Product Description"
+            android:hint="@string/product_description"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextAddNewProductDescription"
+                android:id="@+id/fragmentAddPostDescriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="false"
                 android:inputType="textCapSentences|textMultiLine"
                 android:maxLength ="2000"
                 android:isScrollContainer="true"
-                android:maxLines="4"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

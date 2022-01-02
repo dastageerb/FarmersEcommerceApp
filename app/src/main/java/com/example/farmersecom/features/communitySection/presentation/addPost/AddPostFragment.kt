@@ -13,27 +13,42 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.core.net.toFile
-import com.example.farmersecom.BuildConfig
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentAddPostBinding
+import com.example.farmersecom.features.communitySection.presentation.CommunitySectionViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasCameraPermission
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasStoragePermission
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.imageUtils.ImageCropHelper
 import com.example.farmersecom.utils.imageUtils.ImageUtils
+import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
+import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import timber.log.Timber
 
 
 @AndroidEntryPoint
-class AddPostFragment : BaseFragment<FragmentAddPostBinding>()
+class AddPostFragment : BaseFragment<FragmentAddPostBinding>() , View.OnClickListener
 {
 
+    private val viewModel: CommunitySectionViewModel by activityViewModels()
+    private lateinit var postImage:Uri;
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentAddPostBinding
     {
@@ -44,46 +59,68 @@ class AddPostFragment : BaseFragment<FragmentAddPostBinding>()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        initViews()
+
     } // onViewCreated
 
+    private fun initViews()
+    {
+
+        binding.fragmentAddPostAddImageTextView.setOnClickListener(this)
+       // binding.fragmentAddPostAddImageButton.setOnClickListener(this)
+        binding.fragmentAddPostAddPostButton.setOnClickListener(this)
+        subscribeToCommunityPostsResponse()
+    } // initView closed
+
+
+    private fun subscribeToCommunityPostsResponse()
+    {
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                viewModel.statusMsgResponse.collect()
+                {
+                    when(it)
+                    {
+                        is NetworkResource.Loading ->
+                        {
+                            binding.fragmentAddPostProgressBar.show()
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            Timber.tag(Constants.TAG).d(it.msg.toString())
+                            binding.fragmentAddPostProgressBar.hide()
+                        }
+                        is NetworkResource.Success ->
+                        {
+                            requireContext().showToast(it.data?.message.toString())
+                            binding.fragmentAddPostProgressBar.hide()
+                            Timber.tag(Constants.TAG).d(it.data?.toString())
+                            findNavController().navigate(R.id.action_addPostFragment_to_communityContributionsFragment)
+                        }
+                    } // when closed
+                } // collector closed
+            } // viewLifeCycleOwner.repeatOnLifecycle closed
+        } // coroutineScope closed
+
+    } // subscribeToAddCommunityPostResponseResponse
 
 
     private fun addPostImage()
     {
-        val builder = AlertDialog.Builder(requireContext())
-        // builder.setMessage("")
-        builder.setTitle(getString(R.string.choose_image))
-        builder.setCancelable(true)
-        builder.setNegativeButton(getString(R.string.camera))
-        { dialog, _ -> dialog.cancel()
-
-            if(requireContext().hasCameraPermission())
-            {
-                captureImage()
-            }else
-            {
-                multiPermissionCallback.launch(arrayOf(Manifest.permission.CAMERA))
-            }
-
-            dialog.dismiss()
-        }
-        builder.setPositiveButton("Gallery")
-        { dialog, _ ->
 
             if(requireContext().hasStoragePermission())
             {
-                getImageFromGallery()
+                selectImageFromGalleryResult.launch("image/*")
             }else
             {
                 multiPermissionCallback.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
-            }
+            } // else closed
 
-            dialog.dismiss()
-        } // dialog closed
-        val alert = builder.create()
-        alert.show()
 
-    } // changPhoto
+    } // AddImage
 
 
     private val multiPermissionCallback =
@@ -100,14 +137,7 @@ class AddPostFragment : BaseFragment<FragmentAddPostBinding>()
                         getImageFromGallery()
                     }else
                     {
-                        permissionDenied("App Needs Permission to Pick Image")
-                    }
-                    Manifest.permission.CAMERA -> if(entry.value)
-                    {
-                        captureImage()
-                    }else
-                    {
-                        permissionDenied("App Needs Permission to Capture Image")
+                        permissionDenied(getString(R.string.app_needs_permissions_to_pick_image))
                     }
                 } // when closed
 
@@ -129,8 +159,6 @@ class AddPostFragment : BaseFragment<FragmentAddPostBinding>()
     /** Pick Gallery Image  and pass it to image cropper **/
 
 
-
-
     private fun getImageFromGallery()
     {
         selectImageFromGalleryResult.launch("image/*")
@@ -142,6 +170,8 @@ class AddPostFragment : BaseFragment<FragmentAddPostBinding>()
     { uri: Uri? ->
         uri?.let()
         {
+            postImage = uri
+            binding.fragmentAddPostPostImageImageView.load(uri.toString())
             // binding.fragmentStoreSettingStoreImageImageView.load(uri.toString())
             // pass the uri to  image cropper
             cropGalleryImage.launch(uri)
@@ -152,70 +182,56 @@ class AddPostFragment : BaseFragment<FragmentAddPostBinding>()
     {
         it?.let()
         { uri ->
-         //   binding.fragmentStoreSettingStoreImageImageView.load(uri.toString())
-            uploadImage(uri)
+            postImage = uri
+            binding.fragmentAddPostPostImageImageView.load(uri.toString())
         }
     } // pickGalleryImage result closed
 
 
-    /** Capture Image from Camera **/
-
-    private var imageUri: Uri? = null
-
-    private fun captureImage()
+    override fun onClick(v: View?)
     {
-        ImageUtils.createImageFile(requireContext())?.also()
+        when(v?.id)
         {
-            imageUri = FileProvider
-                .getUriForFile(requireContext(),
-                    BuildConfig.APPLICATION_ID + ".fileprovider", it)
-            takePictureRegistration.launch(imageUri)
-        }
-    } // getImageFrom Gallery closed
-
-    /**
-    Take picture from camera
-    then
-    pass it to image cropping library
-     */
-    private val takePictureRegistration =
-        registerForActivityResult(ActivityResultContracts.TakePicture())
-        { isSuccess ->
-            if (isSuccess)
+            R.id.fragmentAddPostAddImageTextView ->
             {
-
-                //   binding.fragmentFullUserProfileImageViewProfile.load(imageUri.toString())
-                // picture taken -> now passing to image cropper
-                // launch image cropper activity
-                cropCapturedImage.launch(imageUri)
+                addPostImage()
             }
-        } // camera activity result closed
+            R.id.fragmentAddPostAddPostButton ->
+            {
+                addPost()
+            }
+        } // when closed
+    } // onClick closed
 
-
-
-    private val  cropCapturedImage = registerForActivityResult(ImageCropHelper.cropImage)
+    private fun addPost()
     {
-        it?.let()
-        { uri ->
+        val postTitle = binding.fragmentAddPostTitleEditText.text.toString().trim();
+        val postDesc = binding.fragmentAddPostDescriptionEditText.text.toString().trim();
 
-            //binding.fragmentStoreSettingStoreImageImageView.load(uri.toString())
-            uploadImage(uri)
-        } // uri closed
-    } // cropCapturedImage closed
+        if(validateData(postTitle,postDesc) && validateImageView())
+        {
+            viewModel.addPost(postTitle,postDesc,postImage)
+        } // if closed
+
+    } // addPost closed
 
 
-
-
-
-    private fun uploadImage(uri: Uri)
+    private fun validateData(title: String,description: String) :Boolean
     {
 
-        val file = uri.toFile();
-        val requestFile = file.asRequestBody(requireContext().contentResolver.getType(uri)?.toMediaTypeOrNull())
-        val body = MultipartBody.Part.createFormData("storeImage", file.path, requestFile)
+        return title.nonEmpty { binding.fragmentAddPostTitleEditText.error = it }
+                && description.nonEmpty { binding.fragmentAddPostDescriptionEditText.error = it}
+    } // validate Data closed
 
-      //-  storeSettingViewModel.updateStoreImage(body)
-    } // uploadImage closed
+    private fun validateImageView():Boolean
+    {
+        if(!this::postImage.isInitialized)
+        {
+            requireContext().showToast(getString(R.string.select_image))
+            return false
+        }
+        return true
+    }
 
 
 } // AddPostFragment closed

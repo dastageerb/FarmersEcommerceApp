@@ -42,16 +42,16 @@
             android:id="@+id/layoutCommunityContributionItemDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/description"
-            android:textSize="16sp"
+            android:layout_below="@id/layoutCommunityContributionItemTitleTextView"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toEndOf="@id/layoutCommunityContributionImage"
             android:ellipsize="end"
             android:maxLines="3"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@id/layoutCommunityContributionImage"
-            android:layout_below="@id/layoutCommunityContributionItemTitleTextView"
-           />
+            android:text="@string/description"
+            android:layout_toStartOf="@id/layoutCommunityContributionEditImageView"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/layoutCommunityContributionDeleteImageView"
@@ -69,12 +69,12 @@
             android:id="@+id/layoutCommunityContributionEditImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_edit_24"
-            app:tint="@color/colorPrimaryDark"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
             android:layout_toStartOf="@id/layoutCommunityContributionDeleteImageView"
-            />
+            android:src="@drawable/ic_baseline_edit_24"
+            app:tint="@color/colorPrimaryDark" />
 
 
     </RelativeLayout>

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class UpdateCommunityPostUseCase @Inject constructor(private val communityRepository: CommunityRepository)
 {
 
-    suspend fun updateCommunityPost(postId:String,title:String,description:String,image: MultipartBody.Part)
+    suspend fun updateCommunityPost(postId:String,title:String,description:String,image: MultipartBody.Part?)
     = communityRepository.updatePost(postId,title,description,image)
 
 } // addProductUseCase closed

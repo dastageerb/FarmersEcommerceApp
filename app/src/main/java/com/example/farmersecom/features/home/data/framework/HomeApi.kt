@@ -10,6 +10,7 @@ import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgRespons
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface HomeApi
@@ -46,12 +47,12 @@ interface HomeApi
     @GET("api/post/getAllPosts")
      suspend fun getAllPosts(): Response<GetPostsResponse>
 
-    //@GET()
-     suspend fun getSearchedPosts(query: String): Response<GetPostsResponse>
+    @GET("api/post/search")
+     suspend fun getSearchedPosts(@Query("query")query: String): Response<GetPostsResponse>
 
 
-    @GET("api/post/get/{id}")
-     suspend fun getPostById(id: String): Response<Post>
+     @GET("api/post/get/{id}")
+     suspend fun getPostById(@Path("id")id: String): Response<Post>
 
 
 }

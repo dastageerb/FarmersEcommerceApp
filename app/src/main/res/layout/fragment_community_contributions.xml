@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.communitySection.presentation.communitySection.CommunityContributionsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.communitySection.presentation.communityContribution.CommunityContributionsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentCommunityContributionsRecyclerView"
@@ -15,9 +16,26 @@
         android:id="@+id/fragmentCommunityContributionsProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="24dp"
-        />
+        app:tint="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
+
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fragmentCommunityContributionsAddPostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:drawableLeft="@drawable/ic_baseline_add_product_24"
+        android:text="@string/add_post"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/colorPrimary" />
+
 
 </RelativeLayout>

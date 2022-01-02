@@ -381,15 +381,52 @@
     </fragment>
     <fragment
         android:id="@+id/communityContributionsFragment"
-        android:name="com.example.farmersecom.features.communitySection.presentation.communitySection.CommunityContributionsFragment"
+        android:name="com.example.farmersecom.features.communitySection.presentation.communityContribution.CommunityContributionsFragment"
         android:label="@string/my_contributions"
-        tools:layout="@layout/fragment_community_contributions" />
+        tools:layout="@layout/fragment_community_contributions" >
+        <action
+            android:id="@+id/action_communityContributionsFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
+        <action
+            android:id="@+id/action_communityContributionsFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
+        <action
+            android:id="@+id/action_communityContributionsFragment_to_editPostFragment"
+            app:destination="@id/editPostFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.example.farmersecom.features.communitySection.presentation.community.CommunityFragment"
         android:label="@string/community_section"
-        tools:layout="@layout/fragment_community" />
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_communityFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="com.example.farmersecom.features.communitySection.presentation.addPost.AddPostFragment"
+        android:label="@string/add_community_post"
+        tools:layout="@layout/fragment_add_post" >
+        <action
+            android:id="@+id/action_addPostFragment_to_communityContributionsFragment"
+            app:destination="@id/communityContributionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postDetailsFragment"
+        android:name="com.example.farmersecom.features.communitySection.presentation.postDetails.PostDetailsFragment"
+        android:label="@string/post_details"
+        tools:layout="@layout/fragment_post_details" />
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.example.farmersecom.features.communitySection.presentation.editPost.EditPostFragment"
+        android:label="@string/edit_community_post"
+        tools:layout="@layout/fragment_edit_post" >
+        <action
+            android:id="@+id/action_editPostFragment_to_communityContributionsFragment"
+            app:destination="@id/communityContributionsFragment" />
+    </fragment>
 
 
 </navigation>

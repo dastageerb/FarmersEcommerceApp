@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.communitySection.presentation.postDetails.PostDetailsFragment">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:indeterminateTint="@color/colorPrimary"
+        android:id="@+id/fragmentPostDetailsProgressBar"
+        />
+
+    <RelativeLayout
+        android:id="@+id/fragmentPostDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/fragmentPostDetailsImageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_place_holder" />
+
+        <TextView
+            android:id="@+id/fragmentPostDetailsTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragmentPostDetailsImageView"
+            android:layout_marginTop="16sp"
+            android:text="@string/post_title"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginStart="16dp"
+            android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtPublishedBy"
+                android:text="@string/published_by"
+                android:layout_below="@id/fragmentPostDetailsTitleTextView"
+                android:textSize="14sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragmentPostDetailsPublisherName"
+            android:text="@string/name"
+            android:layout_marginStart="4dp"
+            android:layout_below="@id/fragmentPostDetailsTitleTextView"
+            android:textSize="14sp"
+            android:layout_toEndOf="@id/txtPublishedBy"
+            />
+
+        <TextView
+            android:id="@+id/txtPublishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragmentPostDetailsTitleTextView"
+            android:layout_toStartOf="@id/fragmentPostDetailsCreatedDate"
+            android:text="@string/published_on"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragmentPostDetailsCreatedDate"
+            android:text="@string/date"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_below="@id/fragmentPostDetailsTitleTextView"
+            android:textSize="14sp"
+            android:layout_alignParentEnd="true"
+            />
+
+        <View
+            android:id="@+id/postSeperatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/txtPublishedBy"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorGrey"
+            />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/postSeperatorView"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragmentPostDetailsDescription"
+                android:text="@string/description_in_detail"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                />
+        </ScrollView>
+
+
+        <!--        <TextView-->
+<!--            android:id="@+id/fragmentPostDetailsDescriptionTextView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/fragmentPostDetailsTitleTextView"-->
+<!--            android:layout_marginTop="16sp"-->
+<!--            android:text="@string/post_title"-->
+<!--            />-->
+
+    </RelativeLayout>
+
+</RelativeLayout>

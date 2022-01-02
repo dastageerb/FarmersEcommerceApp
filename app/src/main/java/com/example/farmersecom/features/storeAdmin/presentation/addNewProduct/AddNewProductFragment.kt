@@ -245,7 +245,7 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
         {
 
             val productName = editTextAddNewProductName.text.toString().trim();
-            val productDescription = editTextAddNewProductDescription.text.toString().trim();
+            val productDescription = fragmentAddPostDescriptionEditText.text.toString().trim();
 
             /// Get Selected Quantity Button Id first
             val quantityButtonId   = buttonProductQuantityUnitGroup.checkedButtonId
@@ -305,7 +305,7 @@ class AddNewProductFragment : BaseFragment<FragmentAddNewProductBinding>() , Vie
     {
 
         return name.nonEmpty { binding.editTextAddNewProductName.error = it }
-                && description.nonEmpty { binding.editTextAddNewProductDescription.error = it}
+                && description.nonEmpty { binding.fragmentAddPostDescriptionEditText.error = it}
                 && unit.nonEmpty { requireContext().showToast(getString(R.string.plz_select_product_unit)) }
                 && category.nonEmpty() { binding.autoCompleteAddNewProductProductCategory.error = it }
                 && productPrice.nonEmpty() { binding.editTextAddNewProductPriceInRupees.error = it }

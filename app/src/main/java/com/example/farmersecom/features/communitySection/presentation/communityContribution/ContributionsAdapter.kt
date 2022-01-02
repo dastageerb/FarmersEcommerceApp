@@ -1,22 +1,13 @@
-package com.example.farmersecom.features.communitySection.presentation.communitySection
+package com.example.farmersecom.features.communitySection.presentation.communityContribution
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.databinding.LayoutCommunityContributionsItemBinding
-import com.example.farmersecom.databinding.LayoutCommunityPostItemBinding
-import com.example.farmersecom.databinding.LayoutMoreItemBinding
 import com.example.farmersecom.features.communitySection.domain.models.Post
-import com.example.farmersecom.features.home.domain.model.MoreProductsResponseItem
-import com.example.farmersecom.features.home.domain.model.more.MoreProduct
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
-import java.text.DateFormat
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ContributionsAdapter(val onPostSelected:(postId:String)->Unit) : ListAdapter<Post,ContributionsAdapter.ViewHolder>
     (object : DiffUtil.ItemCallback<Post>()
@@ -50,9 +41,13 @@ class ContributionsAdapter(val onPostSelected:(postId:String)->Unit) : ListAdapt
 
             binding.layoutCommunityContributionDeleteImageView.setOnClickListener()
             {
-             //   post?.id?.let { it1 -> onPostSelected(it1) }
+                post?.id?.let { it1 -> onPostDeleteListener?.let { it2 -> it2(it1) } }
             }
 
+            binding.layoutCommunityContributionEditImageView.setOnClickListener()
+            {
+                post?.id?.let { it1 -> onPostEditListener?.let { it2 -> it2(it1) } }
+            }
 
 
 
@@ -78,6 +73,23 @@ class ContributionsAdapter(val onPostSelected:(postId:String)->Unit) : ListAdapt
         }
 
     } // onBindViewHolder closed
+
+
+
+    private var onPostDeleteListener:((postId:String)->Unit)? =null
+    fun onPostDeleteClicked(listener:(postId:String)->Unit)
+    {
+        onPostDeleteListener = listener
+    }
+
+
+
+    private var onPostEditListener:((postId:String)->Unit)? =null
+    fun onEditPostClicked(listener:(postId:String)->Unit)
+    {
+        onPostEditListener= listener
+    }
+
 
 
 }

@@ -11,7 +11,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 
-class CommunityRepositoryImpl(private val communityApi: CommunityApi,private val homeApi: HomeApi) : CommunityRepository
+class CommunityRepositoryImpl(private val communityApi: CommunityApi,private val homeApi: HomeApi)
+    : CommunityRepository
 {
 
     override suspend fun getAllPosts(): Response<GetPostsResponse>
@@ -36,7 +37,7 @@ class CommunityRepositoryImpl(private val communityApi: CommunityApi,private val
 
 
 
-    override suspend fun updatePost(postId: String, title: String, description: String, image: MultipartBody.Part): Response<StatusMsgResponse>
+    override suspend fun updatePost(postId: String, title: String, description: String, image: MultipartBody.Part?): Response<StatusMsgResponse>
     {
         val titleReqBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
         val descriptionReqBody = description.toRequestBody("text/plain".toMediaTypeOrNull())

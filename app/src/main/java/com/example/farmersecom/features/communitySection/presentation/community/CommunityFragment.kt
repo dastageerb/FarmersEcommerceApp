@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
@@ -84,7 +85,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>()
     {
         communityPostAdapter = CommunityPostAdapter ()
         {
-
+                viewModel.setPostId(it)
+            findNavController().navigate(R.id.action_communityFragment_to_postDetailsFragment)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = communityPostAdapter

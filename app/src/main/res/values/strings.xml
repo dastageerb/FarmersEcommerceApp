@@ -141,5 +141,18 @@
     <string name="buyer_dashboard">Buyer Dashboard</string>
     <string name="community_contributions">Community Contributions</string>
 
+    <string name="post_title">Post Title</string>
+    <string name="post_description">Post Description</string>
+    <string name="add_post">Add Post</string>
+    <string name="add_image">Add Image</string>
+    <string name="select_image">Please Select Image</string>
+    <string name="add_community_post">Add Community Post</string>
+    <string name="published_by">Published by</string>
+    <string name="published_on">Published On</string>
+    <string name="post_details">Post Details</string>
+    <string name="app_needs_permissions_to_pick_image">App Needs Permission to Pick Image</string>
+    <string name="update_post">Update Post</string>
+    <string name="edit_community_post">Edit Community Post</string>
+
 
 </resources>

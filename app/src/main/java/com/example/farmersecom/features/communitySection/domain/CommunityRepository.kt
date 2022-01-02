@@ -23,7 +23,7 @@ interface CommunityRepository
 
     suspend fun addPost(title:String,description:String,image:MultipartBody.Part):Response<StatusMsgResponse>
 
-    suspend fun updatePost(postId:String,title:String,description:String,image:MultipartBody.Part):Response<StatusMsgResponse>
+    suspend fun updatePost(postId:String,title:String,description:String,image:MultipartBody.Part?):Response<StatusMsgResponse>
 
     suspend fun deletePost(postId:String):Response<StatusMsgResponse>
 

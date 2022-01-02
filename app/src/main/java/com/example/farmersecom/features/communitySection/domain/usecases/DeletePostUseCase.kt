@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DeletePostUseCase @Inject constructor(private val communityRepository: CommunityRepository)
 {
 
-    suspend fun deletePost(postId:String,title:String,description:String,image: MultipartBody.Part)
+    suspend fun deletePost(postId:String)
     = communityRepository.deletePost(postId)
 
 } // addProductUseCase closed

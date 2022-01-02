@@ -54,7 +54,37 @@ class MainActivity : AppCompatActivity()
                         navController.navigate(R.id.profileFragment)
                     }
                 }
-            }
+                R.id.communityFragment ->
+                {
+                    if(navController.currentDestination?.id != R.id.communityFragment)
+                    {
+                    navController.navigate(R.id.communityFragment)
+                    }
+                }
+                R.id.searchFragment ->
+                {
+                    if(navController.currentDestination?.id != R.id.searchFragment)
+                    {
+                        navController.navigate(R.id.searchFragment)
+                    }
+                }
+                R.id.homeFragment ->
+                {
+                    if(navController.currentDestination?.id != R.id.homeFragment)
+                    {
+                        navController.navigate(R.id.homeFragment)
+                    }
+                }
+                R.id.cartFragment->
+                {
+                    if(navController.currentDestination?.id != R.id.cartFragment)
+                    {
+                        navController.navigate(R.id.cartFragment)
+                    }
+                }
+
+
+            } /// when closed
         }
         setupActionBarWithNavController(navController,appBarConfiguration)
 
