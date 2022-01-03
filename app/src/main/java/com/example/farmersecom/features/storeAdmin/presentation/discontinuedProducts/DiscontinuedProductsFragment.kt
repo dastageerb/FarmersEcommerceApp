@@ -75,6 +75,7 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
                     {
                         is NetworkResource.Success ->
                         {
+
                             Timber.tag(Constants.TAG).d("${it.data}")
                             requireContext().showToast(it.data?.message.toString())
                         binding.fragmentDiscontinuedProductsProgressBar.hide()
@@ -109,6 +110,10 @@ class DiscontinuedProductsFragment : BaseFragment<FragmentDiscontinuedProductsBi
                     {
                         is NetworkResource.Success ->
                         {
+                            if(it.data.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_discontinued_yet))
+                            }
                             binding.fragmentDiscontinuedProductsProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             productStatusAdapter.submitList(it.data)

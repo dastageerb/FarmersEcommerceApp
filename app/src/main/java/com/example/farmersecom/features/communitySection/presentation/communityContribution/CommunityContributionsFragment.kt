@@ -74,12 +74,13 @@ class CommunityContributionsFragment : BaseFragment<FragmentCommunityContributio
                         }
                         is NetworkResource.Error ->
                         {
+                            Timber.tag(TAG).d(it.msg)
                             binding.fragmentCommunityContributionsProgressBar.hide()
                         }
                         is NetworkResource.Success ->
                         {
                             binding.fragmentCommunityContributionsProgressBar.hide()
-                           communityContributionsAdapter.submitList(it.data?.posts)
+                           communityContributionsAdapter.submitList(it.data?.posts!!)
                             Timber.tag(Constants.TAG).d(it.data?.posts.toString())
                         }
                     } // when closed

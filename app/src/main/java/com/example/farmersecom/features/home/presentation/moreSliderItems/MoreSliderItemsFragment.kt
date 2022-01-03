@@ -20,6 +20,7 @@ import com.example.farmersecom.features.home.presentation.SharedViewModel
 import com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsViewModel
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -71,6 +72,10 @@ class MoreSliderItemsFragment : BaseFragment<FragmentMoreSliderItemsBinding>()
                     {
                         is NetworkResource.Success ->
                         {
+                            if(it.data?.products.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_items_found_in))
+                            }
                             binding.moreSliderItemsFragmentProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data?.products}")
                             moreItemsAdapter.submitList(it.data?.products)
@@ -79,6 +84,7 @@ class MoreSliderItemsFragment : BaseFragment<FragmentMoreSliderItemsBinding>()
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.moreSliderItemsFragmentProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
                         is NetworkResource.Loading ->

@@ -3,6 +3,7 @@ package com.example.farmersecom.base
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -11,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.databinding.ActivityMainBinding
+import com.example.farmersecom.features.launchingScreen.LaunchingScreenViewModel
 import com.example.farmersecom.utils.constants.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -19,6 +21,8 @@ import timber.log.Timber
 class MainActivity : AppCompatActivity()
 {
     private lateinit var navController: NavController;
+
+
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity()
         val navHostFragment =
                 supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
+
 
 
         val appBarConfiguration = AppBarConfiguration(

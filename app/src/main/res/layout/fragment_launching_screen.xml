@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.launchingScreen.LaunchingScreenFragment">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="100dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/fragmentLaunchingScreenLogoCardView"
+        android:layout_above="@id/textViewSlogan"
+        android:layout_marginBottom="16dp"
+        >
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/fambazzar"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            />
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <TextView
+        android:id="@+id/textViewSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from_farm_to_kitchen"
+        android:layout_above="@id/fragmentLaunchingScreenLanguageButtonGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/fragmentLaunchingScreenLanguageButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@id/fragmentLaunchingScreenEnglishButton"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        >
+        <Button
+            android:id="@+id/fragmentLaunchingScreenEnglishButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="English"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <Button
+            android:id="@+id/fragmentLaunchingScreenSindhiButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="@string/sindhi"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            />
+
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/small_button_bg"
+        android:text="@string/continue_"
+        android:textColor="@color/white"
+        android:layout_below="@id/fragmentLaunchingScreenLanguageButtonGroup"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:id="@+id/fragmentLaunchingScreenButtonContinue"
+        />
+
+
+</RelativeLayout>

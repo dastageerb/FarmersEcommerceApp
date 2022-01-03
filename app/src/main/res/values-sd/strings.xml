@@ -1,6 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FarmersEcom</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+
+
+
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -161,10 +167,15 @@
     <string name="don_t_have_account">Don\'t have Account ?</string>
 
     <string name="create_account">Create Account</string>
+
+
+
     <string name="enter_query_to_search">Please Enter Query to Search</string>
     <string name="sindhi">Sindhi</string>
-    <string name="from_farm_to_kitchen">From Farm to Kitchen</string>
+    <string name="from_farm_to_kitchen">فارم کان باورچی خانه تائين</string>
     <string name="continue_">Continue</string>
+
+
     <string name="cancel_order">Cancel Order</string>
 
     <string name="order_details_not_loaded">Order Details are not loaded yet</string>
@@ -175,14 +186,16 @@
     <string name="no_active_orders_yet">No Active Orders Yet</string>
     <string name="no_active_products">No Active Products</string>
     <string name="no_discontinued_yet">No Product is Discontinued Yet</string>
+
+
+
     <string name="no_results_found">No Results Found</string>
     <string name="enter_text">Please Enter Some Text</string>
-    <string name="fambazzar">FamBazzar</string>
-
-
+    <string name="fambazzar">فام بازار</string>
     <string name="no_items_found_in">Sorry , No Products Found</string>
 
-    <!--    <string name="create_account">Create Account</string>-->
+
+
 
 
 </resources>

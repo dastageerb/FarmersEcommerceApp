@@ -19,6 +19,7 @@ import com.example.farmersecom.features.home.presentation.MoreItemsAdapter
 import com.example.farmersecom.features.home.presentation.SharedViewModel
 import com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -74,18 +75,26 @@ class SeeAllLatestItemsFragment : BaseFragment<FragmentSeeAllLatestItemsBinding>
                     {
                         is NetworkResource.Success ->
                         {
+                            if(it.data?.products.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_items_found_in))
+                            }
+
+                            binding.moreSeeAllLatestFragmentProgressBar.hide()
                          //   binding.moreSliderItemsFragmentProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data?.products}")
                             moreItemsAdapter.submitList(it.data?.products)
-
                             Timber.tag(Constants.TAG).d("after success -> ${moreItemsAdapter.itemCount}")
                         }
                         is NetworkResource.Error ->
                         {
+
+                            binding.moreSeeAllLatestFragmentProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
                         is NetworkResource.Loading ->
                         {
+                            binding.moreSeeAllLatestFragmentProgressBar.show()
                            // binding.moreSliderItemsFragmentProgressBar.show()
                         }
                     }// when closed

@@ -11,6 +11,7 @@ import com.example.farmersecom.features.authentication.domain.useCases.ForgotPas
 import com.example.farmersecom.features.authentication.domain.useCases.LogInViaEmail
 import com.example.farmersecom.features.home.domain.usecases.UpdateFCMToken
 import com.example.farmersecom.features.storeAdmin.domain.model.StatusMsgResponse
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.handleErros.ErrorBodyExtension.getMessage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -46,6 +48,7 @@ class LogInViewModel @Inject constructor(private val login:LogInViaEmail,
         try
         {
             val response = login.logInViaEmail(logInData)
+            Timber.tag(TAG).d("response code"+response.code())
             _loginResponse.emit(handleResponse(response))
         }catch (e:Exception)
         {

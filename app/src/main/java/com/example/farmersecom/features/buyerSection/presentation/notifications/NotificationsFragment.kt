@@ -39,39 +39,39 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding>()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getBuyerNotifications()
-        subscribeToBuyerCurrentOrdersResponseFlow()
+  //      viewModel.getBuyerNotifications()
+//        subscribeToBuyerCurrentOrdersResponseFlow()
     } // onViewCreated closed
 
-
-    private fun subscribeToBuyerCurrentOrdersResponseFlow()
-    {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
-        {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
-            {
-                viewModel.buyerNotifications.collect()
-                {
-                    when(it)
-                    {
-                        is NetworkResource.Loading ->
-                        {
-
-                        }
-                        is NetworkResource.Success ->
-                        {
-                            Timber.tag(Constants.TAG).d("${it.data}")
-                            // updateViews(it.data)
-                        }
-                        is NetworkResource.Error ->
-                        {
-                            Timber.tag(Constants.TAG).d("${it.msg}")
-                        }
-                    }// when closed
-                } // getProfile closed
-            } // repeatOnLife cycle closed
-        } /// lifecycleScope closed
-    } // subscribeToSearchResponseFlow
+//
+//    private fun subscribeToBuyerCurrentOrdersResponseFlow()
+//    {
+//        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+//        {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+//            {
+//                viewModel.buyerNotifications.collect()
+//                {
+//                    when(it)
+//                    {
+//                        is NetworkResource.Loading ->
+//                        {
+//
+//                        }
+//                        is NetworkResource.Success ->
+//                        {
+//                            Timber.tag(Constants.TAG).d("${it.data}")
+//                            // updateViews(it.data)
+//                        }
+//                        is NetworkResource.Error ->
+//                        {
+//                            Timber.tag(Constants.TAG).d("${it.msg}")
+//                        }
+//                    }// when closed
+//                } // getProfile closed
+//            } // repeatOnLife cycle closed
+//        } /// lifecycleScope closed
+//    } // subscribeToSearchResponseFlow
 
 
 } // NotificationsFragment

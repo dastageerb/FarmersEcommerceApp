@@ -25,6 +25,10 @@ android {
         buildConfigField("String","BASE_URL",base_url)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        resConfigs "en", "sd"
+
+
     }
 
     buildTypes {

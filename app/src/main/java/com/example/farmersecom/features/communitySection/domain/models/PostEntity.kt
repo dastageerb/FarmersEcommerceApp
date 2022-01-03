@@ -5,13 +5,13 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Post(
+data class PostEntity(
     @Json(name = "cloudinary_id")
     var cloudinaryId: String?,
     @Json(name = "createdAt")
     var createdAt: String?,
     @Json(name = "createdBy")
-    var createdBy: CreatedBy?,
+    var createdBy: String?,
     @Json(name = "description")
     var description: String?,
     @Json(name = "_id")

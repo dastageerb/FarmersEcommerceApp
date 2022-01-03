@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="200dp"
+        android:layout_centerInParent="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -49,17 +49,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/buttonLoginFragForgotPassword"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textInputLayoutP"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/textNoAccount"
-        android:background="@android:color/transparent"
         android:text="@string/forgot_password"
         android:textAllCaps="false"
-        android:layout_marginTop="8dp"
         android:textColor="@color/colorPrimaryDark" />
 
 

@@ -15,9 +15,7 @@ import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -154,27 +152,27 @@ class BuyerDashboardViewModel @Inject constructor(
      * **/
 
 
-    private var _statusMsgResponse:MutableStateFlow<NetworkResource<StatusMsgResponse>>
-            = MutableStateFlow(NetworkResource.None())
-    val statusMsgResponse: StateFlow<NetworkResource<StatusMsgResponse>>
+    private var _statusMsgResponse:MutableSharedFlow<NetworkResource<StatusMsgResponse>>
+            = MutableSharedFlow(0)
+    val statusMsgResponse: SharedFlow<NetworkResource<StatusMsgResponse>>
             = _statusMsgResponse
 
 
     fun rateProduct(productId:String,rating:Float) = viewModelScope.launch(Dispatchers.IO)
     {
-        _statusMsgResponse.value = NetworkResource.Loading()
+        _statusMsgResponse.emit( NetworkResource.Loading())
         try
         {
             val response = productRatingUseCase.rateProduct(productId,rating)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
+            _statusMsgResponse.emit( handleStatusMessageResponse(response))
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                is HttpException ->  _statusMsgResponse.emit( NetworkResource.Error(e.message))
                 else ->
                 {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                    _statusMsgResponse.emit( NetworkResource.Error(e.message))
                 }
             } // when closed
         }
@@ -183,64 +181,65 @@ class BuyerDashboardViewModel @Inject constructor(
 
     fun cancelOrder(orderId:String) = viewModelScope.launch(Dispatchers.IO)
     {
-        _statusMsgResponse.value = NetworkResource.Loading()
+        _statusMsgResponse.emit( NetworkResource.Loading())
         try
         {
             val response = cancelOrderUseCase.cancelOrder(orderId)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
+            _statusMsgResponse.emit( handleStatusMessageResponse(response))
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+                is HttpException ->  _statusMsgResponse.emit( NetworkResource.Error(e.message))
                 else ->
                 {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+                    _statusMsgResponse.emit( NetworkResource.Error(""+e.message))
                 }
             } // when closed
         }
     } //   closed
 
 
-    fun addProductToFavourites(productId:String) = viewModelScope.launch(Dispatchers.IO)
-    {
-        _statusMsgResponse.value = NetworkResource.Loading()
-        try
-        {
-            val response = addProductsToFavourites.addProductToFavourites(productId)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
-        }catch (e:Exception)
-        {
-            when (e)
-            {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
-                else ->
-                {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
-                }
-            } // when closed
-        }
-    } //   closed
 
-    fun removeProductsFromFavourites(productId:String) = viewModelScope.launch(Dispatchers.IO)
-    {
-        _statusMsgResponse.value = NetworkResource.Loading()
-        try
-        {
-            val response = removeProductFromFavourites.removeProductFromFavourites(productId)
-            _statusMsgResponse.value = handleStatusMessageResponse(response)
-        }catch (e:Exception)
-        {
-            when (e)
-            {
-                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
-                else ->
-                {
-                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
-                }
-            } // when closed
-        }
-    } //   closed
+//    fun addProductToFavourites(productId:String) = viewModelScope.launch(Dispatchers.IO)
+//    {
+//        _statusMsgResponse.value = NetworkResource.Loading()
+//        try
+//        {
+//            val response = addProductsToFavourites.addProductToFavourites(productId)
+//            _statusMsgResponse.value = handleStatusMessageResponse(response)
+//        }catch (e:Exception)
+//        {
+//            when (e)
+//            {
+//                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+//                else ->
+//                {
+//                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+//                }
+//            } // when closed
+//        }
+//    } //   closed
+//
+//    fun removeProductsFromFavourites(productId:String) = viewModelScope.launch(Dispatchers.IO)
+//    {
+//        _statusMsgResponse.value = NetworkResource.Loading()
+//        try
+//        {
+//            val response = removeProductFromFavourites.removeProductFromFavourites(productId)
+//            _statusMsgResponse.value = handleStatusMessageResponse(response)
+//        }catch (e:Exception)
+//        {
+//            when (e)
+//            {
+//                is HttpException ->  _statusMsgResponse.value = NetworkResource.Error("Something went wrong")
+//                else ->
+//                {
+//                    _statusMsgResponse.value = NetworkResource.Error(""+e.message)
+//                }
+//            } // when closed
+//        }
+//    } //   closed
 
 
 

@@ -34,6 +34,8 @@ class OrderDetailsForSellerFragment : BaseFragment<FragmentOrderDetailsForSeller
 
 
     val orderStatusList = arrayOf("pending","inProcess","ship","complete")
+
+
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentOrderDetailsForSellerBinding
     {
         return FragmentOrderDetailsForSellerBinding.inflate(inflater,container,false)

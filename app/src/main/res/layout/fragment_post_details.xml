@@ -67,28 +67,29 @@
             android:id="@+id/txtPublishDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/fragmentPostDetailsTitleTextView"
-            android:layout_toStartOf="@id/fragmentPostDetailsCreatedDate"
+            android:layout_below="@id/fragmentPostDetailsPublisherName"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
             android:text="@string/published_on"
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/fragmentPostDetailsCreatedDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fragmentPostDetailsCreatedDate"
-            android:text="@string/date"
-            android:layout_marginStart="4dp"
+            android:layout_below="@id/txtPublishedBy"
+            android:layout_toEndOf="@id/txtPublishDate"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_below="@id/fragmentPostDetailsTitleTextView"
-            android:textSize="14sp"
-            android:layout_alignParentEnd="true"
-            />
+            android:text="@string/date"
+            android:textSize="14sp" />
 
         <View
             android:id="@+id/postSeperatorView"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_below="@id/txtPublishedBy"
+            android:layout_below="@id/txtPublishDate"
             android:layout_marginTop="8dp"
             android:background="@color/colorGrey"
             />
@@ -97,19 +98,17 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/postSeperatorView"
-            >
+            android:layout_below="@id/postSeperatorView">
 
             <TextView
+                android:id="@+id/fragmentPostDetailsDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragmentPostDetailsDescription"
-                android:text="@string/description_in_detail"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:textSize="16sp"
                 android:layout_marginTop="16dp"
-                />
+                android:layout_marginEnd="8dp"
+                android:text="@string/description_in_detail"
+                android:textSize="16sp" />
         </ScrollView>
 
 

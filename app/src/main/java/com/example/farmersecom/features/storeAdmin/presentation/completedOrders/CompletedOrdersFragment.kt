@@ -19,6 +19,9 @@ import com.example.farmersecom.databinding.FragmentCompletedOrdersBinding
 import com.example.farmersecom.features.buyerSection.presentation.OrderStatusAdapter
 import com.example.farmersecom.features.storeAdmin.presentation.StoreDashboardViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -63,16 +66,22 @@ class CompletedOrdersFragment : BaseFragment<FragmentCompletedOrdersBinding>()
                     {
                         is NetworkResource.Loading ->
                         {
-
+                            binding.fragmentCompletedOrdersProgressBar.show()
                         }
                         is NetworkResource.Success ->
                         {
+                            if(it.data?.orders.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_completed_orders_yet))
+                            }
+                            binding.fragmentCompletedOrdersProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             orderStatusAdapter.submitList(it.data?.orders)
                             // updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.fragmentCompletedOrdersProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
                     }// when closed

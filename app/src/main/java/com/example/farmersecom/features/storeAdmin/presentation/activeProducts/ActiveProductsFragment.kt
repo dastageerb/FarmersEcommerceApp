@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentActiveProductsBinding
 import com.example.farmersecom.features.storeAdmin.presentation.ProductStatusAdapter
@@ -109,7 +110,10 @@ class ActiveProductsFragment : BaseFragment<FragmentActiveProductsBinding>()
                     {
                         is NetworkResource.Success ->
                         {
-
+                            if(it.data.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_active_products))
+                            }
                             binding.fragmentActiveProductsProgressBar.hide()
                          //   Timber.tag(Constants.TAG).d("${it.data}")
                             productStatusAdapter.submitList(it.data)

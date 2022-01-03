@@ -19,6 +19,9 @@ import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboard
 import com.example.farmersecom.features.buyerSection.presentation.OrderStatusAdapter
 import com.example.farmersecom.features.storeAdmin.presentation.StoreDashboardViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -65,10 +68,16 @@ class ActiveOrdersFragment :BaseFragment<FragmentActiveOrdersBinding>()
                     {
                         is NetworkResource.Loading ->
                         {
-
+                                binding.fragmentActiveOrdersProgressBar.show()
                         }
                         is NetworkResource.Success ->
                         {
+                            binding.fragmentActiveOrdersProgressBar.hide()
+                            if(it.data?.orders.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_active_orders_yet))
+                            }
+
                             Timber.tag(Constants.TAG).d("${it.data}")
                             orderStaAdapter.submitList(it.data?.orders)
                             // updateViews(it.data)

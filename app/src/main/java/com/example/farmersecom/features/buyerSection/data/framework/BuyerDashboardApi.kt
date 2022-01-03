@@ -31,17 +31,21 @@ interface BuyerDashboardApi
             :Response<StatusMsgResponse>
 
 
+
+
+
+    // ---------------------     Future work                       ---------------
+
+
+
+
     @POST("api/product/addToFav/{id}")
     suspend fun addProductToFavourites(@Path("id")orderId:String)
             :Response<StatusMsgResponse>
 
-   // @POST("api/product/addToFav/{id}")
+    // @POST("api/product/addToFav/{id}")
     suspend fun removeProductFromFavourites(@Path("id")orderId:String)
             :Response<StatusMsgResponse>
-
-
-
-
 
 
     // TODO

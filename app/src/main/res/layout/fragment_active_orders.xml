@@ -11,4 +11,15 @@
         android:layout_height="wrap_content"
         />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentActiveOrdersProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+
+        />
+
+
 </RelativeLayout>

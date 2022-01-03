@@ -1,10 +1,9 @@
 package com.example.farmersecom.features.communitySection.presentation.community
 
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +16,7 @@ import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentCommunityBinding
 import com.example.farmersecom.features.communitySection.presentation.CommunitySectionViewModel
 import com.example.farmersecom.utils.constants.Constants.TAG
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
 import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
@@ -28,7 +28,7 @@ import timber.log.Timber
 
 
 @AndroidEntryPoint
-class CommunityFragment : BaseFragment<FragmentCommunityBinding>()
+class CommunityFragment : BaseFragment<FragmentCommunityBinding>(),SearchView.OnQueryTextListener
 {
 
 
@@ -43,7 +43,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
         setupRecyclerVie(binding.fragmentCommunityRecyclerView)
         viewModel.getAllCommunityPosts()
         subscribeToCommunityPostsResponse()
@@ -90,6 +90,54 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>()
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = communityPostAdapter
+    } // setupRecyclerView closed
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search,menu)
+
+        val menuItem = menu?.findItem(R.id.menu_search)
+        val searchView = menuItem?.actionView  as? SearchView
+
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+
+
+    } // oncreateOptionsMenu
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        when(item.itemId)
+        {
+            R.id.menu_search ->
+            {
+
+            }
+        } // when closed
+        return super.onOptionsItemSelected(item)
+    } // onOptionsItemSelected
+
+    // Community search
+
+    override fun onQueryTextSubmit(query: String?): Boolean
+    {
+
+        if(query!=null)
+        {
+            viewModel.getSearchCommunityPosts(query)
+        }else
+        {
+            requireContext().showToast(getString(R.string.enter_query_to_search))
+        }
+        return true
+    } // onQueryTextSubmit closed
+
+    override fun onQueryTextChange(newText: String?): Boolean
+    {
+
+        return true
     }
 
 

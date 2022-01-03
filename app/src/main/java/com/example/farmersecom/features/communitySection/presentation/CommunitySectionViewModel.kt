@@ -120,6 +120,39 @@ class CommunitySectionViewModel
     } // getUserContribution Posts closed
 
 
+
+    fun getSearchCommunityPosts(query:String) = viewModelScope.launch(Dispatchers.IO)
+    {
+        _getCommunityPostsResponse.value = NetworkResource.Loading()
+        if(application.applicationContext.hasInternetConnection())
+        {
+            try
+            {
+                val response = getSearchedPostsUseCase.getSearchedPostsUseCase(query)
+                _getCommunityPostsResponse.value = handleCommunityPostsResponse(response)
+
+            } catch (e:Exception)
+            {
+                when(e)
+                {
+                    is HttpException ->
+                    {
+                        _getCommunityPostsResponse.value =NetworkResource.Error(e.message)
+                    }
+                    else ->
+                    {
+                        _getCommunityPostsResponse.value =NetworkResource.Error(e.message)
+                    } // else closed
+                } // when closed
+            } // catch closed
+        } // if closed
+        else
+        {
+            _getCommunityPostsResponse.value =NetworkResource.Error(application.applicationContext.getString(R.string.no_internet_connection))
+        }
+    } // getUserContribution Posts closed
+
+
     private fun handleCommunityPostsResponse(response: Response<GetPostsResponse>): NetworkResource<GetPostsResponse>
     {
         return when(response.code())
@@ -200,6 +233,9 @@ class CommunitySectionViewModel
         {
             val response = addCommunityPostUseCase.addCommunityPost(title,description,convertImageToMultiPart(imageUri))
             _statusMsgResponse.emit(handleStatusMessageResponse(response))
+
+
+
             //     _statusMsgResponse.value = handleStatusMessageResponse(response)
         }catch (e:Exception)
         {
@@ -216,23 +252,23 @@ class CommunitySectionViewModel
 
 
 
-    fun editORUpdatePost(postId:String,title:String,description:String ,imageUri: Uri?=null) = viewModelScope.launch(Dispatchers.IO)
+    fun editORUpdatePost(postId:String,title:String,description:String,imageUri:MultipartBody.Part?=null) = viewModelScope.launch(Dispatchers.IO)
     {
         _statusMsgResponse.emit(NetworkResource.Loading())
         //   _statusMsgResponse.value = NetworkResource.Loading()
         try
         {
-            val response = updateCommunityPostUseCase.updateCommunityPost(postId,title,description,convertImageToMultiPart(imageUri))
+            val response = updateCommunityPostUseCase.updateCommunityPost(postId,title,description,imageUri)
             _statusMsgResponse.emit(handleStatusMessageResponse(response))
             //     _statusMsgResponse.value = handleStatusMessageResponse(response)
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message)) }
+                is HttpException ->{  _statusMsgResponse.emit(NetworkResource.Error(e.message+"this")) }
                 else ->
                 {
-                    _statusMsgResponse.emit(NetworkResource.Error(e.message))
+                    _statusMsgResponse.emit(NetworkResource.Error(e.message+"that"))
                 }
             } // when closed
         }
@@ -272,7 +308,7 @@ class CommunitySectionViewModel
         return when(response.code())
         {
             200,201 -> NetworkResource.Success(response.body())
-            400,404 -> NetworkResource.Error(response.errorBody()?.getMessage())
+            400,404 -> NetworkResource.Error(response.errorBody()?.getMessage()+response.code())
             else -> NetworkResource.Error("Error + ${response.code()}")
         } // when closed
     }
@@ -308,7 +344,7 @@ class CommunitySectionViewModel
     // util method
 
 
-    private fun convertImageToMultiPart(imageUri: Uri? =null): MultipartBody.Part
+     fun convertImageToMultiPart(imageUri: Uri? =null): MultipartBody.Part
     {
         val file = imageUri?.toFile()
         val requestFile = file?.asRequestBody(application.applicationContext.contentResolver.getType(imageUri)?.toMediaTypeOrNull())

@@ -21,6 +21,7 @@ import com.example.farmersecom.databinding.FragmentEditPostBinding
 import com.example.farmersecom.features.communitySection.domain.models.Post
 import com.example.farmersecom.features.communitySection.presentation.CommunitySectionViewModel
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.permission.Permissions.hasStoragePermission
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
@@ -43,6 +44,8 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
 {
 
     lateinit var postImage:Uri
+
+    lateinit var currentLoadedImage:String
     private val viewModel: CommunitySectionViewModel by activityViewModels()
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentEditPostBinding
     {
@@ -55,10 +58,7 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
         super.onViewCreated(view, savedInstanceState)
 
 
-
         initViews()
-
-
 
     } // onViewCreated
 
@@ -100,10 +100,12 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
 
                 if(this::postImage.isInitialized)
                 {
-                    viewModel.editORUpdatePost(it,postTitle,postDesc,postImage)
+                    Timber.tag(TAG).d("1")
+                    viewModel.editORUpdatePost(it,postTitle,postDesc,viewModel.convertImageToMultiPart(postImage))
                 }else
                 {
-                    viewModel.editORUpdatePost(it,postTitle,postDesc)
+                    Timber.tag(TAG).d("2")
+                    viewModel.editORUpdatePost(it,title = postTitle,description = postDesc)
                 }
             } // observer closed
            // viewModel.(postTitle,postDesc,postImage)
@@ -129,6 +131,7 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
                         }
                         is NetworkResource.Error ->
                         {
+
                             Timber.tag(Constants.TAG).d(""+it.msg)
                             binding.fragmentEditPostProgressBar.hide()
                             //binding.fragmentEditProductDetailsLayout.hide()
@@ -199,8 +202,8 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
 
     private fun updateViews(post: Post?)
     {
-
-        Picasso.get().load(post?.image)
+        currentLoadedImage = post?.image.toString()
+        Picasso.get().load(currentLoadedImage)
             .into(binding.fragmentEditPostPostImageImageView, object : Callback
             {
                 override fun onSuccess()
@@ -287,9 +290,22 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
         uri?.let()
         {
             postImage = uri
-            binding.fragmentEditPostPostImageImageView.load(uri.toString())
-            // binding.fragmentStoreSettingStoreImageImageView.load(uri.toString())
-            // pass the uri to  image cropper
+
+            Picasso.get().load(uri.toString())
+                .into(binding.fragmentEditPostPostImageImageView, object : Callback
+                {
+                    override fun onSuccess()
+                    {
+                        Timber.tag(Constants.TAG).d("Success")
+                        binding.fragmentEditPostProgressBar.hide()
+                    }
+                    override fun onError(e: Exception?)
+                    {
+                        Timber.tag(Constants.TAG).d(""+e?.message)
+                        binding.fragmentEditPostProgressBar.hide()
+                    }
+                })
+
             cropGalleryImage.launch(uri)
         }
     } //
@@ -299,7 +315,24 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
         it?.let()
         { uri ->
             postImage = uri
-            binding.fragmentEditPostPostImageImageView.load(uri.toString())
+            currentLoadedImage = uri.toString()
+
+            binding.fragmentEditPostPostImageImageView.load(postImage.toString(),R.drawable.image_place_holder)
+            //binding.fragmentEditPostPostImageImageView.setImageURI(c)
+//            Picasso.get().load(currentLoadedImage)
+//                .into(binding.fragmentEditPostPostImageImageView, object : Callback
+//                {
+//                    override fun onSuccess()
+//                    {
+//                        Timber.tag(Constants.TAG).d("check Success")
+//                        binding.fragmentEditPostProgressBar.hide()
+//                    }
+//                    override fun onError(e: Exception?)
+//                    {
+//                        Timber.tag(Constants.TAG).d(" check "+e?.message)
+//                        binding.fragmentEditPostProgressBar.hide()
+//                    }
+//                })
         }
     } // pickGalleryImage result closed
 

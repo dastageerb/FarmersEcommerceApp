@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.productDetails.domain.model.NavigationEntity
 import com.example.farmersecom.utils.constants.Constants.CATEGORY
+import com.example.farmersecom.utils.constants.Constants.FIRST_LAUNCH
+import com.example.farmersecom.utils.constants.Constants.LANGUAGE
 import com.example.farmersecom.utils.constants.Constants.LOCATION
 import com.example.farmersecom.utils.constants.Constants.NAVIGATION
 import com.example.farmersecom.utils.constants.Constants.TOKEN
@@ -95,6 +97,34 @@ class SharedPrefsHelper @Inject constructor(private val prefs: SharedPreferences
         editor.putString(CATEGORY,null)
         editor.commit()
     }
+
+    /****************** Language Settings ********************************/
+
+    // language
+
+    fun setLanguage(data: String?)
+    {
+        editor.putString(LANGUAGE, data)
+        editor.commit()
+    }
+
+
+    fun getLanguage(): String?
+    {
+        return prefs.getString(LANGUAGE,"en")
+    }
+
+
+    fun isFirstLaunch():Boolean
+    {
+        return prefs.getBoolean(FIRST_LAUNCH,true)
+    }
+
+    fun changeFirstLaunch(boolean: Boolean)
+    {
+        editor.putBoolean(FIRST_LAUNCH,boolean)
+    }
+
 
 
 } // DataStoreRepo

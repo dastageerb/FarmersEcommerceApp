@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -100,6 +101,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
                     {
                         is NetworkResource.Success ->
                         {
+                            if(it.data?.products.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_results_found))
+                            }
                             binding.fragmentSearchProgressbar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             searchItemAdapter.submitList(it.data?.products)
@@ -136,7 +141,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
         {
             if (query.isEmpty())
             {
-                requireContext().showToast(" Please Enter Some Text ")
+                requireContext().showToast(getString(R.string.enter_text))
                 return@let
             } // if closed
 

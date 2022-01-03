@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentOrderDetailsForBuyerBinding
@@ -32,6 +33,8 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
 
     private val viewModel: BuyerDashboardViewModel by activityViewModels()
     private lateinit var productId:String
+    private lateinit var orderId: String
+
 
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentOrderDetailsForBuyerBinding
@@ -63,6 +66,7 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
         }
 
         binding.fragmentOrderDetailsForBuyerRateButton.setOnClickListener(this)
+        binding.fragmentOrderDetailsForBuyerCancelOrderButton.setOnClickListener(this)
 
         subscribeToStatusMessageResponses()
 
@@ -97,11 +101,13 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
                         {
                             binding.progressBarFragmentOrderDetailsForBuyer.hide()
                             binding.fragmentOrderDetailsForBuyerDetailsLayout.show()
+
                             Timber.tag(Constants.TAG).d("${it.data}")
                             updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
+                            requireContext().showToast(it.msg.toString())
                             binding.progressBarFragmentOrderDetailsForBuyer.show()
                             binding.fragmentOrderDetailsForBuyerDetailsLayout.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
@@ -115,16 +121,29 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
     private fun updateViews(data: OrderDetailsResponse?)
     {
         productId = data?.productId!!
-
+        orderId = data?.id!!
         binding.apply()
         {
 
 
+//
+//            if(data?.orderStatus.equals("completed"))
+//            {
+//            }
 
-            if(data?.orderStatus.equals("completed"))
+            when(data?.orderStatus)
             {
-                binding.fragmentOrderDetailsForBuyerRatingLayout.show()
+                "pending" ->
+                {
+                    binding.fragmentOrderDetailsForBuyerCancelOrderButton.show()
+                } // pending closed
+                "completed" ->
+                {
+                    binding.fragmentOrderDetailsForBuyerRatingLayout.show()
+                }
             }
+
+
 
             // store info
             binding.fragmentOrderDetailsForBuyerStoreNameTextView.text = data?.storeName
@@ -163,10 +182,12 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
                             Timber.tag(Constants.TAG).d("${it.data}")
                             binding.progressBarFragmentOrderDetailsForBuyer.hide()
                             requireContext().showToast(it.data?.message.toString())
+                            findNavController().navigate(R.id.action_orderDetailsFragment_to_currentOrdersFragment)
                         }
                         is NetworkResource.Error ->
                         {
 
+                            requireContext().showToast(it.msg.toString())
                             binding.progressBarFragmentOrderDetailsForBuyer.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
@@ -178,22 +199,35 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
                 } // getProfile closed
             } // repeatOnLife cycle closed
         } /// lifecycleScope closed
-    }
+    } // subscribe to Msg response closed
 
     override fun onClick(v: View?)
     {
         when(v?.id)
         {
             R.id.fragmentOrderDetailsForBuyerRateButton -> rateProduct()
+            R.id.fragmentOrderDetailsForBuyerCancelOrderButton -> cancelOrder()
         } // when closed
 
     } // onClick closed
+
+    private fun cancelOrder()
+    {
+        if(!this::orderId.isInitialized)
+        {
+            requireContext().showToast(getString(R.string.order_details_not_loaded))
+        }else
+        {
+            viewModel.cancelOrder(orderId)
+        }//
+
+    } // cancelOrder
 
     private fun rateProduct()
     {
         if(!this::productId.isInitialized)
         {
-            requireContext().showToast("Order Details are not loaded yet")
+            requireContext().showToast(getString(R.string.order_details_not_loaded))
         }else
         {
             val rating = binding.fragmentOrderDetailsForBuyerRatingBar.rating

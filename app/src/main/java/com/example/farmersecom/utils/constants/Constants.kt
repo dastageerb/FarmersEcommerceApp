@@ -10,6 +10,8 @@ object Constants
     const val TOKEN = "TOKEN"
     const val LOCATION = "LOCATION"
     const val CATEGORY = "CATEGORY"
+    const val LANGUAGE = "LANGUAGE"
+    const val FIRST_LAUNCH = "FIRST_LAUNCH"
     const val USER = "USER"
     const val NAVIGATION = "NAVIGATION"
     const val SAVED_PREFS = "SAVED_PREFS"

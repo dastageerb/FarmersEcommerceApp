@@ -19,6 +19,9 @@ import com.example.farmersecom.databinding.FragmentBuyerOrderHistoryBinding
 import com.example.farmersecom.features.buyerSection.presentation.BuyerDashboardViewModel
 import com.example.farmersecom.features.buyerSection.presentation.OrderStatusAdapter
 import com.example.farmersecom.utils.constants.Constants
+import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -66,15 +69,21 @@ class BuyerOrderHistoryFragment : BaseFragment<FragmentBuyerOrderHistoryBinding>
                     {
                         is NetworkResource.Loading ->
                         {
-
+                            binding.fragmentOrderHistoryProgressBar.show()
                         }
                         is NetworkResource.Success ->
                         {
+                            binding.fragmentOrderHistoryProgressBar.hide()
+                            if(it.data?.orders.isNullOrEmpty())
+                            {
+                                requireContext().showToast(getString(R.string.no_completed_orders_yet))
+                            }
                             Timber.tag(Constants.TAG).d("${it.data}")
                             orderStaAdapter.submitList(it.data?.orders)
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.fragmentOrderHistoryProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
                         }
                     }// when closed
