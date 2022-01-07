@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
+import java.util.*
 
 abstract class BaseFragment<VB:ViewBinding> : Fragment()
 {
@@ -32,6 +33,10 @@ abstract class BaseFragment<VB:ViewBinding> : Fragment()
         super.onDestroyView()
         _binding = null
     } // onDestroy closed
+
+
+
+
 
 
 

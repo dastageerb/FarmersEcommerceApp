@@ -1,6 +1,7 @@
 package com.example.farmersecom.features.launchingScreen
 
 import android.content.res.Configuration
+import android.location.LocationManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentLaunchingScreenBinding
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.google.android.material.button.MaterialButton
+import com.ninenox.kotlinlocalemanager.LocaleManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.util.*
@@ -34,9 +36,19 @@ class LaunchingScreenFragment : BaseFragment<FragmentLaunchingScreenBinding>() ,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-//
-//            requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        if(!launchingVm.isFirstLaunch())
+        {
+            Timber.tag(TAG).d("check launch"+launchingVm.isFirstLaunch())
+            findNavController().navigate(R.id.action_launchingScreenFragment_to_homeFragment)
+           // (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        }
+        else
+        {
+            Timber.tag(TAG).d("check launch"+launchingVm.isFirstLaunch())
+
+        }
 
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
@@ -46,13 +58,6 @@ class LaunchingScreenFragment : BaseFragment<FragmentLaunchingScreenBinding>() ,
         binding.fragmentLaunchingScreenButtonContinue.setOnClickListener(this)
 
 
-        if(!launchingVm.isFirstLaunch())
-        {
-            findNavController().navigate(R.id.action_launchingScreenFragment_to_homeFragment)
-        }else
-        {
-
-        }
 
 
     } // onViewCreated closed
@@ -67,6 +72,7 @@ class LaunchingScreenFragment : BaseFragment<FragmentLaunchingScreenBinding>() ,
             }
             R.id.fragmentLaunchingScreenSindhiButton ->
             {
+
                 setLocale("sd")
             }
             R.id.fragmentLaunchingScreenEnglishButton ->
@@ -80,28 +86,26 @@ class LaunchingScreenFragment : BaseFragment<FragmentLaunchingScreenBinding>() ,
 
     private fun setLocale(language: String)
     {
-        Timber.tag(TAG).d(language)
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        val configuration =  Configuration()
-        configuration.locale = locale
-        requireContext().resources.updateConfiguration(configuration,requireContext().resources.displayMetrics)
+        val localeManager:LocaleManager = LocaleManager(requireContext())
+        localeManager.setNewLocale(requireContext(),language)
+        LocaleManager(requireContext()).language.toString()
+        activity?.recreate()
+
+//        Timber.tag(TAG).d(language)
+//        val locale = Locale(language)
+//        Locale.setDefault(locale)
+//        val configuration =  Configuration()
+//        configuration.locale = locale
+//        requireContext().resources.updateConfiguration(configuration,requireContext().resources.displayMetrics)
 
     }
 
     private fun continueFurther()
     {
 
-        val quantityButtonId   = binding.fragmentLaunchingScreenLanguageButtonGroup.checkedButtonId
-
-        val language = binding.fragmentLaunchingScreenLanguageButtonGroup
-            .findViewById<MaterialButton>(quantityButtonId).text.toString()
-
+        launchingVm.changeFirstLaunch(false)
         findNavController().navigate(R.id.action_launchingScreenFragment_to_homeFragment)
-
-
-
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+      //  (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 
     } // continueFurther closed
 

@@ -115,6 +115,8 @@ class CartCheckOutFragment : BaseFragment<FragmentCartCheckOutBinding>()
             binding.fragmentCartCheckOutCustomerPostalCodeEditText.setText(it.postalCode.toString())
             binding.fragmentCartCheckOutCustomerAddressEditText.setText(it.address)
             binding.fragmentCartCheckOutCustomerCityAutoComplete.setText(it.city)
+            binding.fragmentCartCheckOutCustomerCityAutoComplete.setUpAdapter(requireContext(),R.array.Sindh)
+
         }
         
         

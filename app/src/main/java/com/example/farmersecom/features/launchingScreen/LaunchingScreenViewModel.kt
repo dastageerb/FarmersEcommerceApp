@@ -14,6 +14,8 @@ class LaunchingScreenViewModel @Inject constructor(val sharedPrefsHelper: Shared
     fun setLanguage(language: String?) = sharedPrefsHelper.setLanguage(language)
     fun getLanguage(): String? = sharedPrefsHelper.getLanguage()
     fun isFirstLaunch():Boolean = sharedPrefsHelper.isFirstLaunch()
+
+
     fun changeFirstLaunch(boolean: Boolean) = sharedPrefsHelper.changeFirstLaunch(boolean)
 
 

@@ -3,6 +3,7 @@ package com.example.farmersecom
 import android.content.SharedPreferences
 import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.productDetails.domain.model.NavigationEntity
+import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.CATEGORY
 import com.example.farmersecom.utils.constants.Constants.FIRST_LAUNCH
 import com.example.farmersecom.utils.constants.Constants.LANGUAGE
@@ -11,6 +12,7 @@ import com.example.farmersecom.utils.constants.Constants.NAVIGATION
 import com.example.farmersecom.utils.constants.Constants.TOKEN
 import com.example.farmersecom.utils.constants.Constants.USER
 import com.google.gson.Gson
+import timber.log.Timber
 import javax.inject.Inject
 
 class SharedPrefsHelper @Inject constructor(private val prefs: SharedPreferences,
@@ -123,6 +125,8 @@ class SharedPrefsHelper @Inject constructor(private val prefs: SharedPreferences
     fun changeFirstLaunch(boolean: Boolean)
     {
         editor.putBoolean(FIRST_LAUNCH,boolean)
+        Timber.tag(Constants.TAG).d("changed "+boolean)
+        editor.commit()
     }
 
 

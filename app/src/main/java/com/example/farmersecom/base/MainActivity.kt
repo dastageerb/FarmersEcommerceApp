@@ -1,6 +1,9 @@
 package com.example.farmersecom.base
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -14,19 +17,24 @@ import com.example.farmersecom.R
 import com.example.farmersecom.databinding.ActivityMainBinding
 import com.example.farmersecom.features.launchingScreen.LaunchingScreenViewModel
 import com.example.farmersecom.utils.constants.Constants.TAG
+import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.*
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity()
+class MainActivity : AppCompatActivityBase()
 {
     private lateinit var navController: NavController;
 
 
 
+    @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+
+
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -134,4 +142,13 @@ class MainActivity : AppCompatActivity()
     {
         return navController.navigateUp() || super.onSupportNavigateUp()
     } // onSupportNavigateUp closed
+
+
+
+
+
+
+
+
+
 }

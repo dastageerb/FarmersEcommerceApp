@@ -79,6 +79,8 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
             binding.fragmentBuyNowCustomerPostalCodeEditText.setText(it.postalCode.toString())
             binding.fragmentBuyNowCustomerAddressEditText.setText(it.address)
             binding.fragmentBuyNowCustomerCityAutoComplete.setText(it.city)
+            binding.fragmentBuyNowCustomerCityAutoComplete.setUpAdapter(requireContext(),R.array.Sindh)
+
         }
 
 

@@ -79,17 +79,16 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/fragmentLaunchingScreenButtonContinue"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/fragmentLaunchingScreenLanguageButtonGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
         android:background="@drawable/small_button_bg"
         android:text="@string/continue_"
-        android:textColor="@color/white"
-        android:layout_below="@id/fragmentLaunchingScreenLanguageButtonGroup"
-        android:layout_marginTop="24dp"
-        android:layout_centerHorizontal="true"
         android:textAllCaps="false"
-        android:id="@+id/fragmentLaunchingScreenButtonContinue"
-        />
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>

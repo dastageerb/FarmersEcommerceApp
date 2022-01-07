@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -60,7 +61,7 @@ class HomeFragment :BaseFragment<FragmentHomeBinding>(),View.OnClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 
         homeViewModel.getSliderItems()
        // homeViewModel.getHomeLatestItems()

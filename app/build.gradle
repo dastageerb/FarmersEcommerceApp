@@ -185,8 +185,9 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.9'
 
-
+    /// shimmer effect
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    implementation 'com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0'
 
 } //
