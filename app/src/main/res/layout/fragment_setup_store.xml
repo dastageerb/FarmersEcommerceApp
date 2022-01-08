@@ -52,8 +52,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Do you Provide Cash on Delivery Out Of City ?"
-        android:textSize="10sp"
+        android:text="@string/do_you_provide_cash_on_delivery_out_of_city"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
 
@@ -63,11 +63,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="No"
+        android:text="@string/no"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
 
+
+    <TextView
+        android:id="@+id/fragmentSetupStoreCodNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/code_note"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -76,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/wide_button"
         android:text="@string/setup"
         android:textColor="@color/white"
         android:layout_marginTop="36dp"

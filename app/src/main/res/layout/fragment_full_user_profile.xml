@@ -252,6 +252,20 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/fragmentFullUserProfileChangeLanguageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/wide_button"
+                    android:drawableLeft="@drawable/ic_baseline_language_24"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/change_language"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/fragmentFullUserProfileEditPersonalInfoButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

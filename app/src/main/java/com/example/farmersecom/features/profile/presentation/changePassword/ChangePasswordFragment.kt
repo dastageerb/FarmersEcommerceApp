@@ -102,6 +102,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>()
                             viewModel.clearToken()
                             viewModel.clearFiltersOnLogOut()
                             viewModel.clearCartOnLogout()
+                            viewModel.clearUser()
                             findNavController().navigate(R.id.action_changePasswordFragment_to_logInFragment)
                             requireContext().showToast(it.data?.message.toString())
                         }

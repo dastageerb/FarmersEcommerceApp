@@ -107,20 +107,32 @@ class PostDetailsFragment : BaseFragment<FragmentPostDetailsBinding>()
     private fun updateViews(post: Post?)
     {
 
-
-
         Picasso.get().load(post?.image)
             .into(binding.fragmentPostDetailsImageView, object : Callback
             {
                 override fun onSuccess()
                 {
                     Timber.tag(TAG).d("Success")
-                    binding.fragmentPostDetailsProgressBar.hide()
+                    try
+                    {
+                        binding.fragmentPostDetailsProgressBar.hide()
+                    }catch (e:Exception)
+                    {
+
+                    }
+
                 }
                 override fun onError(e: Exception?)
                 {
-                    Timber.tag(TAG).d(""+e?.message)
-                    binding.fragmentPostDetailsProgressBar.hide()
+
+                    Timber.tag(TAG).d("Success")
+                    try
+                    {
+                        binding.fragmentPostDetailsProgressBar.hide()
+                    }catch (e:Exception)
+                    {
+
+                    }
                 }
             })
        // binding.fragmentPostDetailsImageView.load(post?.image)
@@ -132,5 +144,11 @@ class PostDetailsFragment : BaseFragment<FragmentPostDetailsBinding>()
         binding.fragmentPostDetailsLayout.show()
     } // updateView closed
 
+
+    override fun onDestroyView()
+    {
+        super.onDestroyView()
+        _binding = null
+    }
 
 } // PostDetailsFragment closed

@@ -72,6 +72,8 @@ class FullUserProfileFragment : BaseFragment<FragmentFullUserProfileBinding>() ,
         binding.fragmentFullUserProfileChangePasswordButton.setOnClickListener(this)
         binding.fragmentFullUserProfileEditPersonalInfoButton.setOnClickListener(this)
         binding.fragmentFullUserProfileChangPhotoImageView.setOnClickListener(this)
+        binding.fragmentFullUserProfileChangeLanguageButton.setOnClickListener(this)
+
     } // initViews closed
 
 
@@ -152,6 +154,11 @@ class FullUserProfileFragment : BaseFragment<FragmentFullUserProfileBinding>() ,
                R.id.fragmentFullUserProfileEditPersonalInfoButton ->
                {
                    findNavController().navigate(R.id.action_fullUserProfileFragment_to_editPersonalInfoFragment)
+               }
+               R.id.fragmentFullUserProfileChangeLanguageButton ->
+               {
+                   findNavController().navigate(R.id.action_fullUserProfileFragment_to_changeLanguageFragment)
+
                }
            } //
     } // onClick closed

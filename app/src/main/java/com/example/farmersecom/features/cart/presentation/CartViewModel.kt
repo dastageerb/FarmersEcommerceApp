@@ -178,4 +178,7 @@ class CartViewModel @Inject constructor
     fun getUser() = sharedPrefsHelper.getUser()
 
 
+    fun getAuthToken() : String? = sharedPrefsHelper.getToken()
+
+
 } // CartViewModel

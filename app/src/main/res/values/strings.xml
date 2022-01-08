@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FarmersEcom</string>
+    <string name="app_name">FamBazzar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">Email</string>
@@ -181,6 +181,9 @@
 
 
     <string name="no_items_found_in">Sorry , No Products Found</string>
+    <string name="change_language">Change Language</string>
+    <string name="do_you_provide_cash_on_delivery_out_of_city">Do you Provide Cash on Delivery Out Of City ?</string>
+    <string name="code_note">You will need to open a Cash on delivery account on your nearest Courier service provider</string>
 
     <!--    <string name="create_account">Create Account</string>-->
 

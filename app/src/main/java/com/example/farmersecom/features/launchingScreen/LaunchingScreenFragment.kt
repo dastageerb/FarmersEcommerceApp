@@ -1,14 +1,9 @@
 package com.example.farmersecom.features.launchingScreen
 
-import android.content.res.Configuration
-import android.location.LocationManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,11 +11,9 @@ import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentLaunchingScreenBinding
 import com.example.farmersecom.utils.constants.Constants.TAG
-import com.google.android.material.button.MaterialButton
 import com.ninenox.kotlinlocalemanager.LocaleManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.util.*
 
 @AndroidEntryPoint
 class LaunchingScreenFragment : BaseFragment<FragmentLaunchingScreenBinding>() , View.OnClickListener
@@ -49,7 +42,6 @@ class LaunchingScreenFragment : BaseFragment<FragmentLaunchingScreenBinding>() ,
             Timber.tag(TAG).d("check launch"+launchingVm.isFirstLaunch())
 
         }
-
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 

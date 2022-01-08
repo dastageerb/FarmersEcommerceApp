@@ -13,7 +13,7 @@ import java.util.*
 abstract class BaseFragment<VB:ViewBinding> : Fragment()
 {
 
-    private var _binding:VB?=null
+    public var _binding:VB?=null
     val binding get() = _binding!!
 
 

@@ -66,10 +66,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
             findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
         }else
         {
-
             initViews()
             subscribeProfileResponseFlow()
-
         }
 
     } // onViewCreate closed
@@ -190,6 +188,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
                 viewModel.clearToken()
                 viewModel.clearCartOnLogout()
                 viewModel.clearFiltersOnLogOut()
+                viewModel.clearUser()
                 findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
                 this.onDestroy()
             }

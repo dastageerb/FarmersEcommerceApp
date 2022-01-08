@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".features.profile.presentation.changeLanguage.ChangeLanguageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textViewSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="@string/change_language"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="28sp"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="36dp"
+        />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/fragmentChangeLanguageLanguageButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@id/fragmentChangeLanguageEnglishButton"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        >
+        <Button
+            android:id="@+id/fragmentChangeLanguageEnglishButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="English"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <Button
+            android:id="@+id/fragmentChangeLanguageSindhiButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="@string/sindhi"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            />
+
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+
+
+
+</RelativeLayout>

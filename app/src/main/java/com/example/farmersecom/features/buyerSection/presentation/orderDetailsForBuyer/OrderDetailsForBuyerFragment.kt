@@ -182,7 +182,7 @@ class OrderDetailsForBuyerFragment : BaseFragment<FragmentOrderDetailsForBuyerBi
                             Timber.tag(Constants.TAG).d("${it.data}")
                             binding.progressBarFragmentOrderDetailsForBuyer.hide()
                             requireContext().showToast(it.data?.message.toString())
-                            findNavController().navigate(R.id.action_orderDetailsFragment_to_currentOrdersFragment)
+                            findNavController().navigate(R.id.action_orderDetailsForBuyerFragment_to_buyerOrderHistoryFragment)
                         }
                         is NetworkResource.Error ->
                         {

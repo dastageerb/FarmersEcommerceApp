@@ -69,7 +69,7 @@
     <string name="quantity_in_details">مقدار :\t </string>
     <string name="unit_in_details">مقدار يونٽ\t</string>
     <string name="description_in_detail">وضاحت</string>
-    <string name="home">گھر</string>
+    <string name="home">هوم</string>
     <string name="search_fragment">ڳولا</string>
     <string name="rs">رپيا</string>
     <string name="fragment_product_store">پيداوار جو دڪان</string>
@@ -182,8 +182,10 @@
     <string name="fambazzar">فام بازار</string>
     <string name="no_items_found_in">معاف ڪجو، ڪوبه پراڊڪٽ نه مليو</string>
 
+    <string name="change_language">ٻولي تبديل ڪريو</string>
 
-
+    <string name="do_you_provide_cash_on_delivery_out_of_city">ڇا توهان شهر کان ٻاهر پهچائڻ تي نقد فراهم ڪندا آهيو؟</string>
+    <string name="code_note">توهان کي پنهنجي ويجھي ڪوريئر سروس فراهم ڪندڙ تي ڪيش آن ڊليوري اڪائونٽ کولڻ جي ضرورت پوندي</string>
 
 
 </resources>

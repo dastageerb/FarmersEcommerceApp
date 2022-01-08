@@ -154,22 +154,23 @@ class ProfileViewModel @Inject constructor(
 
 
 
-    private val _editPersonalInfoResponse:MutableStateFlow<NetworkResource<EditPersonalInfoResponse>> = MutableStateFlow(
-        NetworkResource.None())
-    val editPersonalInfoResponse:StateFlow<NetworkResource<EditPersonalInfoResponse>> = _editPersonalInfoResponse
+    private val _editPersonalInfoResponse:MutableSharedFlow<NetworkResource<EditPersonalInfoResponse>> =
+        MutableSharedFlow(0)
+    val editPersonalInfoResponse:SharedFlow<NetworkResource<EditPersonalInfoResponse>> = _editPersonalInfoResponse
 
     fun editPersonalInfoUseCase(personalInfoEntity: EditPersonalInfoEntity) = viewModelScope.launch(Dispatchers.IO)
     {
+        _editPersonalInfoResponse.emit(NetworkResource.Loading())
         try
         {
             val response = editPersonalInfoUseCase.editPersonalInfo(personalInfoEntity)
-            _editPersonalInfoResponse.value = handleEditPersonalInfoResponse(response)
+            _editPersonalInfoResponse.emit(handleEditPersonalInfoResponse(response))
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException -> _editPersonalInfoResponse.value = NetworkResource.Error("Something went wrong")
-                else -> _editPersonalInfoResponse.value = NetworkResource.Error("No Internet Connection")
+                is HttpException -> _editPersonalInfoResponse.emit (NetworkResource.Error(e.message))
+                else -> _editPersonalInfoResponse.emit(NetworkResource.Error(e.message))
             } // when closed
         } // catch closed
     } //  getProfile closed
@@ -235,8 +236,9 @@ class ProfileViewModel @Inject constructor(
 
     fun clearToken()  = sharedPrefsHelper.clearToken()
 
+    fun clearUser() = sharedPrefsHelper.clearUser()
 
-    //TODO
+
     fun clearCartOnLogout() = viewModelScope.launch(Dispatchers.IO)
     {
         deleteAllCartItemsUseCase.deleteAllCartItem()

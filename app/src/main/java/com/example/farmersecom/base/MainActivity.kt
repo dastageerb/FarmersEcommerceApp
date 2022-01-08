@@ -10,12 +10,14 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.farmersecom.R
 import com.example.farmersecom.databinding.ActivityMainBinding
 import com.example.farmersecom.features.launchingScreen.LaunchingScreenViewModel
+import com.example.farmersecom.features.profile.presentation.ProfileViewModel
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,8 +28,7 @@ import java.util.*
 class MainActivity : AppCompatActivityBase()
 {
     private lateinit var navController: NavController;
-
-
+    private val profileViewModel:ProfileViewModel by viewModels()
 
     @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?)
@@ -115,27 +116,33 @@ class MainActivity : AppCompatActivityBase()
         Timber.tag(TAG).d("Called")
         Timber.tag(TAG).d(""+intent?.extras?.get("for"))
 
-        when(intent?.extras?.get("for"))
+        if(profileViewModel.getAuthToken()?.isEmpty() == true)
         {
-            1 ->
+            navController.navigate(R.id.logInFragment)
+        }
+        else
+        {
+            when (intent?.extras?.get("for"))
             {
+                1 ->
+                {
 
-                Timber.tag(TAG).d(""+intent?.extras?.get("for"))
-                navController.navigate(R.id.activeOrdersFragment)
-            }
-            2->
-            {
+                    Timber.tag(TAG).d("" + intent?.extras?.get("for"))
+                    navController.navigate(R.id.activeOrdersFragment)
+                }
+                2 ->
+                {
 
-                Timber.tag(TAG).d(""+intent?.extras?.get("for"))
-                navController.navigate(R.id.currentOrdersFragment)
-            }
-            3 ->
-            {
-                Timber.tag(TAG).d(""+intent?.extras?.get("for"))
-                navController.navigate(R.id.homeFragment)
-            }
-        } // when closed
-
+                    Timber.tag(TAG).d("" + intent?.extras?.get("for"))
+                    navController.navigate(R.id.currentOrdersFragment)
+                }
+                3 ->
+                {
+                    Timber.tag(TAG).d("" + intent?.extras?.get("for"))
+                    navController.navigate(R.id.homeFragment)
+                }
+            } // when closed
+        }
     } // intent closed
 
     override fun onSupportNavigateUp(): Boolean

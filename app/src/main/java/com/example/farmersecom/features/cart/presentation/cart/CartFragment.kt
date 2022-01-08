@@ -33,8 +33,15 @@ class CartFragment : BaseFragment<FragmentCartBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        setupRecycler(binding.cartFragmentRecyclerView)
-        subscribeToCartResponseFlow()
+
+        if(viewModel.getAuthToken()?.isEmpty() == true)
+        {
+            findNavController().navigate(R.id.action_cartFragment_to_logInFragment)
+        }else
+        {
+            setupRecycler(binding.cartFragmentRecyclerView)
+            subscribeToCartResponseFlow()
+        }
 
 
         binding.buttonCartFragmentCheckOut.setOnClickListener()
