@@ -7,6 +7,13 @@
     tools:context=".features.productStore.presentation.ProductStoreFragment"
     android:background="@color/colorLight"
     >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentProductStoreDetailsLayout"
+        android:visibility="gone"
+        >
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,61 +49,103 @@
 
 
         <TextView
-            android:id="@+id/fragmentProductStoreDescriptionTextView"
+            android:id="@+id/fragmentProductStoreCODStatusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Store Description"
             android:layout_below="@id/fragmentProductStoreLayout"
             android:layout_alignParentStart="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:textColor="@color/black"
-            android:paddingBottom="16dp"
-            />
+            android:text="@string/cod_out_of_city"
+            android:textColor="@color/black" />
 
+        <ImageView
+            android:id="@+id/fragmentProductStoreDeliveryOutOfCityImageView"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_below="@id/fragmentProductStoreLayout"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@id/fragmentProductStoreCODStatusTextView"
+            android:src="@drawable/ic_baseline_check_yes_outline_24" />
 
-    <LinearLayout
-        android:id="@+id/fragmentProductStoreSellerInfoLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="8dp"
-        >
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardCornerRadius="20dp"
-            android:id="@+id/fragmentProductStoreSellerImageCardView"
-            android:layout_margin="8dp"
-            >
-            <ImageView
-                android:id="@+id/fragmentProductStoreSellerImageViewView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_baseline_profile_24"
-                />
-        </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/fragmentProductStoreSellerNameTextView"
+            android:id="@+id/fragmentProductStoreDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Seller Name"
-            android:textColor="@color/black"
-            />
-    </LinearLayout>
+            android:layout_below="@id/fragmentProductStoreCODStatusTextView"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="Store Description"
+            android:textColor="@color/black" />
+
+
+        <LinearLayout
+            android:id="@+id/fragmentProductStoreSellerInfoLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="8dp"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/owner"
+                />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="20dp"
+                android:id="@+id/fragmentProductStoreSellerImageCardView"
+                android:layout_margin="8dp"
+                >
+                <ImageView
+                    android:id="@+id/fragmentProductStoreSellerImageViewView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_baseline_profile_24"
+                    />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/fragmentProductStoreSellerNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seller Name"
+                android:textColor="@color/black"
+                />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentProductStoreRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_below="@id/fragmentProductStoreDescriptionTextView"
+        android:layout_below="@id/fragmentProductStoreDetailsLayout"
         />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:id="@+id/bindingProductStoreProgressBar"
+        />
 
 </RelativeLayout>

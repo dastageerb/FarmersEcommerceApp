@@ -185,6 +185,11 @@
     <string name="do_you_provide_cash_on_delivery_out_of_city">Do you Provide Cash on Delivery Out Of City ?</string>
     <string name="code_note">You will need to open a Cash on delivery account on your nearest Courier service provider</string>
 
+
+    <string name="no_contributions_yet">No Contributions Yet</string>
+    <string name="cod_out_of_city">COD out of city</string>
+    <string name="owner">Owner</string>
+
     <!--    <string name="create_account">Create Account</string>-->
 
 

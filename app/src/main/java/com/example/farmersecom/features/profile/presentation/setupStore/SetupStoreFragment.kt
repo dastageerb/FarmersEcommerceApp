@@ -53,8 +53,12 @@ class SetupStoreFragment : BaseFragment<FragmentSetupStoreBinding>()
             if(isChecked)
             {
                 binding.fragmentStoreSetupDeliveryInfoSwitch.text = getString(R.string.yes)
+
+                binding.fragmentSetupStoreCodNote.show()
+
             }else
             {
+                binding.fragmentSetupStoreCodNote.hide()
                 binding.fragmentStoreSetupDeliveryInfoSwitch.text = getString(R.string.no)
             }
         })

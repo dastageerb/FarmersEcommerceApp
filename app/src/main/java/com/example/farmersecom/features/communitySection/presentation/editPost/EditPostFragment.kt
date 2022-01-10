@@ -209,12 +209,28 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>()
                 override fun onSuccess()
                 {
                     Timber.tag(Constants.TAG).d("Success")
-                    binding.fragmentEditPostProgressBar.hide()
+
+                    try
+                    {
+                        binding.fragmentEditPostProgressBar.hide()
+                    }catch (e:java.lang.Exception)
+                    {
+
+                    }
+
+
                 }
                 override fun onError(e: Exception?)
                 {
-                    Timber.tag(Constants.TAG).d(""+e?.message)
-                    binding.fragmentEditPostProgressBar.hide()
+
+                    try
+                    {
+                        binding.fragmentEditPostProgressBar.hide()
+                    }catch (e:java.lang.Exception)
+                    {
+
+                    }
+
                 }
             })
 

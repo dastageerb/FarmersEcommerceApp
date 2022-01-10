@@ -26,6 +26,8 @@ import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
 import com.example.farmersecom.utils.extensionFunctions.context.ContextExtension.showToast
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.hide
+import com.example.farmersecom.utils.extensionFunctions.view.ViewExtension.show
 import com.example.farmersecom.utils.sealedResponseUtils.NetworkResource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -89,12 +91,20 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
                     {
                         is NetworkResource.Success ->
                         {
+                            binding.bindingProductStoreProgressBar.hide()
                             Timber.tag(Constants.TAG).d("${it.data}")
                             updateViews(it.data)
                         }
                         is NetworkResource.Error ->
                         {
+                            binding.bindingProductStoreProgressBar.hide()
+                            binding.fragmentProductStoreDetailsLayout.hide()
                             Timber.tag(Constants.TAG).d("${it.msg}")
+                        }
+                        is NetworkResource.Loading ->
+                        {
+                            binding.bindingProductStoreProgressBar.show()
+                            binding.fragmentProductStoreDetailsLayout.hide()
                         }
                     }// when closed
                 } // getProfile closed
@@ -119,6 +129,16 @@ class ProductStoreFragment : BaseFragment<FragmentProductStoreBinding>()
 
                 fragmentProductStoreSellerNameTextView.text = data.owner?.firstName
 
+                if(data.deliversOfOutCity)
+                {
+                    binding.fragmentProductStoreDeliveryOutOfCityImageView.setImageResource(R.drawable.ic_baseline_check_yes_outline_24)
+                }else
+                {
+                    binding.fragmentProductStoreDeliveryOutOfCityImageView.setImageResource(R.drawable.ic_baseline_remove_24)
+                }
+
+
+                binding.fragmentProductStoreDetailsLayout.show()
             }
 
 

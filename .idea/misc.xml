@@ -16,6 +16,7 @@
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_add_product_24.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.18076923076923077" />
+        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_check_yes_outline_24.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.10854700854700855" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_feed_cummunity_24.xml" value="0.1188034188034188" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_key_24.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_language_24.xml" value="0.1398148148148148" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_no_internet_24.xml" value="0.1" />
+        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_remove_24.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.10854700854700855" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/ic_baseline_shopping_basket_24.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/drawable/image_place_holder.xml" value="0.1" />
@@ -63,15 +65,15 @@
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_order_details_for_seller.xml" value="0.1756007393715342" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_post_details.xml" value="0.28907330567081607" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.25" />
-        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_product_store.xml" value="0.25" />
+        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_product_store.xml" value="0.2696629213483146" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_register.xml" value="0.2931985294117647" />
-        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_search.xml" value="0.33" />
+        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_search.xml" value="1.0" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_see_all_latest_items.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_setup_store.xml" value="0.26755852842809363" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_store.xml" value="0.33" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_store_dashboard.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_store_setting.xml" value="0.33" />
+        <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/fragment_store_setting.xml" value="0.28370786516853935" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_cart_item_view.xml" value="0.33" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_categories_item.xml" value="0.1" />
         <entry key="..\:/Users/Shoaib/AndroidStudioProjects/FarmersEcommerceApp/app/src/main/res/layout/layout_community_contributions_item.xml" value="0.42196531791907516" />

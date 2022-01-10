@@ -43,23 +43,25 @@ class ProfileViewModel @Inject constructor(
 
 
     /** Get Profile Use Case*/
-    private val _userNetworkEntity:MutableStateFlow<NetworkResource<ProfileNetworkEntity>> = MutableStateFlow(
-        NetworkResource.None())
-    val userNetworkEntity:StateFlow<NetworkResource<ProfileNetworkEntity>> = _userNetworkEntity
+    private val _userNetworkEntity:MutableSharedFlow<NetworkResource<ProfileNetworkEntity>>
+    = MutableSharedFlow(0)
+    val userNetworkEntity:SharedFlow<NetworkResource<ProfileNetworkEntity>> = _userNetworkEntity
 
 
     fun getProfile() = viewModelScope.launch(Dispatchers.IO)
     {
+
+        _userNetworkEntity.emit(NetworkResource.Loading())
         try
         {
             val response = getUserProfileUseCase.getUserProfile()
-            _userNetworkEntity.value = handleProfileResponse(response)
+            _userNetworkEntity.emit( handleProfileResponse(response))
         }catch (e:Exception)
         {
             when (e)
             {
-                is HttpException -> _userNetworkEntity.value = NetworkResource.Error("Something went wrong")
-                else -> _userNetworkEntity.value = NetworkResource.Error("No Internet Connection")
+                is HttpException -> _userNetworkEntity.emit(NetworkResource.Error(e.message))
+                else -> _userNetworkEntity.emit(NetworkResource.Error(e.message))
             } // when closed
         } // catch closed
     } //  getProfile closed

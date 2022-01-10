@@ -79,6 +79,10 @@ class CommunityContributionsFragment : BaseFragment<FragmentCommunityContributio
                         }
                         is NetworkResource.Success ->
                         {
+                            if(it.data?.posts?.isNullOrEmpty() == true)
+                            {
+                                requireContext().showToast(getString(R.string.no_contributions_yet))
+                            }
                             binding.fragmentCommunityContributionsProgressBar.hide()
                            communityContributionsAdapter.submitList(it.data?.posts!!)
                             Timber.tag(Constants.TAG).d(it.data?.posts.toString())

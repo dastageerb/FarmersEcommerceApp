@@ -157,7 +157,7 @@
     <string name="app_needs_permissions_to_pick_image">ايپ کي تصوير چونڊڻ جي اجازت جي ضرورت آهي</string>
     <string name="update_post">پوسٽ اپڊيٽ ڪريو</string>
     <string name="edit_community_post">ڪميونٽي پوسٽ کي تبديل ڪريو</string>
-    <string name="see_all">سڀ ڏس</string>
+    <string name="see_all">سڀ ڏسو</string>
     <string name="search_product_here">پراڊڪٽ ڳوليو هتي</string>
     <string name="clear_filters">فلٽر صاف ڪريو</string>
     <string name="filter_applied">فلٽر لاڳو ٿيل</string>
@@ -186,6 +186,13 @@
 
     <string name="do_you_provide_cash_on_delivery_out_of_city">ڇا توهان شهر کان ٻاهر پهچائڻ تي نقد فراهم ڪندا آهيو؟</string>
     <string name="code_note">توهان کي پنهنجي ويجھي ڪوريئر سروس فراهم ڪندڙ تي ڪيش آن ڊليوري اڪائونٽ کولڻ جي ضرورت پوندي</string>
+
+
+
+
+    <string name="no_contributions_yet">توهان اڃا تائين پوسٽ نه ڪيو آهي</string>
+    <string name="cod_out_of_city">COD شهر کان ٻاهر</string>
+    <string name="owner">مالڪ</string>
 
 
 </resources>

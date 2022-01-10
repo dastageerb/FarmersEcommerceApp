@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         app:singleSelection="true"
         app:selectionRequired="true"
-        app:checkedButton="@id/fragmentChangeLanguageEnglishButton"
         android:gravity="center"
         android:layout_centerInParent="true"
         >

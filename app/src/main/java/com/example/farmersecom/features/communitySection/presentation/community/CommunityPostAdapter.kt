@@ -45,7 +45,7 @@ class CommunityPostAdapter(val onPostSelected:(postId:String)->Unit) : ListAdapt
                 layoutCommunityPostItemDescription.text = post?.description
                 layoutCommunityPostItemTitle.text = post?.title
                 layoutCommunitySectionPostImage.load(post?.image)
-                binding.layoutCommunityPostItemDate.text = post?.createdAt
+                binding.layoutCommunityPostItemDate.text = post?.createdAt?.substring(0,10)
 
             } // apply closed
 
