@@ -189,6 +189,10 @@
     <string name="no_contributions_yet">No Contributions Yet</string>
     <string name="cod_out_of_city">COD out of city</string>
     <string name="owner">Owner</string>
+    <string name="quantity_unit">Quantity unit:</string>
+
+
+
 
     <!--    <string name="create_account">Create Account</string>-->
 

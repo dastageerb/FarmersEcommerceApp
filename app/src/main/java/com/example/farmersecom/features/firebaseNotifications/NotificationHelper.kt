@@ -55,7 +55,7 @@ object NotificationHelper
             notification = Notification.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentText(body)
                 .setContentTitle(title)
-                .setSmallIcon(R.drawable.fambazzarlogo)
+                .setSmallIcon(R.drawable.applogo)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .build()

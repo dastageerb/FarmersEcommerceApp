@@ -38,7 +38,7 @@
             android:layout_marginEnd="2dp"
             android:layout_toEndOf="@id/imageCardView"
             android:background="@color/colorTransparent"
-            android:text="change Photo"
+            android:text="@string/change_photo"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark" />
 
@@ -49,9 +49,11 @@
             android:layout_below="@id/imageCardView"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="24dp"
+
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:text="@string/store_name"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -65,6 +67,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:text="@string/store_desc"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -77,6 +80,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:text="@string/store_desc"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
 
@@ -89,8 +93,8 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:text="@string/offers_delivery_out_of_city"
-            android:textSize="14sp"
-            />
+            android:textColor="@color/black"
+            android:textSize="14sp" />
 
 
         <com.google.android.material.switchmaterial.SwitchMaterial

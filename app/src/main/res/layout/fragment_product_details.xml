@@ -25,8 +25,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:paddingBottom="32dp"
+            android:paddingBottom="8dp"
             >
 
             <androidx.recyclerview.widget.RecyclerView
@@ -43,6 +42,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Name"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -66,14 +66,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewFragmentProductDetailsProductName"
-                android:layout_toEndOf="@id/textPrice"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_toEndOf="@id/textPrice"
                 android:text="RS.375"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                />
-
+                android:textStyle="bold" />
 
 
             <TextView
@@ -85,7 +84,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/product_ratings"
-                />
+                android:textColor="@color/black" />
 
 
             <RatingBar
@@ -111,8 +110,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/quantity_in_details"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
-
 
 
             <TextView
@@ -120,10 +119,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ratingBarFragmentProductDetails"
-                android:layout_toEndOf="@id/textQuantity"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_toEndOf="@id/textQuantity"
                 android:text="1"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
 
@@ -135,6 +135,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/location"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
@@ -147,8 +148,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_toEndOf="@id/textLocation"
                 android:text="location"
-                android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
             <TextView
@@ -159,8 +161,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="2dp"
-                android:text="@string/unit_in_details"
                 android:layout_toStartOf="@id/textViewProductQuantityUnitFragmentProductDetails"
+                android:text="@string/quantity_unit"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
 
@@ -174,8 +177,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Kilo"
-                android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
 
             <TextView
@@ -187,9 +191,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="Delivery charges:30"
+                android:text="@string/delivery_charges"
                 android:textColor="@color/colorGreen"
-                android:textSize="18sp"
+                android:textSize="16sp"
 
                 />
 
@@ -225,6 +229,7 @@
                     android:layout_marginEnd="16dp"
                     android:padding="8dp"
                     android:text="Store Name"
+                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -239,10 +244,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/description_in_detail"
-                android:textStyle="bold"
                 android:layout_marginEnd="4dp"
-                android:textSize="18sp" />
+                android:text="@string/description_in_detail"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textViewProductDescription"
@@ -253,11 +259,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
-                android:text="Product Description"
                 android:layout_marginEnd="4dp"
+                android:text="Product Description"
                 android:textSize="18sp"
 
-                />
+                android:textColor="@color/black" />
 
 
             <androidx.appcompat.widget.AppCompatButton
@@ -268,12 +274,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/small_button_bg"
                 android:text="@string/buy_now"
                 android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
 
             <androidx.appcompat.widget.AppCompatButton
@@ -283,13 +289,13 @@
                 android:layout_below="@id/textViewProductDescription"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/small_button_bg"
                 android:text="@string/add_to_cart"
                 android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
         </RelativeLayout>
 
 

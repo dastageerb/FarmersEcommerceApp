@@ -233,7 +233,6 @@ class BuyNowOrderDetailsFragment : BaseFragment<FragmentBuyNowDetailsBinding>(),
                            // binding.fragmentBuyNowDetailsScrollView.fullScroll(ScrollView.FOCUS_DOWN);
                             binding.fragmentBuyNowDetailsProgressBar.show()
                             Timber.tag(Constants.TAG).d("Loading")
-                            binding.fragmentBuyNowDetailsScrollView.scrollY = View.FOCUS_DOWN;
                         }
                         is NetworkResource.Error ->
                         {

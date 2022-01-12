@@ -50,7 +50,7 @@
     <string name="yes">ها</string>
     <string name="no">نه</string>
     <string name="rate">شرح</string>
-    <string name="offers_delivery_out_of_city">شهر کان ٻاهر پهچائڻ جي آڇ</string>
+    <string name="offers_delivery_out_of_city">شهر کان ٻاهر پهچائڻ </string>
     <string name="plz_select_city">مهرباني ڪري شهر چونڊيو</string>
     <string name="re_enter_new_password">ٻيهر داخل ڪريو نئون پاس ورڊ</string>
     <string name="enter_old_password">پراڻو پاسورڊ داخل ڪريو</string>
@@ -193,6 +193,9 @@
     <string name="no_contributions_yet">توهان اڃا تائين پوسٽ نه ڪيو آهي</string>
     <string name="cod_out_of_city">COD شهر کان ٻاهر</string>
     <string name="owner">مالڪ</string>
+
+
+    <string name="quantity_unit">مقدار يونٽ:</string>
 
 
 </resources>

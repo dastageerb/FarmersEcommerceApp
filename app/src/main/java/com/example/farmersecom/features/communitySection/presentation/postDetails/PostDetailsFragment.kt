@@ -138,7 +138,7 @@ class PostDetailsFragment : BaseFragment<FragmentPostDetailsBinding>()
        // binding.fragmentPostDetailsImageView.load(post?.image)
         binding.fragmentPostDetailsTitleTextView.text = post?.title
         binding.fragmentPostDetailsDescription.text = post?.description
-        binding.fragmentPostDetailsCreatedDate.text = post?.createdAt
+        binding.fragmentPostDetailsCreatedDate.text = post?.createdAt?.substring(0,10)
         binding.fragmentPostDetailsPublisherName.text=post?.createdBy?.firstName
         ///binding.fragmentPostDetailsProgressBar.hide()
         binding.fragmentPostDetailsLayout.show()

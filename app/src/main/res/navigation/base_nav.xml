@@ -301,14 +301,19 @@
             app:destination="@id/editProductFragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/orderDetailsForBuyerFragment"
         android:name="com.example.farmersecom.features.buyerSection.presentation.orderDetailsForBuyer.OrderDetailsForBuyerFragment"
         android:label="@string/order_details_as_buyer_frag"
         tools:layout="@layout/fragment_order_details_for_buyer" >
         <action
-            android:id="@+id/action_orderDetailsForBuyerFragment_to_buyerOrderHistoryFragment"
-            app:destination="@id/buyerOrderHistoryFragment" />
+            android:id="@+id/action_orderDetailsForBuyerFragment_to_currentOrdersFragment"
+            app:destination="@id/currentOrdersFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/base_nav"
+            app:popUpToInclusive="true"
+            />
     </fragment>
     <fragment
         android:id="@+id/orderDetailsForSellerFragment"

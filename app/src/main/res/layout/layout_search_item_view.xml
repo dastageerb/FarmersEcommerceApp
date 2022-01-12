@@ -4,10 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
-    app:cardElevation="8dp"
+    app:cardElevation="4dp"
     android:layout_margin="8dp"
     >
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,10 +14,13 @@
 
         <ImageView
             android:id="@+id/layoutSearchItemsImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerVertical="true"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:scaleType="fitXY"
             android:src="@drawable/image_place_holder" />
 
@@ -31,20 +33,20 @@
             android:layout_toEndOf="@id/layoutSearchItemsImageView"
             android:text="Product Name"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/layoutSearchItemsProductCategoryTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="category"
-            android:layout_toEndOf="@id/layoutSearchItemsImageView"
             android:layout_below="@id/layoutSearchItemsProductNameTextView"
-            android:textColor="@color/black"
-            android:textSize="18sp"
             android:layout_marginStart="8dp"
-            />
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/layoutSearchItemsImageView"
+            android:text="category"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
 
 
         <TextView
@@ -53,10 +55,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/layoutSearchItemsProductCategoryTextView"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/layoutSearchItemsImageView"
             android:text="@string/rs"
             android:textColor="@color/colorRed"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/layoutSearchItemsProductPriceTextView"
@@ -64,21 +67,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/layoutSearchItemsProductCategoryTextView"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/txtRs"
             android:text="120"
             android:textColor="@color/colorRed"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/layoutSearchItemsProductLocationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/layoutSearchItemsProductPriceTextView"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/layoutSearchItemsImageView"
             android:text="Location"
-            android:layout_marginBottom="4dp"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
 
 
