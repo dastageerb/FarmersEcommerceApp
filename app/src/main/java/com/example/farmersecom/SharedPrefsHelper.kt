@@ -29,7 +29,8 @@ class SharedPrefsHelper @Inject constructor(private val prefs: SharedPreferences
 
     fun clearToken()
     {
-
+        editor.remove(TOKEN);
+        editor.apply()
         editor.putString(TOKEN,"")
         editor.commit()
     }

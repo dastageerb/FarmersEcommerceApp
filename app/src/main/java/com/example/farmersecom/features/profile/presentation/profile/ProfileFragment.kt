@@ -72,11 +72,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() ,View.OnClickList
 
     } // onViewCreate closed
 
-    override fun onStart()
-    {
-        super.onStart()
-
-    }
 
 
     private fun subscribeProfileResponseFlow()

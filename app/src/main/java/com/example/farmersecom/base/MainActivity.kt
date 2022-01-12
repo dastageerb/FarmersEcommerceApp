@@ -63,11 +63,21 @@ class MainActivity : AppCompatActivityBase()
             {
                 R.id.profileFragment ->
                 {
-                    if(navController.currentDestination?.id != R.id.profileFragment)
+
+                    if(profileViewModel.getAuthToken()?.isEmpty() == true)
                     {
-                        navController.navigate(R.id.profileFragment)
+                        navController.navigate(R.id.logInFragment)
+                    }
+                    else
+                    {
+                        if(navController.currentDestination?.id != R.id.profileFragment)
+                        {
+                            navController.navigate(R.id.profileFragment)
+                        }
                     }
                 }
+
+
                 R.id.communityFragment ->
                 {
                     if(navController.currentDestination?.id != R.id.communityFragment)

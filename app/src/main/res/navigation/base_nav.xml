@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.farmersecom.features.profile.presentation.profile.ProfileFragment"
-        android:label="profile"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile" >
 
         <action

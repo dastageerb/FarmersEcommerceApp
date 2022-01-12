@@ -30,9 +30,10 @@ object NetworkModule
     fun providesIntercept(sharedPreferences:SharedPrefsHelper) :Interceptor
     {
 
-        val token = sharedPreferences.getToken()
-        return Interceptor{ chain ->
+        return Interceptor()
+        { chain ->
             val request = chain.request()
+            val token = sharedPreferences.getToken()
             val newRequest = request.newBuilder().addHeader("Authorization", "Bearer $token")
             chain.proceed(newRequest.build())
         }
