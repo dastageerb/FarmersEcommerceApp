@@ -22,7 +22,8 @@ class FCMessagingService:FirebaseMessagingService()
 
             Timber.tag(TAG).d("notification_data"+remoteMessage.data.toString())
 
-        NotificationHelper.buildNotification(applicationContext,remoteMessage.data)
+        val icon = remoteMessage.notification?.icon
+        NotificationHelper.buildNotification(applicationContext,remoteMessage.data,icon)
 
     } // remoteMessage closed
 

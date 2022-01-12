@@ -18,7 +18,7 @@ object NotificationHelper
     val NOTIFICATION_NAME = "NOTIFYUser"
 
 
-    fun buildNotification(context: Context, data: MutableMap<String, String>)
+    fun buildNotification(context: Context, data: MutableMap<String, String>, icon: String?)
     {
         val body = data["body"]
         val title = data["title"]
@@ -55,7 +55,7 @@ object NotificationHelper
             notification = Notification.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentText(body)
                 .setContentTitle(title)
-                .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                .setSmallIcon(R.drawable.fambazzarlogo)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .build()

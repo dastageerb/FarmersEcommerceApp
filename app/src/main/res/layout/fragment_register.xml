@@ -6,302 +6,309 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.farmersecom.features.authentication.presentation.register.RegisterFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="100dp"
         >
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_name"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="32dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragFirstName"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:hint="@string/first_name"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="32dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/last_name"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragLastName"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/last_name"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/contact_number"
-            app:counterEnabled="true"
-            app:counterMaxLength="11"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragContact"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="number"
-                android:maxLength="11"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/contact_number"
+                app:counterEnabled="true"
+                app:counterMaxLength="11"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/email"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragEmail"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textEmailAddress"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/email"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textEmailAddress"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/password"
-            app:counterEnabled="true"
-            app:counterMaxLength="16"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragPassword"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/password"
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/re_enter_password"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragReEnterPassword"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword"
-              />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/re_enter_password"
+                >
 
-        <TextView
-            android:id="@+id/headerGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gender"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragReEnterPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioGroup
-
-            android:id="@+id/radioGroupRegisterFrag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:checkedButton="@id/radioButtonMale"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            >
-
-
-            <RadioButton
-                android:id="@+id/radioButtonMale"
+            <TextView
+                android:id="@+id/headerGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/radio_button_male"
-                android:buttonTint="@color/colorPrimary"
+                android:text="@string/gender"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
                 />
-            <RadioButton
-                android:id="@+id/radiobButtomFemale"
+
+            <RadioGroup
+
+                android:id="@+id/radioGroupRegisterFrag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:checkedButton="@id/radioButtonMale"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                >
+
+
+                <RadioButton
+                    android:id="@+id/radioButtonMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radio_button_male"
+                    android:buttonTint="@color/colorPrimary"
+                    />
+                <RadioButton
+                    android:id="@+id/radiobButtomFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radio_button_female"
+                    android:layout_marginStart="24dp"
+                    android:buttonTint="@color/colorPrimary"
+                    />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/headerDOB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/radio_button_female"
-                android:layout_marginStart="24dp"
-                android:buttonTint="@color/colorPrimary"
+                android:text="@string/dob"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
                 />
-        </RadioGroup>
-        <TextView
-            android:id="@+id/headerDOB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dob"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/date_hint"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragDate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="date" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/select_city"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp">
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteCity"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:inputType="text"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/date_hint"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="date" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/address"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragAddress"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-             />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:hint="@string/select_city"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp">
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:inputType="text"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/postal_code"
-            app:counterMaxLength="5"
-            app:counterEnabled="true"
 
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextRegisterFragPostalCode"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="number"
-                android:maxLength="5"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/address"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/postal_code"
+                app:counterMaxLength="5"
+                app:counterEnabled="true"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRegisterFragPostalCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonRegFragRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register"
+                android:textColor="@color/white"
+                android:background="@drawable/wide_button"
+                android:layout_marginTop="18dp"
+                android:layout_gravity="center"
                 />
-        </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textNoAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="15dp"
+                android:text="Already Have Account?"
+                />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonRegFragLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="@string/login_here"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="right"
+                android:layout_marginBottom="24dp"
 
+                />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonRegFragRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:textColor="@color/white"
-            android:background="@drawable/wide_button"
-            android:layout_marginTop="18dp"
-            android:layout_gravity="center"
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textNoAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="15dp"
-            android:text="Already Have Account?"
-            />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonRegFragLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/login_here"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:layout_gravity="right"
-            android:layout_marginBottom="24dp"
-
-            />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBarRegisterFrag"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="24dp"
             android:visibility="gone"
             android:indeterminateTint="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="24dp"
+            android:layout_centerHorizontal="true"
             />
 
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>
