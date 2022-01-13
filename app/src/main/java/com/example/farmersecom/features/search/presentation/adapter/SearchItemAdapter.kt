@@ -11,7 +11,7 @@ import com.example.farmersecom.features.search.domain.model.SearchResponse
 import com.example.farmersecom.utils.extensionFunctions.picasso.PicassoExtensions.load
 
 
-class SearchItemAdapter ()
+class SearchItemAdapter (val onStoreItemClicked:(productId:String)->Unit)
     : ListAdapter<Product, SearchItemAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Product>()
 {
     override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean
@@ -60,6 +60,13 @@ class SearchItemAdapter ()
     {
         val searchItem = getItem(position)
         holder.bind(searchItem)
+
+
+        holder.itemView.setOnClickListener()
+        {
+            onStoreItemClicked(searchItem.productId!!)
+        } //
+
     }
 
 

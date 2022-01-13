@@ -3,6 +3,7 @@ package com.example.farmersecom.features.productDetails.presentation.productDeta
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.farmersecom.SharedPrefsHelper
+import com.example.farmersecom.features.authentication.data.frameWork.entity.responses.User
 import com.example.farmersecom.features.cart.domain.CartItem
 import com.example.farmersecom.features.cart.domain.usecase.CheckIfProductExistsInCartUseCase
 import com.example.farmersecom.features.cart.domain.usecase.DeleteAllCartItemsUseCase
@@ -31,7 +32,8 @@ class ProductDetailsViewModel @Inject constructor(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val sharedPrefsHelper:SharedPrefsHelper,
     private val getAllCartItemsUseCase: GetCartItemsUseCase,
-    private val checkIfProductExistsInCartUseCase: CheckIfProductExistsInCartUseCase
+    private val checkIfProductExistsInCartUseCase: CheckIfProductExistsInCartUseCase,
+
     )
     :ViewModel()
 {
@@ -99,6 +101,8 @@ class ProductDetailsViewModel @Inject constructor(
 
 
             fun getAuthToken() : String? = sharedPrefsHelper.getToken()
+
+    fun getUser() : User? = sharedPrefsHelper.getUser()
 
 
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.farmersecom.R
 import com.example.farmersecom.base.BaseFragment
 import com.example.farmersecom.databinding.FragmentSearchBinding
+import com.example.farmersecom.features.productDetails.presentation.productDetails.ProductDetailsViewModel
 import com.example.farmersecom.features.search.presentation.adapter.SearchItemAdapter
 import com.example.farmersecom.utils.constants.Constants
 import com.example.farmersecom.utils.constants.Constants.TAG
@@ -34,6 +36,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
 {
 
     val viewModel:SearchViewModel by viewModels()
+    val productDetailsViewModel:ProductDetailsViewModel by activityViewModels()
     lateinit var  searchItemAdapter: SearchItemAdapter
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, root: Boolean): FragmentSearchBinding
     {
@@ -130,7 +133,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>()
 
     private fun setupRecycler(recycler: RecyclerView)
     {
-        searchItemAdapter = SearchItemAdapter();
+        searchItemAdapter = SearchItemAdapter()
+        {
+            productDetailsViewModel.setProductId(it)
+            findNavController().navigate(R.id.action_searchFragment_to_productDetailsFragment)
+        }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = searchItemAdapter
     } // setupHomeSlider closed

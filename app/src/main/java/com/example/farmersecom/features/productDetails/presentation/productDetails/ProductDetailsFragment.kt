@@ -179,6 +179,17 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>() , V
          productId= data?.productId!!
         //checkItemAlreadyInCart()
 
+        if(data.sellerId.equals(viewModel.getUser()?.id))
+        {
+            binding.buttonProductDetailsFragmentAddToCart.hide()
+            binding.buttonProductDetailsFragmentBuyNow.hide()
+        }else
+        {
+            binding.buttonProductDetailsFragmentAddToCart.show()
+            binding.buttonProductDetailsFragmentBuyNow.show()
+        }
+
+
         data?.let { list.add(it) }
         data?.let { setupRecyclerView(binding.recyclerViewFragmentProductDetails, it.productPictures) }
         binding.textViewFragmentProductDetailsProductName.text = data?.productName

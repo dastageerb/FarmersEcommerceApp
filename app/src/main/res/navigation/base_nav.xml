@@ -161,11 +161,15 @@
         android:name="com.example.farmersecom.features.search.presentation.SearchFragment"
         android:label="@string/search_fragment"
         tools:layout="@layout/fragment_search"
-
         >
         <action
             android:id="@+id/action_searchFragment_to_filtersFragment"
             app:destination="@id/filtersFragment" />
+
+        <action
+            android:id="@+id/action_searchFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/filtersFragment"
@@ -315,6 +319,10 @@
             app:popUpToInclusive="true"
             />
     </fragment>
+
+
+
+
     <fragment
         android:id="@+id/orderDetailsForSellerFragment"
         android:name="com.example.farmersecom.features.storeAdmin.presentation.orderDetailsForSeller.OrderDetailsForSellerFragment"
